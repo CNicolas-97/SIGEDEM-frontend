@@ -2,6 +2,8 @@
 
 Interfaz web del **Sistema Integral de Gestión Deportiva Municipal (SIGEDEM)** para la Dirección de Deportes de Tucumán. Permite que los vecinos consulten y se inscriban en las disciplinas deportivas, y que el personal de la Dirección gestione inscripciones, sedes y cobros desde un solo lugar.
 
+**Sitio en producción:** https://sigedem-frontend.vercel.app
+
 > Proyecto desarrollado para la materia **Programación IV** (2do año, 2do cuatrimestre).
 
 ## Inicio rápido
@@ -52,7 +54,7 @@ El backend se desarrolla en un repositorio separado con **NestJS + TypeScript**.
 
 ```
 SIGEDEM-frontend/
-├── public/            # Archivos estáticos (favicon, robots.txt)
+├── public/            # Archivos estáticos (favicon, robots.txt, sitemap.xml)
 ├── src/
 │   ├── assets/        # Imágenes y recursos importados desde el código
 │   ├── components/    # Componentes reutilizables
@@ -67,7 +69,7 @@ SIGEDEM-frontend/
 
 | Rama | Uso |
 |------|-----|
-| `main` | Producción |
+| `main` | Producción (deploy automático en Vercel) |
 | `develop` | Integración del desarrollo |
 | `feat/*`, `fix/*`, `docs/*` | Una rama por tarea, con Pull Request hacia `develop` |
 
