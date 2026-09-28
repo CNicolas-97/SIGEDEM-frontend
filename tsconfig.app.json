@@ -1,0 +1,38 @@
+// Configuración de TypeScript para el código de la app (src/).
+// TypeScript acá solo REVISA los tipos ("noEmit"): quien transforma el código
+// a JavaScript para el navegador es Vite.
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    // Tipos de Vite: permiten importar imágenes, CSS, etc. sin errores.
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+
+    // Alias "@/" -> "src/" (debe coincidir con resolve.alias en vite.config.ts).
+    // Permite escribir '@/shared/ui/Button.tsx' en lugar de '../../../shared/ui/Button.tsx'.
+    // Sin "baseUrl": está deprecado desde TypeScript 6; "paths" se resuelve
+    // relativo a este mismo archivo.
+    "paths": { "@/*": ["./src/*"] },
+
+    // Modo "bundler": las reglas de imports las define Vite, no Node.
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    // Transforma JSX con el runtime moderno de React (no hace falta importar React).
+    "jsx": "react-jsx",
+
+    // Chequeos extra: avisan de variables/parámetros sin usar y casos de switch
+    // que "caen" al siguiente sin break.
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"]
+}
