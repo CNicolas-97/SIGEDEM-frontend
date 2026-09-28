@@ -1,12 +1,61 @@
 <!doctype html>
-<html lang="en">
+<html lang="es-AR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sigedem-frontend</title>
+
+    <!-- SEO: título y descripción únicos del sitio -->
+    <title>SIGEDEM — Dirección de Deportes de Tucumán</title>
+    <meta
+      name="description"
+      content="Consultá las disciplinas deportivas municipales de Tucumán, sus sedes y horarios, e inscribite online con SIGEDEM, el sistema de la Dirección de Deportes."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Dirección de Deportes de Tucumán" />
+    <meta name="theme-color" content="#0b6ea8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph: vista previa al compartir en redes -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="SIGEDEM" />
+    <meta
+      property="og:title"
+      content="SIGEDEM — Dirección de Deportes de Tucumán"
+    />
+    <meta
+      property="og:description"
+      content="Disciplinas deportivas municipales de Tucumán: sedes, horarios e inscripción online."
+    />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="SIGEDEM — Dirección de Deportes de Tucumán"
+    />
+    <meta
+      name="twitter:description"
+      content="Disciplinas deportivas municipales de Tucumán: sedes, horarios e inscripción online."
+    />
+
+    <!-- Datos estructurados: identifica al sitio como organismo público -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "GovernmentOrganization",
+        "name": "Dirección de Deportes de Tucumán",
+        "alternateName": "SIGEDEM",
+        "description": "Sistema Integral de Gestión Deportiva Municipal para la inscripción y gestión de disciplinas deportivas.",
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Tucumán, Argentina"
+        }
+      }
+    </script>
   </head>
   <body>
+    <noscript>SIGEDEM necesita JavaScript habilitado para funcionar.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -1,0 +1,3 @@
+# Permite a los buscadores indexar el sitio público
+User-agent: *
+Allow: /
