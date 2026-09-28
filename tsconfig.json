@@ -1,0 +1,11 @@
+// Archivo raíz de TypeScript. No compila nada por sí mismo: solo referencia
+// las dos configuraciones reales del proyecto.
+//  - tsconfig.app.json  → el código de la app (todo lo que está en src/)
+//  - tsconfig.node.json → los archivos que corren en Node (vite.config.ts)
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
