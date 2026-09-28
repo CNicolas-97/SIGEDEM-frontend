@@ -1,0 +1,5 @@
+# Permite a los buscadores indexar el sitio público
+User-agent: *
+Allow: /
+
+Sitemap: https://sigedem-frontend.vercel.app/sitemap.xml

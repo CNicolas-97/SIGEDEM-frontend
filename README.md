@@ -1,23 +1,111 @@
 # SIGEDEM Frontend
 
-Sistema Integral de Gestión Deportiva Municipal — interfaz de usuario.
+Interfaz web del **Sistema Integral de Gestión Deportiva Municipal (SIGEDEM)** para la Dirección de Deportes de Tucumán. Permite que los vecinos consulten y se inscriban en las disciplinas deportivas, y que el personal de la Dirección gestione inscripciones, sedes y cobros desde un solo lugar.
 
-## Tecnologías
+**Sitio en producción:** https://sigedem-frontend.vercel.app
 
-- React 19
-- Vite
-- ESLint + Prettier
+> Proyecto desarrollado para la materia **Programación IV** (2do año, 2do cuatrimestre).
 
-## Instalación
+## Inicio rápido
+
+Requisitos: **Node.js 20.19+** (o 22.12+) y **npm**.
 
 ```bash
+git clone https://github.com/CNicolas-97/SIGEDEM-frontend.git
+cd SIGEDEM-frontend
 npm install
 npm run dev
 ```
 
 La app queda disponible en http://localhost:5173
 
-## Ramas
+## Funcionalidades
 
-- `main` — producción
-- `develop` — desarrollo
+| Módulo              | Descripción                                                                                     | Estado        |
+| ------------------- | ----------------------------------------------------------------------------------------------- | ------------- |
+| Landing pública     | Presentación de la Dirección de Deportes y sus disciplinas                                      | En desarrollo |
+| Disciplinas         | Listado de disciplinas con edades, sede y horarios                                              | Previsto      |
+| Inscripciones       | Alta de vecinos en una disciplina                                                               | Previsto      |
+| Acceso del personal | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección) | Previsto      |
+| Navegación          | Rutas entre páginas con React Router                                                            | Previsto      |
+
+## Tecnologías
+
+| Tecnología                                    | Uso                                                     |
+| --------------------------------------------- | ------------------------------------------------------- |
+| [React 19](https://react.dev/)                | Librería de interfaz basada en componentes              |
+| [TypeScript](https://www.typescriptlang.org/) | JavaScript con tipos: detecta errores antes de ejecutar |
+| [Vite](https://vite.dev/)                     | Servidor de desarrollo y build                          |
+| [React Router](https://reactrouter.com/)      | Navegación entre páginas (a incorporar)                 |
+| ESLint + typescript-eslint                    | Análisis estático del código                            |
+| Prettier                                      | Formato de código consistente                           |
+
+El backend se desarrolla en un repositorio separado con **NestJS + TypeScript**, así que todo el sistema usa el mismo lenguaje.
+
+## Scripts
+
+| Comando             | Qué hace                                                      |
+| ------------------- | ------------------------------------------------------------- |
+| `npm run dev`       | Levanta el servidor de desarrollo                             |
+| `npm run build`     | Revisa los tipos y genera la versión de producción en `dist/` |
+| `npm run typecheck` | Revisa los tipos con TypeScript, sin generar archivos         |
+| `npm run preview`   | Sirve localmente el build de producción                       |
+| `npm run lint`      | Revisa el código con ESLint                                   |
+
+## Arquitectura
+
+El código se organiza **por features** (estilo [Bulletproof React](https://github.com/alan2207/bulletproof-react)): cada funcionalidad del sistema tiene su propia carpeta, y las carpetas nombran lo que hace el sistema (`landing`, `inscripciones`), no la tecnología que usan.
+
+Dentro de cada feature se aplica el patrón **container/presentational**:
+
+| Tipo                               | Responsabilidad                                                                       |
+| ---------------------------------- | ------------------------------------------------------------------------------------- |
+| **Presentacional** (`components/`) | Recibe datos por props y los muestra. No busca datos por su cuenta.                   |
+| **Container** (`containers/`)      | Obtiene los datos y se los pasa a los presentacionales. Cada container es una página. |
+
+```
+SIGEDEM-frontend/
+├── public/                      # Archivos estáticos (favicon, robots.txt, sitemap.xml)
+├── src/
+│   ├── app/                     # Infraestructura: router y providers (a incorporar)
+│   ├── shared/
+│   │   └── ui/                  # Componentes genéricos (Button, Card, Seo)
+│   ├── features/
+│   │   └── landing/             # Sitio público
+│   │       ├── components/      # Presentacionales (SiteHeader, SiteFooter)
+│   │       ├── containers/      # Páginas (LandingPageContainer)
+│   │       └── model/           # Datos y tipos de la feature
+│   ├── App.tsx                  # Componente raíz
+│   └── main.tsx                 # Punto de entrada
+├── index.html                   # HTML base con metadatos SEO
+└── tsconfig*.json               # Configuración de TypeScript
+```
+
+Los imports usan el alias `@/` en lugar de rutas relativas: `@/shared/ui/Button.tsx` apunta a `src/shared/ui/Button.tsx`.
+
+### Correspondencia con los conceptos de React
+
+| Concepto     | Dónde se aplica                                                                                |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| Components   | `shared/ui/` y `features/*/components/`                                                        |
+| Pages        | `features/*/containers/` (una por ruta)                                                        |
+| Props        | Tipadas en cada componente (`type ...Props`)                                                   |
+| `map()`      | Listas renderizadas a partir de datos de `model/` (por ejemplo, la navegación en `SiteHeader`) |
+| React Router | `app/` (a incorporar)                                                                          |
+
+## Flujo de trabajo
+
+| Rama                        | Uso                                                  |
+| --------------------------- | ---------------------------------------------------- |
+| `main`                      | Producción (deploy automático en Vercel)             |
+| `develop`                   | Integración del desarrollo                           |
+| `feat/*`, `fix/*`, `docs/*` | Una rama por tarea, con Pull Request hacia `develop` |
+
+- Los commits siguen [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/) (`feat:`, `fix:`, `docs:`, `chore:`).
+- Cada Pull Request lo revisa y aprueba otro integrante del equipo antes de mergear.
+
+## Equipo
+
+- [CNicolas-97](https://github.com/CNicolas-97)
+- [leanNunez](https://github.com/leanNunez)
+- [lourdesrodriguez071102-ui](https://github.com/lourdesrodriguez071102-ui)
