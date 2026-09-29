@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { Button } from '@/shared/ui/Button.tsx';
 import { BrandMark } from '@/features/landing/components/BrandMark.tsx';
 import type { SiteLink } from '@/features/landing/model/navigation.ts';
 
@@ -32,9 +33,7 @@ export function SiteHeader({ links, cta }: SiteHeaderProps) {
           </Link>
         ))}
       </nav>
-      <Link className="btn" to={cta.to}>
-        {cta.label}
-      </Link>
+      <Button to={cta.to}>{cta.label}</Button>
     </header>
   );
 }

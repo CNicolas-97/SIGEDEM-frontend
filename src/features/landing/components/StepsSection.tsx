@@ -1,3 +1,4 @@
+import { Button } from '@/shared/ui/Button.tsx';
 import type { MembershipStep } from '@/features/landing/model/membership.ts';
 
 // QUÉ ES: la sección "Cómo asociarse", con los pasos del trámite.
@@ -27,9 +28,7 @@ export function StepsSection({ steps }: StepsSectionProps) {
             </div>
           ))}
         </div>
-        <a className="btn" href="#hero">
-          Ver planes y precios
-        </a>
+        <Button to="/#hero">Ver planes y precios</Button>
       </div>
     </section>
   );

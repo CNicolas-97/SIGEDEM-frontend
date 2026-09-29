@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Link } from 'react-router';
+import { Button } from '@/shared/ui/Button.tsx';
 import { CourtLines } from '@/features/landing/components/ActivityArt.tsx';
 import { ActivityPhoto } from '@/features/landing/components/ActivityPhoto.tsx';
 import { StatList } from '@/features/landing/components/StatList.tsx';
@@ -31,9 +31,9 @@ export function ActivitySection({ activity }: ActivitySectionProps) {
           <p>{activity.description}</p>
           <StatList stats={activity.stats} />
           {/* Lleva a la página de detalle: /actividades/natacion, etc. */}
-          <Link className="btn" to={`/actividades/${activity.slug}`}>
+          <Button to={`/actividades/${activity.slug}`}>
             {activity.ctaLabel}
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

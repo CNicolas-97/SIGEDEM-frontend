@@ -1,0 +1,78 @@
+/* Estilos de los componentes genéricos de shared/ui (Button y Card).
+   Los importan Button.tsx y Card.tsx. Usan las variables de index.css
+   (--accent, --btn-fg), así toman los colores de la sección en pantalla. */
+
+/* ---------- Button ---------- */
+.btn {
+  display: inline-block;
+  /* Un <button> trae borde y tipografía propios del navegador: los quitamos
+     para que se vea igual que la versión link. */
+  border: 0;
+  font: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 999px;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    background 0.18s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+.btn--primary {
+  background: var(--accent);
+  color: var(--btn-fg, #04121b);
+}
+/* Secundario: sin relleno, solo el contorno (sombra interna de 1.5px, así
+   mide lo mismo que el primario). */
+.btn--secondary {
+  background: transparent;
+  color: inherit;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Card ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+}
+.card-eyebrow {
+  align-self: flex-start;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--btn-fg, #04121b);
+}
+.card-title {
+  font-size: 22px;
+  line-height: 1.05;
+  margin: 0;
+}
+.card-description {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+/* margin-top: auto empuja el pie al fondo, aunque las tarjetas de una misma
+   fila tengan textos de distinto largo. */
+.card-footer {
+  margin-top: auto;
+  padding-top: 8px;
+}

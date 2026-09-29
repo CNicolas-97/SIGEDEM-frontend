@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
+import { Button } from '@/shared/ui/Button.tsx';
+import { Card } from '@/shared/ui/Card.tsx';
 import { CourtLines } from '@/features/landing/components/ActivityArt.tsx';
 import { ActivityPhoto } from '@/features/landing/components/ActivityPhoto.tsx';
 import { StatList } from '@/features/landing/components/StatList.tsx';
@@ -49,18 +51,24 @@ export function ActivityDetail({ activity, now }: ActivityDetailProps) {
       <div className="detail-more">
         <h2>Lo que tenés que saber</h2>
         <ul className="highlights">
-          {/* Un <li> por cada dato extra. El título no se repite dentro de
-              una actividad, así que sirve como key. */}
+          {/* Un <li> por cada dato extra, con una Card adentro. El título no
+              se repite dentro de una actividad, así que sirve como key. */}
           {activity.highlights.map((highlight) => (
             <li key={highlight.title}>
-              <h3>{highlight.title}</h3>
-              <p>{highlight.description}</p>
+              <Card
+                title={highlight.title}
+                description={highlight.description}
+              />
             </li>
           ))}
         </ul>
-        <Link className="btn" to="/#pasos">
-          Cómo asociarse
-        </Link>
+        {/* El mismo Button con distinta "variant": relleno o solo borde. */}
+        <div className="detail-actions">
+          <Button to="/#pasos">Cómo asociarse</Button>
+          <Button to="/#natacion" variant="secondary">
+            Ver todas las actividades
+          </Button>
+        </div>
       </div>
     </section>
   );
