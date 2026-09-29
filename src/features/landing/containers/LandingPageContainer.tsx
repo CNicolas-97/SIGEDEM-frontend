@@ -1,27 +1,60 @@
+import { useState } from 'react';
 import { Seo } from '@/shared/ui/Seo.tsx';
+import { ActivitySection } from '@/features/landing/components/ActivitySection.tsx';
+import { Hero } from '@/features/landing/components/Hero.tsx';
 import { SiteFooter } from '@/features/landing/components/SiteFooter.tsx';
 import { SiteHeader } from '@/features/landing/components/SiteHeader.tsx';
-import { navLinks } from '@/features/landing/model/navigation.ts';
+import { StepsSection } from '@/features/landing/components/StepsSection.tsx';
+import { useScrollMotion } from '@/features/landing/hooks/useScrollMotion.ts';
+import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
+import { activities } from '@/features/landing/model/activities.ts';
+import {
+  membershipSteps,
+  sampleCard,
+} from '@/features/landing/model/membership.ts';
+import {
+  footerColumns,
+  headerCta,
+  navLinks,
+} from '@/features/landing/model/navigation.ts';
+import { pageSections } from '@/features/landing/model/sectionTheme.ts';
+import '@/features/landing/landing.css';
 
-// QUÉ ES: la página de inicio del sitio público. Esqueleto.
+// QUÉ ES: la página de inicio del sitio público (Complejo Teniente Ledesma).
 // NIVEL: container — obtiene los datos (de model/, y más adelante de la API)
 // y se los pasa por props a los componentes presentacionales.
-// Equivale a una "página" (page): React Router va a mostrar este componente
-// en la ruta "/".
+// Equivale a una "página" (page): React Router muestra este componente en la
+// ruta "/" (ver App.tsx).
 export function LandingPageContainer() {
+  // Fecha y hora al abrir la página, para el tablero "Hoy".
+  // La función dentro de useState se ejecuta solo en el primer render: así
+  // la fecha no cambia en cada re-render y los componentes quedan "puros".
+  const [now] = useState(() => new Date());
+
+  useSectionTheme(pageSections);
+  useScrollMotion();
+
   return (
     <>
       <Seo
         title="Inicio"
-        description="Disciplinas deportivas municipales de Tucumán: sedes, horarios e inscripción online."
+        description="Complejo Deportivo Municipal Teniente Ledesma: natatorio climatizado, canchas de fútbol y vóley. Sacá el abono y entrá con el QR."
       />
-      <SiteHeader links={navLinks} />
+      {/* Fondo fijo que cambia de color según la sección (useSectionTheme). */}
+      <div className="backdrop" aria-hidden="true" />
+      <div className="grain" aria-hidden="true" />
+
+      <SiteHeader links={navLinks} cta={headerCta} />
       {/* <main>: contenido principal de la página. Debe haber uno solo. */}
       <main>
-        {/* Un único <h1> por página: es el título principal para el SEO. */}
-        <h1>Dirección de Deportes de Tucumán</h1>
+        <Hero card={sampleCard} activities={activities} now={now} />
+        {/* Un mismo componente para las tres actividades: cambian las props. */}
+        {activities.map((activity) => (
+          <ActivitySection key={activity.slug} activity={activity} />
+        ))}
+        <StepsSection steps={membershipSteps} />
       </main>
-      <SiteFooter />
+      <SiteFooter columns={footerColumns} />
     </>
   );
 }

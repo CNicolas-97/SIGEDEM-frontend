@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
+import { App } from './App.tsx';
 
 // Punto de entrada de la app: busca el <div id="root"> de index.html y
 // monta React adentro.

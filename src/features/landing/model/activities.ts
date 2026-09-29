@@ -1,0 +1,171 @@
+import futbolLarge from '@/assets/landing/activities/futbol-botin-pelota-375w.webp';
+import natacionLarge from '@/assets/landing/activities/natacion-nadador-crol-589w.webp';
+import natacionSmall from '@/assets/landing/activities/natacion-nadador-crol-400w.webp';
+import voleyLarge from '@/assets/landing/activities/voley-armado-en-la-red-720w.webp';
+import voleySmall from '@/assets/landing/activities/voley-armado-en-la-red-400w.webp';
+import type { SectionTheme } from '@/features/landing/model/sectionTheme.ts';
+
+// QUÉ ES: las actividades del complejo (natación, fútbol y vóley).
+// NIVEL: model — datos y tipos, sin JSX.
+// DÓNDE SE USA: la home las recorre con map() para armar una ActivitySection
+// por cada una y la fila de horarios del hero. El "slug" lo va a reutilizar
+// la futura página /actividades/:slug.
+
+// Unión de strings: el slug solo puede ser uno de estos tres valores.
+export type ActivitySlug = 'natacion' | 'futbol' | 'voley';
+
+// Un dato destacado: número grande + título + detalle.
+export type Stat = {
+  value: string;
+  label: string;
+  detail: string;
+};
+
+// Horario del día, en horas enteras (7 = 7:00, 21 = 21:00).
+export type Schedule = {
+  opensAt: number;
+  closesAt: number;
+};
+
+export type Activity = {
+  slug: ActivitySlug;
+  // Nombre corto: se ve sobre la imagen y en el tablero de horarios.
+  name: string;
+  title: string;
+  description: string;
+  stats: Stat[];
+  ctaLabel: string;
+  schedule: Schedule;
+  // Colores de la sección (ver sectionTheme.ts).
+  theme: SectionTheme;
+  image: ActivityImage;
+};
+
+// Foto de la tarjeta. Cada foto está exportada en WebP y en dos anchos:
+// - src: la versión grande, la que usan los navegadores sin srcSet.
+// - srcSet: la lista de versiones con su ancho real ("400w" = 400 píxeles).
+//   El navegador elige la más chica que alcance para el tamaño en pantalla:
+//   en el celular baja la de 400 y no gasta datos en la grande.
+// - alt: descripción para lectores de pantalla y para el SEO.
+export type ActivityImage = {
+  src: string;
+  srcSet: string;
+  alt: string;
+};
+
+export const activities: Activity[] = [
+  {
+    slug: 'natacion',
+    name: 'Natatorio',
+    title: 'La pileta abre todo el año',
+    description:
+      'Pileta semiolímpica climatizada de seis andariveles, con turnos de nado libre y escuela de natación por nivel. La cubierta funciona también en invierno.',
+    stats: [
+      {
+        value: '6',
+        label: 'Andariveles',
+        detail:
+          'Tres para nado libre y tres para las comisiones de la escuela.',
+      },
+      {
+        value: '28°',
+        label: 'Agua climatizada',
+        detail: 'Temperatura constante de marzo a diciembre.',
+      },
+      {
+        value: '45′',
+        label: 'Turnos',
+        detail: 'Reservás desde la app y el molinete te deja pasar con el QR.',
+      },
+    ],
+    ctaLabel: 'Ver horarios del natatorio',
+    schedule: { opensAt: 7, closesAt: 21 },
+    theme: {
+      bg: '#06263F',
+      accent: '#2BD4D9',
+      glowA: '#1C7FD6',
+      glowB: '#2BD4D9',
+    },
+    image: {
+      src: natacionLarge,
+      srcSet: `${natacionSmall} 400w, ${natacionLarge} 589w`,
+      alt: 'Nadador con gorra y antiparras nadando crol en un andarivel de la pileta',
+    },
+  },
+  {
+    slug: 'futbol',
+    name: 'Fútbol',
+    title: 'Canchas para jugar el finde',
+    description:
+      'Dos canchas de once con césped mantenido y cuatro de fútbol cinco iluminadas. Reservás por hora o entrás a la liga interna del complejo.',
+    stats: [
+      {
+        value: '6',
+        label: 'Canchas',
+        detail: 'Dos de once y cuatro de fútbol cinco con iluminación LED.',
+      },
+      {
+        value: '22',
+        label: 'Equipos en la liga',
+        detail: 'Categorías libre, veteranos y femenino.',
+      },
+      {
+        value: '23h',
+        label: 'Último turno',
+        detail:
+          'Las canchas iluminadas se reservan hasta las once de la noche.',
+      },
+    ],
+    ctaLabel: 'Reservar una cancha',
+    schedule: { opensAt: 9, closesAt: 23 },
+    theme: {
+      bg: '#08281A',
+      accent: '#8CE05B',
+      glowA: '#189B4A',
+      glowB: '#8CE05B',
+    },
+    image: {
+      src: futbolLarge,
+      srcSet: `${futbolLarge} 375w`,
+      alt: 'Jugador con botines amarillos a punto de patear una pelota sobre el césped',
+    },
+  },
+  {
+    slug: 'voley',
+    name: 'Vóley',
+    title: 'Bajo techo y sobre la arena',
+    description:
+      'Dos canchas cubiertas con piso flotante para las comisiones formativas, y tres de vóley playa que abren de octubre a marzo.',
+    stats: [
+      {
+        value: '5',
+        label: 'Canchas',
+        detail: 'Dos cubiertas con piso flotante y tres de arena.',
+      },
+      {
+        value: '4',
+        label: 'Categorías',
+        detail:
+          'Mini, sub 14, sub 18 y adultos, con entrenadores del complejo.',
+      },
+      {
+        value: '2×',
+        label: 'Por semana',
+        detail: 'Cada comisión entrena martes y jueves.',
+      },
+    ],
+    ctaLabel: 'Anotarse en una comisión',
+    schedule: { opensAt: 16, closesAt: 22 },
+    theme: {
+      bg: '#2B1406',
+      accent: '#FFB23F',
+      glowA: '#E4572E',
+      glowB: '#FFB23F',
+    },
+    image: {
+      src: voleyLarge,
+      srcSet: `${voleySmall} 400w, ${voleyLarge} 720w`,
+      alt: 'Jugadora de vóley saltando para armar la pelota junto a la red',
+    },
+  },
+];
