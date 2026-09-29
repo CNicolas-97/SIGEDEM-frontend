@@ -16,6 +16,7 @@ export function NotFoundPageContainer() {
       <Seo
         title="Página no encontrada"
         description="La página que buscás no existe."
+        noIndex
       />
       <h1>No encontramos esta página</h1>
       {/* <Link> cambia de ruta sin recargar el sitio (a diferencia de <a>). */}

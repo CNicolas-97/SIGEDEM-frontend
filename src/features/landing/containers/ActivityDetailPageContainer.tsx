@@ -34,7 +34,11 @@ export function ActivityDetailPageContainer() {
 
   return (
     <>
-      <Seo title={activity.name} description={activity.description} />
+      <Seo
+        title={activity.name}
+        description={activity.description}
+        path={`/actividades/${activity.slug}`}
+      />
       <main>
         <ActivityDetail activity={activity} now={now} />
       </main>

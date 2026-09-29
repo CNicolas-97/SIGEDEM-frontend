@@ -43,6 +43,7 @@ export function LandingPageContainer() {
     <>
       <Seo
         title="Inicio"
+        path="/"
         description="Complejo Deportivo Municipal Teniente Ledesma: natatorio climatizado, canchas de fútbol y vóley. Sacá el abono y entrá con el QR."
       />
       {/* <main>: contenido principal de la página. Debe haber uno solo. */}
