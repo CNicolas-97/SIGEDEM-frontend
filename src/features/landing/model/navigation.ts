@@ -20,17 +20,18 @@ export type FooterColumn = {
 
 // "SiteLink[]" = un array de SiteLink. Si a un link le falta "label" o se
 // escribe mal una propiedad, TypeScript marca el error.
-// Las actividades tienen su propia página (/actividades/:slug); "Cómo
-// asociarse" es una sección de la home.
+// Las actividades tienen su propia página (/actividades/:slug), los planes
+// también (/planes); "Cómo asociarse" es una sección de la home.
 export const navLinks: SiteLink[] = [
   { to: '/actividades/natacion', label: 'Natatorio' },
   { to: '/actividades/futbol', label: 'Fútbol' },
   { to: '/actividades/voley', label: 'Vóley' },
+  { to: '/planes', label: 'Planes' },
   { to: '/#pasos', label: 'Cómo asociarse' },
 ];
 
 // Botón destacado a la derecha del header.
-export const headerCta: SiteLink = { to: '/#pasos', label: 'Sacar el abono' };
+export const headerCta: SiteLink = { to: '/planes', label: 'Sacar el abono' };
 
 export const footerColumns: FooterColumn[] = [
   {
@@ -44,6 +45,7 @@ export const footerColumns: FooterColumn[] = [
   {
     title: 'Trámites',
     links: [
+      { to: '/planes', label: 'Planes y precios' },
       { to: '/#pasos', label: 'Sacar el abono' },
       { to: '/#pasos', label: 'Renovar' },
       { to: '/#pasos', label: 'Apto médico' },

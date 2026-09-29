@@ -25,6 +25,7 @@ La app queda disponible en http://localhost:5173
 | -------------------- | ----------------------------------------------------------------------------------------------- | ------------- |
 | Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                      | En desarrollo |
 | Detalle de actividad | Página por actividad (natatorio, fútbol, vóley) con horario de hoy y datos destacados           | Hecho         |
+| Planes y precios     | Planes del abono con precio mensual, qué incluye cada uno y filtro por tipo                     | Hecho         |
 | Disciplinas          | Listado de disciplinas con edades, sede y horarios                                              | Previsto      |
 | Inscripciones        | Alta de vecinos en una disciplina                                                               | Previsto      |
 | Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección) | Previsto      |
@@ -71,11 +72,12 @@ SIGEDEM-frontend/
 │   ├── shared/
 │   │   └── ui/                  # Componentes genéricos (Button, Card, Seo)
 │   ├── features/
-│   │   └── landing/             # Sitio público
-│   │       ├── components/      # Presentacionales (SiteHeader, ActivitySection, ...)
-│   │       ├── containers/      # Páginas y layout (PublicLayout, LandingPageContainer, ...)
-│   │       ├── hooks/           # Custom hooks (colores por sección, movimiento al scroll)
-│   │       └── model/           # Datos y tipos de la feature
+│   │   ├── landing/             # Sitio público
+│   │   │   ├── components/      # Presentacionales (SiteHeader, ActivitySection, ...)
+│   │   │   ├── containers/      # Páginas y layout (PublicLayout, LandingPageContainer, ...)
+│   │   │   ├── hooks/           # Custom hooks (colores por sección, movimiento al scroll)
+│   │   │   └── model/           # Datos y tipos de la feature
+│   │   └── plans/               # Planes y precios (PlansPageContainer, PlanCard, model/)
 │   ├── App.tsx                  # Componente raíz y rutas
 │   └── main.tsx                 # Punto de entrada
 ├── index.html                   # HTML base con metadatos SEO
@@ -90,6 +92,7 @@ Definidas en `src/App.tsx`. Todas se dibujan dentro de `PublicLayout`, que pone 
 | -------------------- | ----------------------------- | -------------------------------------------------------- |
 | `/`                  | `LandingPageContainer`        | Home: hero, actividades y cómo asociarse                 |
 | `/actividades/:slug` | `ActivityDetailPageContainer` | Detalle de una actividad (`natacion`, `futbol`, `voley`) |
+| `/planes`            | `PlansPageContainer`          | Planes y precios, con filtro por tipo de plan            |
 | `*`                  | `NotFoundPageContainer`       | Página 404 para cualquier otra dirección                 |
 
 Los links a secciones de la home (por ejemplo `/#pasos`) funcionan desde cualquier página: la home busca el elemento con ese id al cargarse y baja hasta él.
@@ -105,7 +108,7 @@ Los imports usan el alias `@/` en lugar de rutas relativas: `@/shared/ui/Button.
 | Components   | `shared/ui/` y `features/*/components/`                                                                                                                                                                                                                                                                                                                                                                         |
 | Pages        | `features/landing/containers/`: `LandingPageContainer`, `ActivityDetailPageContainer`, `NotFoundPageContainer` (una por ruta)                                                                                                                                                                                                                                                                                   |
 | Props        | Tipadas en cada componente (`type ...Props`). `shared/ui/Button.tsx`: `children` obligatoria, `variant` opcional con valor por defecto (`'primary'`) y `to` que decide si es link o botón. `shared/ui/Card.tsx`: `title` obligatoria y el resto opcional (`description`, `eyebrow`, `children`, `footer`). `ActivitySection.tsx`: el mismo componente muestra las tres actividades cambiando la prop `activity` |
-| `map()`      | Listas renderizadas a partir de datos de `model/` (por ejemplo, la navegación en `SiteHeader`)                                                                                                                                                                                                                                                                                                                  |
+| `map()`      | Listas renderizadas a partir de datos de `model/`: `PlansPageContainer.tsx` (botones del filtro y tarjetas de planes, después de `filter()`), `PlanCard.tsx` (lo que incluye cada plan), `LandingPageContainer.tsx` (una `ActivitySection` por actividad), `StatList.tsx`, `TodayBoard.tsx` y `SiteHeader.tsx`. Cada ítem lleva una `key` única y estable (un id o un texto que no se repite, no el índice)     |
 | React Router | `App.tsx` (rutas anidadas y parámetro `:slug`), `PublicLayout.tsx` (`<Outlet />`), `ActivityDetailPageContainer.tsx` (`useParams`), `SiteHeader.tsx` (`<Link>`)                                                                                                                                                                                                                                                 |
 
 ## Flujo de trabajo
