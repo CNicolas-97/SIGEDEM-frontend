@@ -48,3 +48,10 @@ export const pageSections: ThemedSection[] = [
   })),
   { id: 'pasos', theme: stepsTheme },
 ];
+
+// Páginas simples (404, planes): un solo bloque con id="contenido" que toma
+// los colores oscuros de "pasos". Sin esto, el header quedaría con el texto
+// oscuro pensado para el hero claro de la home.
+export const defaultPageSections: ThemedSection[] = [
+  { id: 'contenido', theme: stepsTheme },
+];

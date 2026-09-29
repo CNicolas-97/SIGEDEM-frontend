@@ -1,9 +1,10 @@
+import { Link } from 'react-router';
 import { BrandMark } from '@/features/landing/components/BrandMark.tsx';
 import type { FooterColumn } from '@/features/landing/model/navigation.ts';
 
 // QUÉ ES: pie de página del sitio público.
 // NIVEL: componente presentacional — recibe las columnas de links por props.
-// DÓNDE SE USA: en LandingPageContainer.
+// DÓNDE SE USA: en PublicLayout, así aparece en todas las páginas públicas.
 
 type SiteFooterProps = {
   columns: FooterColumn[];
@@ -27,10 +28,10 @@ export function SiteFooter({ columns }: SiteFooterProps) {
           <div key={column.title} className="foot-col">
             <h4>{column.title}</h4>
             {column.links.map((link) => (
-              // Hay links que repiten href (#pasos), así que la key es el texto.
-              <a key={link.label} href={link.href}>
+              // Hay links que repiten ruta (/#pasos), así que la key es el texto.
+              <Link key={link.label} to={link.to}>
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         ))}
