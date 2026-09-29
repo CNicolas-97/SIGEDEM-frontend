@@ -33,7 +33,11 @@ export function PublicLayout() {
       <div className="grain" aria-hidden="true" />
 
       <SiteHeader links={navLinks} cta={headerCta} />
-      <Outlet />
+      {/* key={pathname}: si cambia la dirección, React monta la página de
+          cero aunque sea el mismo componente (de /actividades/natacion a
+          /actividades/futbol). Así cada página arranca con sus efectos y su
+          estado limpios, por ejemplo los colores de useSectionTheme. */}
+      <Outlet key={location.pathname} />
       <SiteFooter columns={footerColumns} />
     </>
   );

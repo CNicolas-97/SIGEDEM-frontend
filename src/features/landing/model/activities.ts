@@ -8,8 +8,8 @@ import type { SectionTheme } from '@/features/landing/model/sectionTheme.ts';
 // QUÉ ES: las actividades del complejo (natación, fútbol y vóley).
 // NIVEL: model — datos y tipos, sin JSX.
 // DÓNDE SE USA: la home las recorre con map() para armar una ActivitySection
-// por cada una y la fila de horarios del hero. El "slug" lo va a reutilizar
-// la futura página /actividades/:slug.
+// por cada una y la fila de horarios del hero. La página
+// /actividades/:slug busca acá la actividad cuyo "slug" coincide con la URL.
 
 // Unión de strings: el slug solo puede ser uno de estos tres valores.
 export type ActivitySlug = 'natacion' | 'futbol' | 'voley';
@@ -19,6 +19,12 @@ export type Stat = {
   value: string;
   label: string;
   detail: string;
+};
+
+// Información extra que se muestra en la página de detalle.
+export type Highlight = {
+  title: string;
+  description: string;
 };
 
 // Horario del día, en horas enteras (7 = 7:00, 21 = 21:00).
@@ -34,6 +40,8 @@ export type Activity = {
   title: string;
   description: string;
   stats: Stat[];
+  // Lista de información extra (solo en la página de detalle).
+  highlights: Highlight[];
   ctaLabel: string;
   schedule: Schedule;
   // Colores de la sección (ver sectionTheme.ts).
@@ -78,7 +86,29 @@ export const activities: Activity[] = [
         detail: 'Reservás desde la app y el molinete te deja pasar con el QR.',
       },
     ],
-    ctaLabel: 'Ver horarios del natatorio',
+    highlights: [
+      {
+        title: 'Escuela por nivel',
+        description:
+          'Comisiones de iniciación, perfeccionamiento y adultos, de lunes a viernes.',
+      },
+      {
+        title: 'Nado libre',
+        description:
+          'Turnos de 45 minutos que reservás desde la app, con cupo por andarivel.',
+      },
+      {
+        title: 'Apto médico',
+        description:
+          'Se pide para entrar a la pileta. Lo cargás en la ventanilla del complejo.',
+      },
+      {
+        title: 'Qué traer',
+        description:
+          'Gorra, antiparras, ojotas y toallón. Hay vestuarios con duchas.',
+      },
+    ],
+    ctaLabel: 'Ver el natatorio',
     schedule: { opensAt: 7, closesAt: 21 },
     theme: {
       bg: '#06263F',
@@ -116,7 +146,23 @@ export const activities: Activity[] = [
           'Las canchas iluminadas se reservan hasta las once de la noche.',
       },
     ],
-    ctaLabel: 'Reservar una cancha',
+    highlights: [
+      {
+        title: 'Reserva por hora',
+        description:
+          'Elegís cancha y horario desde la app; el turno queda a tu nombre.',
+      },
+      {
+        title: 'Liga interna',
+        description:
+          'Torneo anual con fecha los fines de semana. Se anotan equipos completos.',
+      },
+      {
+        title: 'Escuelita infantil',
+        description: 'Para chicos de 6 a 12 años, sábados a la mañana.',
+      },
+    ],
+    ctaLabel: 'Ver las canchas',
     schedule: { opensAt: 9, closesAt: 23 },
     theme: {
       bg: '#08281A',
@@ -154,7 +200,24 @@ export const activities: Activity[] = [
         detail: 'Cada comisión entrena martes y jueves.',
       },
     ],
-    ctaLabel: 'Anotarse en una comisión',
+    highlights: [
+      {
+        title: 'Comisiones formativas',
+        description:
+          'Martes y jueves, separadas por categoría y con entrenadores del complejo.',
+      },
+      {
+        title: 'Vóley playa',
+        description:
+          'Tres canchas de arena que abren de octubre a marzo, con turnos libres.',
+      },
+      {
+        title: 'Torneos',
+        description:
+          'Encuentros con otros clubes de la provincia durante la temporada.',
+      },
+    ],
+    ctaLabel: 'Ver las comisiones',
     schedule: { opensAt: 16, closesAt: 22 },
     theme: {
       bg: '#2B1406',

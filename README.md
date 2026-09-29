@@ -21,13 +21,14 @@ La app queda disponible en http://localhost:5173
 
 ## Funcionalidades
 
-| Módulo              | Descripción                                                                                     | Estado        |
-| ------------------- | ----------------------------------------------------------------------------------------------- | ------------- |
-| Landing pública     | Presentación de la Dirección de Deportes y sus disciplinas                                      | En desarrollo |
-| Disciplinas         | Listado de disciplinas con edades, sede y horarios                                              | Previsto      |
-| Inscripciones       | Alta de vecinos en una disciplina                                                               | Previsto      |
-| Acceso del personal | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección) | Previsto      |
-| Navegación          | Rutas entre páginas con React Router                                                            | Previsto      |
+| Módulo               | Descripción                                                                                     | Estado        |
+| -------------------- | ----------------------------------------------------------------------------------------------- | ------------- |
+| Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                      | En desarrollo |
+| Detalle de actividad | Página por actividad (natatorio, fútbol, vóley) con horario de hoy y datos destacados           | Hecho         |
+| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                              | Previsto      |
+| Inscripciones        | Alta de vecinos en una disciplina                                                               | Previsto      |
+| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección) | Previsto      |
+| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404          | Hecho         |
 
 ## Tecnologías
 
@@ -36,7 +37,7 @@ La app queda disponible en http://localhost:5173
 | [React 19](https://react.dev/)                | Librería de interfaz basada en componentes              |
 | [TypeScript](https://www.typescriptlang.org/) | JavaScript con tipos: detecta errores antes de ejecutar |
 | [Vite](https://vite.dev/)                     | Servidor de desarrollo y build                          |
-| [React Router](https://reactrouter.com/)      | Navegación entre páginas (a incorporar)                 |
+| [React Router](https://reactrouter.com/)      | Navegación entre páginas (modo declarativo)             |
 | ESLint + typescript-eslint                    | Análisis estático del código                            |
 | Prettier                                      | Formato de código consistente                           |
 
@@ -67,31 +68,45 @@ Dentro de cada feature se aplica el patrón **container/presentational**:
 SIGEDEM-frontend/
 ├── public/                      # Archivos estáticos (favicon, robots.txt, sitemap.xml)
 ├── src/
-│   ├── app/                     # Infraestructura: router y providers (a incorporar)
 │   ├── shared/
 │   │   └── ui/                  # Componentes genéricos (Button, Card, Seo)
 │   ├── features/
 │   │   └── landing/             # Sitio público
-│   │       ├── components/      # Presentacionales (SiteHeader, SiteFooter)
-│   │       ├── containers/      # Páginas (LandingPageContainer)
+│   │       ├── components/      # Presentacionales (SiteHeader, ActivitySection, ...)
+│   │       ├── containers/      # Páginas y layout (PublicLayout, LandingPageContainer, ...)
+│   │       ├── hooks/           # Custom hooks (colores por sección, movimiento al scroll)
 │   │       └── model/           # Datos y tipos de la feature
-│   ├── App.tsx                  # Componente raíz
+│   ├── App.tsx                  # Componente raíz y rutas
 │   └── main.tsx                 # Punto de entrada
 ├── index.html                   # HTML base con metadatos SEO
 └── tsconfig*.json               # Configuración de TypeScript
 ```
 
+### Rutas
+
+Definidas en `src/App.tsx`. Todas se dibujan dentro de `PublicLayout`, que pone el header y el footer una sola vez.
+
+| Ruta                 | Página                        | Qué muestra                                              |
+| -------------------- | ----------------------------- | -------------------------------------------------------- |
+| `/`                  | `LandingPageContainer`        | Home: hero, actividades y cómo asociarse                 |
+| `/actividades/:slug` | `ActivityDetailPageContainer` | Detalle de una actividad (`natacion`, `futbol`, `voley`) |
+| `*`                  | `NotFoundPageContainer`       | Página 404 para cualquier otra dirección                 |
+
+Los links a secciones de la home (por ejemplo `/#pasos`) funcionan desde cualquier página: la home busca el elemento con ese id al cargarse y baja hasta él.
+
 Los imports usan el alias `@/` en lugar de rutas relativas: `@/shared/ui/Button.tsx` apunta a `src/shared/ui/Button.tsx`.
 
 ### Correspondencia con los conceptos de React
 
-| Concepto     | Dónde se aplica                                                                                |
-| ------------ | ---------------------------------------------------------------------------------------------- |
-| Components   | `shared/ui/` y `features/*/components/`                                                        |
-| Pages        | `features/*/containers/` (una por ruta)                                                        |
-| Props        | Tipadas en cada componente (`type ...Props`)                                                   |
-| `map()`      | Listas renderizadas a partir de datos de `model/` (por ejemplo, la navegación en `SiteHeader`) |
-| React Router | `app/` (a incorporar)                                                                          |
+> La escena animada del hero (`HeroScene`, con WebGL) es un extra visual: queda fuera de los temas del trabajo práctico.
+
+| Concepto     | Dónde se aplica                                                                                                                                                 |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Components   | `shared/ui/` y `features/*/components/`                                                                                                                         |
+| Pages        | `features/landing/containers/`: `LandingPageContainer`, `ActivityDetailPageContainer`, `NotFoundPageContainer` (una por ruta)                                   |
+| Props        | Tipadas en cada componente (`type ...Props`)                                                                                                                    |
+| `map()`      | Listas renderizadas a partir de datos de `model/` (por ejemplo, la navegación en `SiteHeader`)                                                                  |
+| React Router | `App.tsx` (rutas anidadas y parámetro `:slug`), `PublicLayout.tsx` (`<Outlet />`), `ActivityDetailPageContainer.tsx` (`useParams`), `SiteHeader.tsx` (`<Link>`) |
 
 ## Flujo de trabajo
 

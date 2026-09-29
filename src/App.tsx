@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
+import { ActivityDetailPageContainer } from '@/features/landing/containers/ActivityDetailPageContainer.tsx';
 import { LandingPageContainer } from '@/features/landing/containers/LandingPageContainer.tsx';
 import { NotFoundPageContainer } from '@/features/landing/containers/NotFoundPageContainer.tsx';
 import { PublicLayout } from '@/features/landing/containers/PublicLayout.tsx';
@@ -16,6 +17,11 @@ export function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<LandingPageContainer />} />
+          {/* ":slug" es un parámetro: la parte variable de la dirección. */}
+          <Route
+            path="/actividades/:slug"
+            element={<ActivityDetailPageContainer />}
+          />
           {/* "*" atrapa cualquier otra dirección: página 404. */}
           <Route path="*" element={<NotFoundPageContainer />} />
         </Route>

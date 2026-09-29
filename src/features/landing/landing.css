@@ -642,6 +642,81 @@
   opacity: 0.5;
 }
 
+/* ---------- detalle de actividad (/actividades/:slug) ----------
+   Reutiliza .sport, .shot, .copy y .facts de la home; acá solo lo nuevo. */
+.detail {
+  /* Espacio para el header fijo. */
+  padding-top: calc(120px + env(safe-area-inset-top, 0px));
+}
+.copy h1 {
+  font-size: clamp(38px, 5.6vw, 66px);
+  margin: 0 0 20px;
+}
+.back {
+  display: inline-block;
+  margin-bottom: 22px;
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0.8;
+  border-bottom: 1.5px solid transparent;
+}
+.back:hover,
+.back:focus-visible {
+  opacity: 1;
+  border-color: var(--accent);
+}
+.copy > .today {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+.today i {
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+.today i.on {
+  color: var(--accent);
+}
+.detail-more {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: clamp(56px, 9vh, 96px) auto 0;
+}
+.detail-more h2 {
+  font-size: clamp(30px, 4vw, 46px);
+  margin: 0 0 28px;
+}
+.highlights {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+.highlights h3 {
+  font-size: 21px;
+  margin: 0 0 10px;
+}
+.highlights p {
+  margin: 0;
+  font-size: 15.5px;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+.highlights li {
+  border-top: 3px solid var(--accent);
+  padding-top: 18px;
+}
+
 /* ---------- página 404 ---------- */
 .not-found {
   min-height: 100svh;
