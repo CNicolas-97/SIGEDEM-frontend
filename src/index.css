@@ -70,10 +70,6 @@
     --accent: #2bd4d9;
     --glow-a: #1c7fd6;
     --glow-b: #2bd4d9;
-    /* TEMPORAL: alias para el CSS viejo mientras se migra a utilidades. */
-    --ink: #071a26;
-    --paper: #edf2f4;
-    --maxw: 1180px;
 
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
