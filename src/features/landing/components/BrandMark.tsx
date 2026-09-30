@@ -41,8 +41,11 @@ export function BrandMark({ spinning = true, size = 'md' }: BrandMarkProps) {
       </svg>
       <span
         className={cn(
-          'font-display leading-[0.94] tracking-[0.01em]',
-          size === 'lg' ? 'text-[27px]' : 'text-[19px]'
+          'font-display tracking-[0.01em]',
+          size === 'lg' ? 'text-[27px]' : 'text-[19px]',
+          // Va después del tamaño: twMerge descarta un leading-* que esté
+          // antes de una clase text-*.
+          'leading-[0.94]'
         )}
       >
         SIGEDEM
