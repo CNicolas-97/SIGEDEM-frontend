@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Button } from '@/shared/ui/Button.tsx';
 import { Seo } from '@/shared/ui/Seo.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { defaultPageSections } from '@/features/landing/model/sectionTheme.ts';
@@ -19,10 +19,8 @@ export function NotFoundPageContainer() {
         noIndex
       />
       <h1>No encontramos esta página</h1>
-      {/* <Link> cambia de ruta sin recargar el sitio (a diferencia de <a>). */}
-      <Link className="btn" to="/">
-        Volver al inicio
-      </Link>
+      {/* Button con "to" dibuja un <Link>: cambia de ruta sin recargar. */}
+      <Button to="/">Volver al inicio</Button>
     </main>
   );
 }
