@@ -45,7 +45,7 @@ const courtLines: Record<ActivitySlug, ReactNode> = {
 export function CourtLines({ slug }: ActivityArtProps) {
   return (
     <svg
-      className="court"
+      className="pointer-events-none absolute inset-0 z-0 opacity-20"
       viewBox="0 0 1200 800"
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"

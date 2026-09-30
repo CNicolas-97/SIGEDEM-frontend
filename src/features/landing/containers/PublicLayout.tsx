@@ -28,9 +28,16 @@ export function PublicLayout() {
 
   return (
     <>
-      {/* Fondo fijo que cambia de color según la sección (useSectionTheme). */}
-      <div className="backdrop" aria-hidden="true" />
-      <div className="grain" aria-hidden="true" />
+      {/* Fondo fijo que cambia de color según la sección (useSectionTheme).
+          Los brillos y el grano son degradados: viven en landing.css. */}
+      <div
+        className="page-glow fixed inset-0 -z-2 bg-page transition-[background-color] duration-900 ease-in-out"
+        aria-hidden="true"
+      />
+      <div
+        className="grain pointer-events-none fixed inset-0 -z-1 opacity-28 mix-blend-overlay"
+        aria-hidden="true"
+      />
 
       <SiteHeader links={navLinks} cta={headerCta} />
       {/* key={pathname}: si cambia la dirección, React monta la página de
