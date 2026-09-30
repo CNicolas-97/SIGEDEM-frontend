@@ -1,79 +1,123 @@
-/* Estilos GLOBALES: variables de color (tokens), reset y tipografías.
-   Lo específico de cada página vive en su feature (ej.: landing/landing.css).
+/* Estilos GLOBALES: Tailwind, tokens de diseño (@theme) y reset mínimo.
+   Los componentes se estilan con clases utilitarias en su propio JSX; lo que
+   no entra en utilidades vive en su feature (ej.: landing/landing.css).
    Las fuentes (Archivo Black y Public Sans) se cargan en index.html. */
 
-:root {
-  --ink: #071a26;
-  --paper: #edf2f4;
-  /* Estas cambian según la sección visible (ver useSectionTheme). */
-  --ui-fg: #08313d;
-  --btn-fg: #08313d;
-  --bg: #071a26;
-  --accent: #2bd4d9;
-  --glow-a: #1c7fd6;
-  --glow-b: #2bd4d9;
-  --maxw: 1180px;
+@import 'tailwindcss';
+
+/* Tokens: cada variable genera utilidades. --color-ink -> bg-ink, text-ink;
+   --font-display -> font-display; --container-page -> max-w-page. */
+@theme {
+  --color-ink: #071a26;
+  --color-paper: #edf2f4;
+  --color-abyss: #04121b;
+  /* Paleta clara del hero de la home ("papel y bosque"). */
+  --color-forest: #23392f;
+  --color-forest-hover: #2f4a3f;
+  --color-moss: #42584c;
+  --color-sage: #4d6558;
+  --color-sand: #efeadc;
+  --color-cream: #f3efe4;
+  --color-pass-light: #f7f4ea;
+  --color-pass-dark: #e6e0ce;
+  --color-open: #1e7a52;
+  --color-closed: #9c5a1c;
 
   --font-display: 'Archivo Black', 'Arial Black', Impact, sans-serif;
   --font-body: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
 
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  color-scheme: dark;
+  --container-page: 1180px;
+
+  /* Cortes del diseño (reemplazan a los de Tailwind).
+     tablet: = desde 861px; max-tablet: = hasta 860px. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 861px;
+  --breakpoint-laptop: 941px;
+  --breakpoint-desktop: 1081px;
+
+  /* animate-spin-slow reutiliza el @keyframes spin que trae Tailwind. */
+  --animate-spin-slow: spin 26s linear infinite;
+  --animate-pull: pull 2.4s ease-in-out infinite;
+
+  @keyframes pull {
+    0%,
+    100% {
+      transform: scaleX(0.3);
+    }
+    50% {
+      transform: scaleX(1);
+    }
+  }
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
+/* Colores que cambian en tiempo de ejecución. Con "inline" la utilidad usa
+   la variable directo (text-ui-fg -> color: var(--ui-fg)), así reacciona a
+   useSectionTheme. --sec la define cada sección de actividad en su style. */
+@theme inline {
+  --color-accent: var(--accent);
+  --color-ui-fg: var(--ui-fg);
+  --color-btn-fg: var(--btn-fg);
+  --color-page: var(--bg);
+  --color-section: var(--sec);
 }
 
-html {
-  scroll-padding-top: env(safe-area-inset-top, 0px);
-  -webkit-text-size-adjust: 100%;
-}
+@layer base {
+  :root {
+    /* Valores iniciales; useSectionTheme los cambia según la sección visible. */
+    --ui-fg: #08313d;
+    --btn-fg: #08313d;
+    --bg: #071a26;
+    --accent: #2bd4d9;
+    --glow-a: #1c7fd6;
+    --glow-b: #2bd4d9;
+    /* TEMPORAL: alias para el CSS viejo mientras se migra a utilidades. */
+    --ink: #071a26;
+    --paper: #edf2f4;
+    --maxw: 1180px;
 
-body {
-  margin: 0;
-  background: var(--ink);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    color-scheme: dark;
+  }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 0.94;
-}
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  body {
+    background: var(--color-ink);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-img,
-svg {
-  max-width: 100%;
-}
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.94;
+  }
 
-:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+  svg {
+    max-width: 100%;
+  }
 
-/* Si la persona pidió menos movimiento en su sistema, cortamos animaciones. */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Si la persona pidió menos movimiento en su sistema, cortamos animaciones. */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
