@@ -28,7 +28,10 @@ export function StepsSection({ steps }: StepsSectionProps) {
             </div>
           ))}
         </div>
-        <Button to="/planes">Ver planes y precios</Button>
+        {/* Sobre el fondo claro de esta sección el botón va oscuro. */}
+        <Button to="/planes" className="mt-[52px] bg-ink text-white">
+          Ver planes y precios
+        </Button>
       </div>
     </section>
   );

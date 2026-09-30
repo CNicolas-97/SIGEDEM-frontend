@@ -33,7 +33,10 @@ export function SiteHeader({ links, cta }: SiteHeaderProps) {
           </Link>
         ))}
       </nav>
-      <Button to={cta.to}>{cta.label}</Button>
+      {/* En el header el botón va un poco más chico. */}
+      <Button to={cta.to} className="px-[18px] py-2.5">
+        {cta.label}
+      </Button>
     </header>
   );
 }

@@ -116,11 +116,6 @@
   opacity: 1;
   border-color: var(--accent);
 }
-/* .btn (el componente Button) vive en shared/ui/ui.css; acá solo el ajuste
-   de tamaño para el header. */
-.topbar .btn {
-  padding: 10px 18px;
-}
 @media (max-width: 860px) {
   .topnav {
     display: none;
@@ -574,11 +569,6 @@
   font-size: 16px;
   opacity: 0.78;
   line-height: 1.55;
-}
-.steps .btn {
-  margin-top: 52px;
-  background: var(--ink);
-  color: #fff;
 }
 
 /* ---------- pie ---------- */
