@@ -17,18 +17,32 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ links, cta }: SiteHeaderProps) {
   return (
-    <header className="topbar">
+    // topbar-veil (landing.css): el degradado de fondo, que cambia con la
+    // sección visible (--ui-veil de useSectionTheme).
+    <header className="topbar-veil fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-5 px-6.5 pt-[calc(18px+env(safe-area-inset-top,0px))] pb-[18px] text-ui-fg backdrop-blur-[6px] transition-[color] duration-600 ease-[ease]">
       {/* La marca lleva al inicio desde cualquier página. */}
-      <Link className="brand-link" to="/" aria-label="SIGEDEM, ir al inicio">
+      <Link
+        className="flex items-center"
+        to="/"
+        aria-label="SIGEDEM, ir al inicio"
+      >
         <BrandMark />
       </Link>
       {/* aria-label: le dice a los lectores de pantalla qué navegación es. */}
-      <nav className="topnav" aria-label="Principal">
+      {/* Hasta 860px de ancho la navegación se oculta (queda el botón). */}
+      <nav
+        className="hidden gap-6.5 text-[14.5px] font-medium tablet:flex"
+        aria-label="Principal"
+      >
         {/* map() recorre el array y devuelve un <Link> por cada link.
             "key" debe ser único: React lo usa para saber qué elemento cambió.
             <Link> cambia de ruta sin recargar la página (un <a> la recargaría). */}
         {links.map((link) => (
-          <Link key={link.to} to={link.to}>
+          <Link
+            key={link.to}
+            to={link.to}
+            className="border-b-[1.5px] border-transparent py-1 opacity-82 transition-[opacity,border-color] duration-200 hover:border-accent hover:opacity-100 focus-visible:border-accent focus-visible:opacity-100"
+          >
             {link.label}
           </Link>
         ))}

@@ -12,13 +12,18 @@ export function NotFoundPageContainer() {
 
   return (
     // id="contenido": el bloque que toma los colores (ver defaultPageSections).
-    <main className="not-found" id="contenido">
+    <main
+      className="flex min-h-svh flex-col items-center justify-center gap-7 p-6.5 text-center"
+      id="contenido"
+    >
       <Seo
         title="Página no encontrada"
         description="La página que buscás no existe."
         noIndex
       />
-      <h1>No encontramos esta página</h1>
+      <h1 className="text-[length:clamp(34px,6vw,64px)]">
+        No encontramos esta página
+      </h1>
       {/* Button con "to" dibuja un <Link>: cambia de ruta sin recargar. */}
       <Button to="/">Volver al inicio</Button>
     </main>
