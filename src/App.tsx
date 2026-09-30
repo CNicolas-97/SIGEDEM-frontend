@@ -3,6 +3,7 @@ import { ActivityDetailPageContainer } from '@/features/landing/containers/Activ
 import { LandingPageContainer } from '@/features/landing/containers/LandingPageContainer.tsx';
 import { NotFoundPageContainer } from '@/features/landing/containers/NotFoundPageContainer.tsx';
 import { PublicLayout } from '@/features/landing/containers/PublicLayout.tsx';
+import { PlansPageContainer } from '@/features/plans/containers/PlansPageContainer.tsx';
 
 // QUÉ ES: el componente raíz de la app. Define qué página se ve en cada ruta.
 // CÓMO FUNCIONA (React Router, modo declarativo):
@@ -22,6 +23,7 @@ export function App() {
             path="/actividades/:slug"
             element={<ActivityDetailPageContainer />}
           />
+          <Route path="/planes" element={<PlansPageContainer />} />
           {/* "*" atrapa cualquier otra dirección: página 404. */}
           <Route path="*" element={<NotFoundPageContainer />} />
         </Route>

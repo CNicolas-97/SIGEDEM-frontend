@@ -28,7 +28,7 @@ export function StepsSection({ steps }: StepsSectionProps) {
             </div>
           ))}
         </div>
-        <Button to="/#hero">Ver planes y precios</Button>
+        <Button to="/planes">Ver planes y precios</Button>
       </div>
     </section>
   );
