@@ -23,7 +23,9 @@ export function StepsSection({ steps }: StepsSectionProps) {
           Se hace en la ventanilla del complejo, de lunes a sábado de 8 a 20. Si
           ya sos socio, renovás desde la app sin venir.
         </p>
-        <div className="grid grid-cols-[1fr] gap-6.5 tablet:grid-cols-[repeat(3,1fr)]">
+        {/* 3 columnas desde 768px (tablet vertical): con menos ancho los
+            títulos de los pasos se cortan en dos renglones. */}
+        <div className="grid grid-cols-[1fr] gap-6.5 min-[768px]:grid-cols-[repeat(3,1fr)]">
           {/* map() también da el índice (0, 1, 2): lo usamos para numerar. */}
           {steps.map((step, index) => (
             <div key={step.title} className="border-t-[3px] border-ink pt-5">
