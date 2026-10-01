@@ -54,8 +54,11 @@ export function Hero({ card, activities, now }: HeroProps) {
 
       <MembershipCard card={card} />
 
-      {/* hero-scrollcue (landing.css): se desvanece al bajar. */}
-      <div className="hero-scrollcue absolute bottom-[calc(9vh+74px)] left-1/2 z-3 flex -translate-x-1/2 items-center gap-2.5 text-[12.5px] tracking-[0.03em] text-sage max-tablet:hidden">
+      {/* hero-scrollcue (landing.css): se desvanece al bajar.
+          Va a una distancia fija del borde de abajo y los botones van
+          centrados: con menos de 860px de alto se encima a los botones, así
+          que en esas pantallas se oculta. */}
+      <div className="hero-scrollcue absolute bottom-[calc(9vh+74px)] left-1/2 z-3 flex -translate-x-1/2 items-center gap-2.5 text-[12.5px] tracking-[0.03em] text-sage max-tablet:hidden [@media(max-height:859px)]:hidden">
         <span className="block h-0.5 w-[34px] origin-left animate-pull bg-current" />{' '}
         Entrá al complejo
       </div>
