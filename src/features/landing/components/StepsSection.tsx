@@ -1,5 +1,8 @@
 import { Button } from '@/shared/ui/Button.tsx';
 import type { MembershipStep } from '@/features/landing/model/membership.ts';
+// Ícono gratuito de Magnific (Flaticon): la licencia pide citar al autor,
+// el crédito está en SiteFooter.
+import credentialImage from '@/assets/landing/credencial-socio.webp';
 
 // QUÉ ES: la sección "Cómo asociarse", con los pasos del trámite.
 // NIVEL: componente presentacional.
@@ -16,13 +19,28 @@ export function StepsSection({ steps }: StepsSectionProps) {
       id="pasos"
     >
       <div className="mx-auto max-w-page">
-        <h2 className="mb-3.5 max-w-[18ch] text-[length:clamp(34px,5vw,58px)]">
-          Asociarse lleva cinco minutos
-        </h2>
-        <p className="mb-14 max-w-[52ch] text-[18px] opacity-75">
-          Se hace en la ventanilla del complejo, de lunes a sábado de 8 a 20. Si
-          ya sos socio, renovás desde la app sin venir.
-        </p>
+        {/* Texto a la izquierda y la credencial a la derecha. En celular
+            la credencial se oculta para no empujar los pasos hacia abajo. */}
+        <div className="mb-14 flex items-center justify-between gap-8">
+          <div>
+            <h2 className="mb-3.5 max-w-[18ch] text-[length:clamp(34px,5vw,58px)]">
+              Asociarse lleva cinco minutos
+            </h2>
+            <p className="max-w-[52ch] text-[18px] opacity-75">
+              Se hace en la ventanilla del complejo, de lunes a sábado de 8 a
+              20. Si ya sos socio, renovás desde la app sin venir.
+            </p>
+          </div>
+          {/* alt vacío: es decorativa, el texto ya dice todo. */}
+          <img
+            src={credentialImage}
+            alt=""
+            width={256}
+            height={180}
+            loading="lazy"
+            className="hidden w-[clamp(150px,18vw,230px)] shrink-0 -rotate-6 min-[768px]:block"
+          />
+        </div>
         {/* 3 columnas desde 768px (tablet vertical): con menos ancho los
             títulos de los pasos se cortan en dos renglones. */}
         <div className="grid grid-cols-[1fr] gap-6.5 min-[768px]:grid-cols-[repeat(3,1fr)]">
