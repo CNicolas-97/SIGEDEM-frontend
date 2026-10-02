@@ -4,7 +4,8 @@ import type { MembershipStep } from '@/features/landing/model/membership.ts';
 // el crédito está en SiteFooter.
 import credentialImage from '@/assets/landing/credencial-socio.webp';
 
-// QUÉ ES: la sección "Cómo asociarse", con los pasos del trámite.
+// QUÉ ES: la sección "Cómo asociarse", con los pasos del trámite. Usa el
+// mismo azul que la sección de natación (bg-pool).
 // NIVEL: componente presentacional.
 // DÓNDE SE USA: en LandingPageContainer.
 
@@ -15,7 +16,7 @@ type StepsSectionProps = {
 export function StepsSection({ steps }: StepsSectionProps) {
   return (
     <section
-      className="relative z-1 mt-10 rounded-t-[44px] bg-paper px-6.5 py-[min(13vh,110px)] text-ink"
+      className="relative z-1 bg-pool px-6.5 py-[min(13vh,110px)] text-white"
       id="pasos"
     >
       <div className="mx-auto max-w-page">
@@ -46,8 +47,8 @@ export function StepsSection({ steps }: StepsSectionProps) {
         <div className="grid grid-cols-[1fr] gap-6.5 min-[768px]:grid-cols-[repeat(3,1fr)]">
           {/* map() también da el índice (0, 1, 2): lo usamos para numerar. */}
           {steps.map((step, index) => (
-            <div key={step.title} className="border-t-[3px] border-ink pt-5">
-              <span className="font-display text-[15px] opacity-45">
+            <div key={step.title} className="border-t-[3px] border-white pt-5">
+              <span className="font-display text-[15px] opacity-60">
                 Paso {index + 1}
               </span>
               <h3 className="my-2.5 text-[23px]">{step.title}</h3>
@@ -57,8 +58,8 @@ export function StepsSection({ steps }: StepsSectionProps) {
             </div>
           ))}
         </div>
-        {/* Sobre el fondo claro de esta sección el botón va oscuro. */}
-        <Button to="/planes" className="mt-[52px] bg-ink text-white">
+        {/* Sin colores propios: usa el acento cian, igual que el botón del header. */}
+        <Button to="/planes" className="mt-[52px]">
           Ver planes y precios
         </Button>
       </div>

@@ -9,8 +9,9 @@
    --font-display -> font-display; --container-page -> max-w-page. */
 @theme {
   --color-ink: #071a26;
-  --color-paper: #edf2f4;
   --color-abyss: #04121b;
+  /* Azul de la sección de natación; también lo usa "Cómo asociarse". */
+  --color-pool: #06263f;
   /* Paleta clara del hero de la home ("papel y bosque"). */
   --color-forest: #23392f;
   --color-forest-hover: #2f4a3f;
