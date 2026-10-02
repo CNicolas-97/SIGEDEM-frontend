@@ -1,4 +1,7 @@
-// QUÉ ES: los links de navegación del sitio público (header y footer).
+import type { Schedule } from '@/features/landing/model/activities.ts';
+
+// QUÉ ES: los links de navegación del sitio público y los datos de contacto
+// del footer.
 // NIVEL: model — datos y tipos; acá no hay componentes ni JSX.
 // POR QUÉ SEPARADO: si mañana los links vienen de la API, solo cambia este
 // archivo; los componentes que los muestran quedan iguales.
@@ -10,12 +13,6 @@
 export type SiteLink = {
   to: string;
   label: string;
-};
-
-// Un grupo de links del pie de página, con su título.
-export type FooterColumn = {
-  title: string;
-  links: SiteLink[];
 };
 
 // "SiteLink[]" = un array de SiteLink. Si a un link le falta "label" o se
@@ -33,29 +30,22 @@ export const navLinks: SiteLink[] = [
 // Botón destacado a la derecha del header.
 export const headerCta: SiteLink = { to: '/planes', label: 'Sacar el abono' };
 
-export const footerColumns: FooterColumn[] = [
-  {
-    title: 'Actividades',
-    links: [
-      { to: '/actividades/natacion', label: 'Natatorio' },
-      { to: '/actividades/futbol', label: 'Fútbol' },
-      { to: '/actividades/voley', label: 'Vóley' },
-    ],
-  },
-  {
-    title: 'Trámites',
-    links: [
-      { to: '/planes', label: 'Planes y precios' },
-      { to: '/#pasos', label: 'Sacar el abono' },
-      { to: '/#pasos', label: 'Renovar' },
-      { to: '/#pasos', label: 'Apto médico' },
-    ],
-  },
-  {
-    title: 'Contacto',
-    links: [
-      { to: '/#hero', label: 'Ventanilla: 8 a 20 h' },
-      { to: '/#hero', label: '(0381) 000-0000' },
-    ],
-  },
-];
+// Datos de contacto del footer. La ventanilla atiende de lunes a sábado; el
+// horario usa el mismo tipo Schedule que las actividades, así el footer
+// calcula si está abierta con la misma función (getOpeningStatus).
+export type ContactInfo = {
+  windowSchedule: Schedule;
+  windowDays: string;
+  phone: string;
+  address: string;
+  mapsUrl: string;
+};
+
+export const footerContact: ContactInfo = {
+  windowSchedule: { opensAt: 8, closesAt: 20 },
+  windowDays: 'Lunes a sábado',
+  phone: '(0381) 000-0000',
+  address: '25 de Mayo 971, T4000 San Miguel de Tucumán, Tucumán',
+  mapsUrl:
+    'https://www.google.com/maps/search/?api=1&query=25+de+Mayo+971%2C+T4000+San+Miguel+de+Tucum%C3%A1n%2C+Tucum%C3%A1n',
+};
