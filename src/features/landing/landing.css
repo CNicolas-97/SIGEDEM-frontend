@@ -57,12 +57,6 @@
   transform: translateY(calc(var(--hero-progress, 0) * -50px));
   opacity: calc(1 - var(--hero-progress, 0) * 1.15);
 }
-/* Carnet: centrado en vertical, sube y gira un poco. */
-.hero-pass {
-  transform: translateY(calc(-50% + var(--hero-progress, 0) * -30px))
-    rotate(calc(var(--hero-progress, 0) * 4deg));
-  opacity: calc(1 - var(--hero-progress, 0) * 1.4);
-}
 /* Tablero "Hoy": baja. */
 .hero-board {
   transform: translateY(calc(var(--hero-progress, 0) * 60px));
@@ -81,21 +75,16 @@
     scale(calc(1 - var(--tilt-abs, 0) * 0.045));
 }
 
-/* Menos movimiento: sin efectos atados al scroll (el carnet conserva su
-   centrado vertical). */
+/* Menos movimiento: sin efectos atados al scroll. */
 @media (prefers-reduced-motion: reduce) {
   .hero-content,
   .hero-board,
-  .hero-scrollcue,
-  .hero-pass {
+  .hero-scrollcue {
     opacity: 1;
   }
   .hero-content,
   .hero-board,
   .shot-tilt {
     transform: none;
-  }
-  .hero-pass {
-    transform: translateY(-50%);
   }
 }

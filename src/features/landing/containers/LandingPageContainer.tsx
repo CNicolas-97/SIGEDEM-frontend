@@ -7,10 +7,7 @@ import { StepsSection } from '@/features/landing/components/StepsSection.tsx';
 import { useScrollMotion } from '@/features/landing/hooks/useScrollMotion.ts';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { activities } from '@/features/landing/model/activities.ts';
-import {
-  membershipSteps,
-  sampleCard,
-} from '@/features/landing/model/membership.ts';
+import { membershipSteps } from '@/features/landing/model/membership.ts';
 import { pageSections } from '@/features/landing/model/sectionTheme.ts';
 
 // QUÉ ES: la página de inicio del sitio público (Complejo Teniente Ledesma).
@@ -48,7 +45,7 @@ export function LandingPageContainer() {
       />
       {/* <main>: contenido principal de la página. Debe haber uno solo. */}
       <main>
-        <Hero card={sampleCard} activities={activities} now={now} />
+        <Hero activities={activities} now={now} />
         {/* Un mismo componente para las tres actividades: cambian las props. */}
         {activities.map((activity) => (
           <ActivitySection key={activity.slug} activity={activity} />

@@ -1,22 +1,19 @@
 import { HeroScene } from '@/features/landing/components/HeroScene.tsx';
-import { MembershipCard } from '@/features/landing/components/MembershipCard.tsx';
 import { TodayBoard } from '@/features/landing/components/TodayBoard.tsx';
 import type { Activity } from '@/features/landing/model/activities.ts';
-import type { MembershipCardData } from '@/features/landing/model/membership.ts';
 
-// QUÉ ES: la primera pantalla de la home: título, botones, carnet y tablero
+// QUÉ ES: la primera pantalla de la home: título, botones y tablero
 // de horarios, sobre la escena animada de fondo.
 // NIVEL: componente presentacional — arma la sección con otros componentes y
 // les reparte las props que recibe.
 // DÓNDE SE USA: en LandingPageContainer.
 
 type HeroProps = {
-  card: MembershipCardData;
   activities: Activity[];
   now: Date;
 };
 
-export function Hero({ card, activities, now }: HeroProps) {
+export function Hero({ activities, now }: HeroProps) {
   return (
     // hero-veil (landing.css): velo claro detrás del texto, sobre la escena.
     // Hasta 860px el tablero de horarios tiene 3 filas (293px): el padding
@@ -56,8 +53,6 @@ export function Hero({ card, activities, now }: HeroProps) {
           </a>
         </div>
       </div>
-
-      <MembershipCard card={card} />
 
       {/* hero-scrollcue (landing.css): se desvanece al bajar.
           Va a una distancia fija del borde de abajo y los botones van
