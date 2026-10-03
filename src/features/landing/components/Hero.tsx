@@ -41,7 +41,7 @@ export function Hero({ activities, now }: HeroProps) {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-[clamp(18px,3vw,30px)]">
           <a
-            className="rounded-[3px] bg-pool px-[34px] py-[15px] text-[16.5px] font-bold text-cream transition-[translate,background-color] duration-160 ease-[ease] hover:-translate-y-0.5 hover:bg-pool-hover focus-visible:-translate-y-0.5 focus-visible:bg-pool-hover"
+            className="rounded-full bg-pool px-[34px] py-[15px] text-[16.5px] font-bold text-cream transition-[translate,background-color] duration-160 ease-[ease] hover:-translate-y-0.5 hover:bg-pool-hover focus-visible:-translate-y-0.5 focus-visible:bg-pool-hover"
             href="#pasos"
           >
             Sacar el abono
