@@ -9,6 +9,9 @@ import {
   plans,
   type PlanFilter,
 } from '@/features/plans/model/plans.ts';
+// Ilustración gratuita de Storyset: la licencia pide citar la fuente, el
+// crédito está en SiteFooter.
+import poolImage from '@/assets/landing/pileta-planes.webp';
 
 // QUÉ ES: la página de planes y precios (/planes).
 // NIVEL: container (página) — guarda el filtro elegido, filtra los planes de
@@ -39,13 +42,28 @@ export function PlansPageContainer() {
       <main className="mx-auto max-w-page px-6.5 pt-[calc(130px+env(safe-area-inset-top,0px))] pb-[110px]">
         {/* id="contenido": el bloque que toma los colores de la página. */}
         <section id="contenido">
-          <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
-            Planes y precios
-          </h1>
-          <p className="mb-8 max-w-[52ch] text-[18px] opacity-80">
-            Individual, familiar o por actividad. Si te corresponde descuento de
-            jubilado o familia numerosa, se aplica en la ventanilla.
-          </p>
+          {/* Texto a la izquierda y la ilustración a la derecha. En celular
+              la ilustración se oculta para no empujar los planes hacia abajo. */}
+          <div className="mb-8 flex items-center justify-between gap-8">
+            <div>
+              <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
+                Planes y precios
+              </h1>
+              <p className="max-w-[52ch] text-[18px] opacity-80">
+                Individual, familiar o por actividad. Si te corresponde
+                descuento de jubilado o familia numerosa, se aplica en la
+                ventanilla.
+              </p>
+            </div>
+            {/* alt vacío: es decorativa, el texto ya dice todo. */}
+            <img
+              src={poolImage}
+              alt=""
+              width={640}
+              height={640}
+              className="hidden w-[clamp(170px,19vw,250px)] shrink-0 rotate-3 rounded-[28px] shadow-[0_24px_48px_-20px] shadow-black/60 min-[768px]:block"
+            />
+          </div>
 
           <div
             className="mb-10 flex flex-wrap gap-2.5"
