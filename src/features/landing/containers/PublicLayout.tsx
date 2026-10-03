@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { SiteFooter } from '@/features/landing/components/SiteFooter.tsx';
 import { SiteHeader } from '@/features/landing/components/SiteHeader.tsx';
+import { activities } from '@/features/landing/model/activities.ts';
 import {
-  footerColumns,
+  footerContact,
   headerCta,
   navLinks,
 } from '@/features/landing/model/navigation.ts';
@@ -45,7 +46,7 @@ export function PublicLayout() {
           /actividades/futbol). Así cada página arranca con sus efectos y su
           estado limpios, por ejemplo los colores de useSectionTheme. */}
       <Outlet key={location.pathname} />
-      <SiteFooter columns={footerColumns} />
+      <SiteFooter activities={activities} contact={footerContact} />
     </>
   );
 }
