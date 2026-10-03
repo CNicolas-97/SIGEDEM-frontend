@@ -31,7 +31,7 @@ export const heroTheme: SectionTheme = {
 
 export const stepsTheme: SectionTheme = {
   bg: '#0B1C24',
-  accent: '#2BD4D9',
+  accent: '#1EA7EF',
   glowA: '#1C7FD6',
 };
 

@@ -112,7 +112,7 @@ export const activities: Activity[] = [
     schedule: { opensAt: 7, closesAt: 21 },
     theme: {
       bg: '#06263F',
-      accent: '#2BD4D9',
+      accent: '#1EA7EF',
       glowA: '#1C7FD6',
     },
     image: {
