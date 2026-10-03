@@ -12,6 +12,10 @@
   --color-abyss: #04121b;
   /* Azul de la sección de natación; también lo usa "Cómo asociarse". */
   --color-pool: #06263f;
+  /* Colores del logo del complejo (diseño de Figma). */
+  --color-brand-blue: #0a63f4;
+  --color-brand-sky: #1ea7ef;
+  --color-brand-sun: #ffd30b;
   /* Paleta clara del hero de la home ("papel y bosque"). */
   --color-forest: #23392f;
   --color-forest-hover: #2f4a3f;
@@ -36,8 +40,6 @@
   --breakpoint-laptop: 941px;
   --breakpoint-desktop: 1081px;
 
-  /* animate-spin-slow reutiliza el @keyframes spin que trae Tailwind. */
-  --animate-spin-slow: spin 26s linear infinite;
   --animate-pull: pull 2.4s ease-in-out infinite;
 
   @keyframes pull {
