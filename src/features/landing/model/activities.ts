@@ -114,7 +114,6 @@ export const activities: Activity[] = [
       bg: '#06263F',
       accent: '#2BD4D9',
       glowA: '#1C7FD6',
-      glowB: '#2BD4D9',
     },
     image: {
       src: natacionLarge,
@@ -168,7 +167,6 @@ export const activities: Activity[] = [
       bg: '#08281A',
       accent: '#8CE05B',
       glowA: '#189B4A',
-      glowB: '#8CE05B',
     },
     image: {
       src: futbolLarge,
@@ -223,7 +221,6 @@ export const activities: Activity[] = [
       bg: '#2B1406',
       accent: '#FFB23F',
       glowA: '#E4572E',
-      glowB: '#FFB23F',
     },
     image: {
       src: voleyLarge,

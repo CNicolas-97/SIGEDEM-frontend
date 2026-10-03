@@ -18,7 +18,6 @@ const THEME_VARIABLES = [
   '--bg',
   '--accent',
   '--glow-a',
-  '--glow-b',
   '--ui-fg',
   '--btn-fg',
   '--ui-veil',
@@ -29,7 +28,6 @@ function applyTheme(theme: SectionTheme) {
   root.setProperty('--bg', theme.bg);
   root.setProperty('--accent', theme.accent);
   root.setProperty('--glow-a', theme.glowA);
-  root.setProperty('--glow-b', theme.glowB);
   root.setProperty('--ui-fg', theme.isLight ? '#08313D' : '#ffffff');
   root.setProperty(
     '--btn-fg',
