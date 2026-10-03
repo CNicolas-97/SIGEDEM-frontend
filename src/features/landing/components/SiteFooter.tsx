@@ -44,7 +44,7 @@ export function SiteFooter({ columns }: SiteFooterProps) {
       </div>
       <p className="mx-auto mt-[52px] max-w-page border-t border-white/14 pt-5.5 text-[13px] opacity-50">
         Maqueta de diseño — contenido y datos de ejemplo. Calderón · Núñez ·
-        Rodríguez.
+        Rodríguez. Ícono de credencial diseñado por Magnific (Flaticon).
       </p>
     </footer>
   );
