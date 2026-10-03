@@ -34,12 +34,12 @@ export function TodayBoard({ activities, now }: TodayBoardProps) {
   return (
     // hero-board (landing.css): baja y se desvanece con el scroll.
     // gap-px + fondo: las líneas finas entre celdas.
-    <div className="hero-board absolute inset-x-0 bottom-0 z-3 grid grid-cols-[1.1fr_1fr_1fr_1fr] gap-px bg-forest/20 max-tablet:grid-cols-[1fr_1fr]">
+    <div className="hero-board absolute inset-x-0 bottom-0 z-3 grid grid-cols-[1.1fr_1fr_1fr_1fr] gap-px bg-pool/20 max-tablet:grid-cols-[1fr_1fr]">
       {/* La celda "Hoy" va oscura; hasta 860px ocupa toda la fila. */}
       <div
         className={cn(
           CELL_CLASSES,
-          'bg-forest text-cream max-tablet:col-span-full'
+          'bg-pool text-cream max-tablet:col-span-full'
         )}
       >
         <b className="text-[14.5px] font-bold">Hoy</b>
@@ -55,7 +55,7 @@ export function TodayBoard({ activities, now }: TodayBoardProps) {
         return (
           <div
             key={activity.slug}
-            className={cn(CELL_CLASSES, 'bg-cream/93 text-forest')}
+            className={cn(CELL_CLASSES, 'bg-cream/93 text-pool')}
           >
             <b className="text-[14.5px] font-bold">{activity.name}</b>
             <span className="text-[13px] tabular-nums opacity-72">

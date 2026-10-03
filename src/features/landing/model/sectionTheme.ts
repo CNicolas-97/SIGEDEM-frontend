@@ -23,7 +23,7 @@ export type ThemedSection = {
 
 export const heroTheme: SectionTheme = {
   bg: '#EFEADC',
-  accent: '#23392F',
+  accent: '#06263F',
   glowA: '#C9CFB8',
   isLight: true,
   buttonFg: '#F3EFE4',

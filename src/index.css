@@ -16,11 +16,10 @@
   --color-brand-blue: #0a63f4;
   --color-brand-sky: #1ea7ef;
   --color-brand-sun: #ffd30b;
-  /* Paleta clara del hero de la home ("papel y bosque"). */
-  --color-forest: #23392f;
-  --color-forest-hover: #2f4a3f;
-  --color-moss: #42584c;
-  --color-sage: #4d6558;
+  /* Paleta clara del hero de la home: papel con el azul de natación (pool). */
+  --color-pool-hover: #0d3a5c;
+  --color-pool-muted: #3d5566;
+  --color-pool-faint: #4a6274;
   --color-sand: #efeadc;
   --color-cream: #f3efe4;
   --color-open: #1e7a52;
