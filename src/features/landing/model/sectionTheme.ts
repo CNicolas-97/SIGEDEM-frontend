@@ -9,7 +9,6 @@ export type SectionTheme = {
   bg: string;
   accent: string;
   glowA: string;
-  glowB: string;
   // "?" = opcional. true si la sección es clara (el header usa texto oscuro).
   isLight?: boolean;
   // Color del texto de los botones, si no alcanza con el valor por defecto.
@@ -24,18 +23,16 @@ export type ThemedSection = {
 
 export const heroTheme: SectionTheme = {
   bg: '#EFEADC',
-  accent: '#23392F',
+  accent: '#06263F',
   glowA: '#C9CFB8',
-  glowB: '#A9C7CE',
   isLight: true,
   buttonFg: '#F3EFE4',
 };
 
 export const stepsTheme: SectionTheme = {
   bg: '#0B1C24',
-  accent: '#2BD4D9',
+  accent: '#1EA7EF',
   glowA: '#1C7FD6',
-  glowB: '#8CE05B',
 };
 
 // Todas las secciones de la home, en orden. Cada actividad trae su propio
