@@ -2,7 +2,7 @@ import { HeroScene } from '@/features/landing/components/HeroScene.tsx';
 import { TodayBoard } from '@/features/landing/components/TodayBoard.tsx';
 import type { Activity } from '@/features/landing/model/activities.ts';
 
-// QUÉ ES: la primera pantalla de la home: título, botones y tablero
+// QUÉ ES: la primera pantalla de la home: título, botones y desplegable
 // de horarios, sobre la escena animada de fondo.
 // NIVEL: componente presentacional — arma la sección con otros componentes y
 // les reparte las props que recibe.
@@ -16,16 +16,17 @@ type HeroProps = {
 export function Hero({ activities, now }: HeroProps) {
   return (
     // hero-veil (landing.css): velo claro detrás del texto, sobre la escena.
-    // Hasta 860px el tablero de horarios tiene 3 filas (293px): el padding
-    // inferior de 324px le reserva ese lugar para que no tape los botones.
+    // Hasta 860px el desplegable de horarios ocupa todo el ancho abajo: el
+    // padding inferior de 110px le reserva ese lugar para que no tape los
+    // botones.
     <section
-      className="hero-veil relative isolate flex min-h-svh flex-col justify-center overflow-hidden bg-sand px-6.5 pt-30 max-tablet:px-5.5 max-tablet:pt-26 max-tablet:pb-[324px]"
+      className="hero-veil relative isolate flex min-h-svh flex-col justify-center overflow-hidden bg-sand px-6.5 pt-30 max-tablet:px-5.5 max-tablet:pt-26 max-tablet:pb-[110px]"
       id="hero"
     >
       <HeroScene />
 
       {/* hero-content (landing.css): sube y se desvanece al bajar.
-          El tablero de horarios (TodayBoard) va pegado abajo y mide 97px: el
+          El desplegable de horarios (TodayBoard) va abajo a la izquierda: el
           padding inferior nunca baja de 128px para que los botones no queden
           debajo de él en pantallas bajas. */}
       <div className="hero-content relative z-3 mx-auto w-full max-w-page pb-[max(12vh,128px)] text-center max-tablet:pb-0">

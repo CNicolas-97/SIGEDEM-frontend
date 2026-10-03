@@ -23,6 +23,8 @@
   --color-sand: #efeadc;
   --color-cream: #f3efe4;
   --color-open: #1e7a52;
+  /* Verde más claro para el punto de "abierto" sobre fondo azul. */
+  --color-open-bright: #4cc38a;
   --color-closed: #9c5a1c;
 
   --font-display: 'Archivo Black', 'Arial Black', Impact, sans-serif;
