@@ -1,26 +1,20 @@
 /* Estilos de la feature landing que no entran en utilidades de Tailwind:
    fondos con varias capas de degradado y los movimientos atados al scroll.
    Los importa PublicLayout. Todo lo demás está como clases en cada componente.
-   --glow-a, --glow-b y --ui-veil los escribe useSectionTheme al hacer scroll;
+   --glow-a y --ui-veil los escribe useSectionTheme al hacer scroll;
    --hero-progress, --tilt y --tilt-abs los escribe useScrollMotion. */
 
 /* ---------- fondo que cambia de color por sección ---------- */
-/* Dos brillos de color, uno arriba a la izquierda y otro abajo a la derecha. */
+/* Un brillo de color arriba a la izquierda. */
 .page-glow::after {
   content: '';
   position: absolute;
   inset: -20%;
-  background:
-    radial-gradient(
-      48% 42% at 18% 22%,
-      color-mix(in srgb, var(--glow-a) 62%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      44% 44% at 85% 72%,
-      color-mix(in srgb, var(--glow-b) 46%, transparent),
-      transparent 70%
-    );
+  background: radial-gradient(
+    48% 42% at 18% 22%,
+    color-mix(in srgb, var(--glow-a) 62%, transparent),
+    transparent 70%
+  );
   filter: blur(18px);
   opacity: 0.85;
   transition: background 900ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -63,12 +57,6 @@
   transform: translateY(calc(var(--hero-progress, 0) * -50px));
   opacity: calc(1 - var(--hero-progress, 0) * 1.15);
 }
-/* Carnet: centrado en vertical, sube y gira un poco. */
-.hero-pass {
-  transform: translateY(calc(-50% + var(--hero-progress, 0) * -30px))
-    rotate(calc(var(--hero-progress, 0) * 4deg));
-  opacity: calc(1 - var(--hero-progress, 0) * 1.4);
-}
 /* Tablero "Hoy": baja. */
 .hero-board {
   transform: translateY(calc(var(--hero-progress, 0) * 60px));
@@ -87,21 +75,16 @@
     scale(calc(1 - var(--tilt-abs, 0) * 0.045));
 }
 
-/* Menos movimiento: sin efectos atados al scroll (el carnet conserva su
-   centrado vertical). */
+/* Menos movimiento: sin efectos atados al scroll. */
 @media (prefers-reduced-motion: reduce) {
   .hero-content,
   .hero-board,
-  .hero-scrollcue,
-  .hero-pass {
+  .hero-scrollcue {
     opacity: 1;
   }
   .hero-content,
   .hero-board,
   .shot-tilt {
     transform: none;
-  }
-  .hero-pass {
-    transform: translateY(-50%);
   }
 }
