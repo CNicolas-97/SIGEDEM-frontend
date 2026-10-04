@@ -21,15 +21,15 @@ La app queda disponible en http://localhost:5173
 
 ## Funcionalidades
 
-| Módulo               | Descripción                                                                                     | Estado        |
-| -------------------- | ----------------------------------------------------------------------------------------------- | ------------- |
-| Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                      | En desarrollo |
-| Detalle de actividad | Página por actividad (natatorio, fútbol, vóley) con horario de hoy y datos destacados           | Hecho         |
-| Planes y precios     | Planes del abono con precio mensual, qué incluye cada uno y filtro por tipo                     | Hecho         |
-| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                              | Previsto      |
-| Inscripciones        | Alta de vecinos en una disciplina                                                               | Previsto      |
-| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección) | Previsto      |
-| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404          | Hecho         |
+| Módulo               | Descripción                                                                                                  | Estado   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ | -------- |
+| Landing pública      | Presentación del complejo, actividades, estado de apertura y pasos para asociarse en tarjetas               | Hecho    |
+| Detalle de actividad | Página por actividad (natatorio, fútbol, vóley) con horario de hoy y datos destacados                        | Hecho    |
+| Planes y precios     | Planes del abono con precio mensual, qué incluye cada uno y filtro por tipo                                  | Hecho    |
+| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                                           | Previsto |
+| Inscripciones        | Alta de vecinos en una disciplina                                                                            | Previsto |
+| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección)              | Previsto |
+| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404                       | Hecho    |
 
 ## Tecnologías
 
@@ -38,6 +38,7 @@ La app queda disponible en http://localhost:5173
 | [React 19](https://react.dev/)                | Librería de interfaz basada en componentes              |
 | [TypeScript](https://www.typescriptlang.org/) | JavaScript con tipos: detecta errores antes de ejecutar |
 | [Vite](https://vite.dev/)                     | Servidor de desarrollo y build                          |
+| [Tailwind CSS 4](https://tailwindcss.com/)     | Estilos utilitarios y tokens visuales del proyecto      |
 | [React Router](https://reactrouter.com/)      | Navegación entre páginas (modo declarativo)             |
 | ESLint + typescript-eslint                    | Análisis estático del código                            |
 | Prettier                                      | Formato de código consistente                           |
@@ -98,6 +99,8 @@ Definidas en `src/App.tsx`. Todas se dibujan dentro de `PublicLayout`, que pone 
 Los links a secciones de la home (por ejemplo `/#pasos`) funcionan desde cualquier página: la home busca el elemento con ese id al cargarse y baja hasta él.
 
 Los imports usan el alias `@/` en lugar de rutas relativas: `@/shared/ui/Button.tsx` apunta a `src/shared/ui/Button.tsx`.
+
+Los estilos de los componentes usan clases utilitarias de Tailwind directamente en `className`. Tailwind se integra con Vite mediante `@tailwindcss/vite`; los colores, fuentes, anchos y puntos de quiebre propios del proyecto se definen en `src/index.css`, dentro de `@theme`. Los efectos visuales específicos de la landing que no se expresan como utilidades están en `src/features/landing/landing.css`.
 
 ### Correspondencia con los conceptos de React
 

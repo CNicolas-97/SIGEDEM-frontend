@@ -1,11 +1,14 @@
-// QUÉ ES: los planes del abono del complejo, con sus precios.
-// NIVEL: model — datos, tipos y funciones puras; sin JSX.
-// DÓNDE SE USA: PlansPageContainer los filtra y los recorre con map() para
-// armar una PlanCard por cada plan.
+// Este archivo contiene el modelo de planes: los tipos que describen los
+// datos, los datos concretos y una funcion de formato. No dibuja interfaz
+// porque no contiene componentes JSX.
 
-// Unión de strings: un plan solo puede ser de uno de estos tres tipos.
+// type crea un alias de tipo. Esta union (| significa "o") restringe type a
+// uno de tres textos exactos; TypeScript avisara si se escribe otro valor.
 export type PlanType = 'individual' | 'familiar' | 'actividad';
 
+// Un objeto Plan debe tener las propiedades obligatorias de abajo y con sus
+// respectivos tipos. string es texto, number es numero y string[] es una
+// lista de textos. Las propiedades con ? son opcionales.
 export type Plan = {
   // Identificador único y estable: se usa como "key" al recorrer la lista.
   id: string;
@@ -22,11 +25,13 @@ export type Plan = {
   discountNote?: string;
 };
 
-// Filtro de la página: los tres tipos de plan, o "todos".
+// Reutilizamos PlanType y le agregamos la opcion 'todos'. Esta union sirve
+// para tipar el estado del filtro y las opciones que lo pueden cambiar.
 export type PlanFilter = PlanType | 'todos';
 
-// Botones del filtro. También es un array de datos: la página lo recorre con
-// map() en lugar de escribir cada botón a mano.
+// [] significa que es un array. Cada elemento debe ser un objeto con value
+// (una opcion de filtro) y label (el texto visible del boton). La pagina
+// recorrera el array con map() para crear los botones desde estos datos.
 export const planFilters: { value: PlanFilter; label: string }[] = [
   { value: 'todos', label: 'Todos' },
   { value: 'individual', label: 'Individual' },
@@ -34,6 +39,8 @@ export const planFilters: { value: PlanFilter; label: string }[] = [
   { value: 'actividad', label: 'Por actividad' },
 ];
 
+// Esta lista es la fuente de datos de las tarjetas. Plan[] indica a TypeScript
+// que cada elemento debe cumplir la forma definida por el tipo Plan.
 export const plans: Plan[] = [
   {
     id: 'individual',
@@ -112,14 +119,17 @@ export const plans: Plan[] = [
   },
 ];
 
-// Intl.NumberFormat es la herramienta del navegador para formatear números
-// según el país: 18000 → "$ 18.000". Se crea una sola vez y se reutiliza.
+// Intl.NumberFormat es una funcion incluida en JavaScript para presentar
+// numeros segun una convencion regional. Se configura una vez para Argentina
+// y pesos (ARS), sin decimales, y se reutiliza para todos los precios.
 const priceFormatter = new Intl.NumberFormat('es-AR', {
   style: 'currency',
   currency: 'ARS',
   maximumFractionDigits: 0,
 });
 
+// Recibe un numero (price: number) y devuelve texto (: string). Esta funcion
+// delega el formato en priceFormatter; no modifica los datos originales.
 export function formatPrice(price: number): string {
   return priceFormatter.format(price);
 }

@@ -25,18 +25,21 @@ export function StepsSection({ steps }: StepsSectionProps) {
         </p>
         {/* 3 columnas desde 768px (tablet vertical): con menos ancho los
             títulos de los pasos se cortan en dos renglones. */}
-        <div className="grid grid-cols-[1fr] gap-6.5 min-[768px]:grid-cols-[repeat(3,1fr)]">
+        <div className="grid grid-cols-[1fr] gap-5 min-[768px]:grid-cols-[repeat(3,1fr)]">
           {/* map() también da el índice (0, 1, 2): lo usamos para numerar. */}
           {steps.map((step, index) => (
-            <div key={step.title} className="border-t-[3px] border-ink pt-5">
-              <span className="font-display text-[15px] opacity-45">
-                Paso {index + 1}
+            <article
+              key={step.title}
+              className="flex h-full flex-col rounded-[20px] border border-ink/10 bg-white/55 p-6 shadow-[0_8px_24px_rgba(7,26,38,0.06)] transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(7,26,38,0.1)]"
+            >
+              <span className="mb-5 flex size-12 items-center justify-center rounded-full bg-forest font-display text-[16px] text-cream">
+                {index + 1}
               </span>
-              <h3 className="my-2.5 text-[23px]">{step.title}</h3>
+              <h3 className="mb-3 text-[23px]">{step.title}</h3>
               <p className="text-[16px] leading-[1.55] opacity-78">
                 {step.description}
               </p>
-            </div>
+            </article>
           ))}
         </div>
         {/* Sobre el fondo claro de esta sección el botón va oscuro. */}
