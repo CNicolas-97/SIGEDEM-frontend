@@ -20,15 +20,27 @@ export function PlanCard({ plan }: PlanCardProps) {
       footer={<Button to="/#pasos">Quiero este plan</Button>}
     >
       {/* Todo lo que va entre <Card> y </Card> le llega como "children". */}
-      <p className="plan-price">
-        {formatPrice(plan.monthlyPrice)} <small>por mes</small>
+      <p className="mt-1 font-display text-[34px] leading-none text-accent tabular-nums">
+        {formatPrice(plan.monthlyPrice)}{' '}
+        <small className="font-body text-[14px] text-white opacity-70">
+          por mes
+        </small>
       </p>
-      {plan.discountNote && <p className="plan-note">{plan.discountNote}</p>}
-      <ul className="plan-includes">
+      {plan.discountNote && (
+        <p className="rounded-[10px] bg-white/8 px-3 py-2 text-[14px]">
+          {plan.discountNote}
+        </p>
+      )}
+      <ul className="mt-1 grid gap-2 text-[15px]">
         {/* Cada texto es distinto dentro de un plan, así que el propio texto
-            sirve como key. */}
+            sirve como key. El "before:" dibuja un guion de color delante. */}
         {plan.includes.map((item) => (
-          <li key={item}>{item}</li>
+          <li
+            key={item}
+            className="flex gap-2.5 before:mt-[0.8em] before:h-0.5 before:w-3 before:flex-none before:bg-accent"
+          >
+            {item}
+          </li>
         ))}
       </ul>
     </Card>

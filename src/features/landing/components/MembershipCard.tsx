@@ -14,14 +14,17 @@ const qrCells = buildQrCells();
 
 export function MembershipCard({ card }: MembershipCardProps) {
   return (
-    <div className="pass">
-      <div className="pass-body">
-        <div className="t">
+    // hero-pass (landing.css): se mueve con el scroll. Desde 1081px de ancho.
+    <div className="hero-pass absolute top-1/2 right-[clamp(20px,4vw,64px)] z-3 w-[clamp(150px,14vw,196px)] perspective-[800px] will-change-transform max-desktop:hidden">
+      {/* Carnet inclinado en 3D, con sombra y un borde fino (ring). */}
+      <div className="relative -rotate-5 rotate-y-13 rounded-2xl bg-linear-155/srgb from-pass-light to-pass-dark p-3.5 text-forest shadow-[0_26px_50px_-18px] shadow-forest/55 ring-1 ring-forest/14">
+        <div className="flex items-center justify-between font-display text-[11px] tracking-[0.04em]">
           <span>SIGEDEM</span>
           <span>{card.year}</span>
         </div>
-        <div className="qr">
+        <div className="mt-2.5 mb-[9px] aspect-square rounded-[9px] bg-forest p-[9px]">
           <svg
+            className="block size-full"
             viewBox={`0 0 ${QR_SIZE} ${QR_SIZE}`}
             shapeRendering="crispEdges"
             aria-hidden="true"
@@ -41,8 +44,10 @@ export function MembershipCard({ card }: MembershipCardProps) {
             </g>
           </svg>
         </div>
-        <div className="nm">{card.holderName}</div>
-        <div className="mt">
+        <div className="text-[12.5px] leading-[1.15] font-extrabold">
+          {card.holderName}
+        </div>
+        <div className="mt-0.5 text-[9.5px] font-bold opacity-68">
           {card.plan} · Vence {card.expiresOn}
         </div>
       </div>

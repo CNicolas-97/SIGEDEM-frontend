@@ -11,7 +11,8 @@ import type {
 // DÓNDE SE USA: en LandingPageContainer.
 // CÓMO FUNCIONA: IntersectionObserver avisa cuando una sección entra en
 // pantalla; en ese momento escribimos sus colores como variables CSS en
-// <html>. El CSS (landing.css) lee esas variables y anima el cambio.
+// <html>. Las utilidades de Tailwind (bg-page, text-accent, ... definidas en
+// index.css) y landing.css leen esas variables y animan el cambio.
 
 const THEME_VARIABLES = [
   '--bg',

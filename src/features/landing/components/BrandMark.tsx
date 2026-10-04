@@ -1,41 +1,34 @@
-// QUÉ ES: la marca de SIGEDEM: tres arcos de colores + el nombre.
+// QUÉ ES: la marca de SIGEDEM: el logo del complejo (vela, base y sol) + el
+// nombre.
 // NIVEL: componente presentacional.
-// DÓNDE SE USA: en SiteHeader (girando) y en SiteFooter (quieta).
+// DÓNDE SE USA: en SiteHeader. El footer usa LedesmaWordmark.
 
-type BrandMarkProps = {
-  // Valor por defecto true: si no se pasa la prop, el anillo gira.
-  spinning?: boolean;
-};
-
-// Un color por actividad: natación, fútbol y vóley.
-const RING_COLORS = ['#2BD4D9', '#8CE05B', '#FFB23F'];
-
-export function BrandMark({ spinning = true }: BrandMarkProps) {
+export function BrandMark() {
   return (
-    <div className="brand">
-      {/* aria-hidden: es decorativo, el nombre ya está escrito al lado. */}
+    <div className="flex items-center gap-[11px]">
+      {/* aria-hidden: es decorativo, el nombre ya está escrito al lado.
+          Formas copiadas del diseño de Figma (logo.jpeg). */}
       <svg
-        className={spinning ? 'ring' : 'ring ring--still'}
-        viewBox="0 0 40 40"
+        className="h-[34px] w-auto flex-none"
+        viewBox="70 36 110 152"
         aria-hidden="true"
       >
-        {/* Cada arco es el mismo círculo punteado, rotado 0°, 120° y 240°. */}
-        {RING_COLORS.map((color, index) => (
-          <circle
-            key={color}
-            cx="20"
-            cy="20"
-            r="15"
-            fill="none"
-            stroke={color}
-            strokeWidth="6"
-            strokeLinecap="round"
-            strokeDasharray="26 68"
-            transform={`rotate(${index * 120} 20 20)`}
-          />
-        ))}
+        {/* Vela azul. */}
+        <path
+          className="fill-brand-blue"
+          d="M91 38C108 52 121 72 119 92C118 110 112 130 111 152H82C72 130 72 100 78 78C81 62 85 48 91 38Z"
+        />
+        {/* Sol amarillo. */}
+        <circle className="fill-brand-sun" cx="146.5" cy="112.5" r="19.5" />
+        {/* Base celeste: va al final para quedar encima de la vela. */}
+        <path
+          className="fill-brand-sky"
+          d="M83 150L177 151C160 165 125 182 96 186C90 176 86 162 83 150Z"
+        />
       </svg>
-      <span className="wordmark">SIGEDEM</span>
+      <span className="font-display text-[19px] leading-[0.94] tracking-[0.01em]">
+        SIGEDEM
+      </span>
     </div>
   );
 }

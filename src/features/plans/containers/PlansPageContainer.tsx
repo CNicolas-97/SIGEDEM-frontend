@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { cn } from '@/shared/lib/cn.ts';
 import { Seo } from '@/shared/ui/Seo.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { defaultPageSections } from '@/features/landing/model/sectionTheme.ts';
@@ -8,7 +9,6 @@ import {
   plans,
   type PlanFilter,
 } from '@/features/plans/model/plans.ts';
-import '@/features/plans/plans.css';
 
 // QUÉ ES: la página de planes y precios (/planes).
 // NIVEL: container (página) — guarda el filtro elegido, filtra los planes de
@@ -35,36 +35,55 @@ export function PlansPageContainer() {
         path="/planes"
         description="Planes del abono del Complejo Teniente Ledesma: individual, familiar o por actividad, con descuento para jubilados y familias numerosas."
       />
-      <main className="plans-page">
+      {/* El padding de arriba deja espacio para el header fijo. */}
+      <main className="mx-auto max-w-page px-6.5 pt-[calc(130px+env(safe-area-inset-top,0px))] pb-[110px]">
         {/* id="contenido": el bloque que toma los colores de la página. */}
-        <section className="plans-intro" id="contenido">
-          <h1>Planes y precios</h1>
-          <p>
+        <section id="contenido">
+          <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
+            Planes y precios
+          </h1>
+          <p className="mb-8 max-w-[52ch] text-[18px] opacity-80">
             Individual, familiar o por actividad. Si te corresponde descuento de
             jubilado o familia numerosa, se aplica en la ventanilla.
           </p>
 
-          <div className="plan-filters" role="group" aria-label="Tipo de plan">
-            {planFilters.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                className="plan-filter"
-                // aria-pressed: avisa a los lectores de pantalla cuál está
-                // activo; el CSS también lo usa para pintarlo.
-                aria-pressed={filter === option.value}
-                onClick={() => setFilter(option.value)}
-              >
-                {option.label}
-              </button>
-            ))}
+          <div
+            className="mb-10 flex flex-wrap gap-2.5"
+            role="group"
+            aria-label="Tipo de plan"
+          >
+            {planFilters.map((option) => {
+              const isActive = filter === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  // cn(): las clases del final dependen de si es el activo,
+                  // que se pinta con el color de acento.
+                  className={cn(
+                    'cursor-pointer rounded-full px-[18px] py-[9px] text-[15px] font-semibold transition-[background-color,color] duration-180 ease-[ease]',
+                    isActive
+                      ? 'bg-accent text-btn-fg'
+                      : 'inset-ring-[1.5px] inset-ring-white/35 hover:bg-white/8'
+                  )}
+                  // aria-pressed: avisa a los lectores de pantalla cuál está
+                  // activo.
+                  aria-pressed={isActive}
+                  onClick={() => setFilter(option.value)}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
           </div>
         </section>
 
         {visiblePlans.length === 0 ? (
-          <p className="plans-empty">No hay planes de este tipo por ahora.</p>
+          <p className="my-[1em] text-[15px] opacity-70">
+            No hay planes de este tipo por ahora.
+          </p>
         ) : (
-          <ul className="plan-grid">
+          <ul className="grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-5">
             {/* key={plan.id}: React usa la key para saber qué tarjeta es cuál
                 cuando la lista cambia (al filtrar). Tiene que ser única y
                 estable: por eso el id del plan y no el índice del map, porque
@@ -77,7 +96,7 @@ export function PlansPageContainer() {
           </ul>
         )}
 
-        <p className="plans-footnote">
+        <p className="mt-10 text-[15px] opacity-70">
           Precios mensuales de ejemplo. Para el natatorio se pide apto médico,
           que se carga en la misma ventanilla.
         </p>
