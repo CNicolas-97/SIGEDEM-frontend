@@ -16,16 +16,15 @@
   --color-brand-blue: #0a63f4;
   --color-brand-sky: #1ea7ef;
   --color-brand-sun: #ffd30b;
-  /* Paleta clara del hero de la home ("papel y bosque"). */
-  --color-forest: #23392f;
-  --color-forest-hover: #2f4a3f;
-  --color-moss: #42584c;
-  --color-sage: #4d6558;
+  /* Paleta clara del hero de la home: papel con el azul de natación (pool). */
+  --color-pool-hover: #0d3a5c;
+  --color-pool-muted: #3d5566;
+  --color-pool-faint: #4a6274;
   --color-sand: #efeadc;
   --color-cream: #f3efe4;
-  --color-pass-light: #f7f4ea;
-  --color-pass-dark: #e6e0ce;
   --color-open: #1e7a52;
+  /* Verde más claro para el punto de "abierto" sobre fondo azul. */
+  --color-open-bright: #4cc38a;
   --color-closed: #9c5a1c;
 
   --font-display: 'Archivo Black', 'Arial Black', Impact, sans-serif;
@@ -70,9 +69,8 @@
     --ui-fg: #08313d;
     --btn-fg: #08313d;
     --bg: #071a26;
-    --accent: #2bd4d9;
+    --accent: #1ea7ef;
     --glow-a: #1c7fd6;
-    --glow-b: #2bd4d9;
 
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
