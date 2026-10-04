@@ -1,31 +1,39 @@
-import type { NavLink } from '@/features/landing/model/navigation.ts';
+import { Link } from 'react-router';
+import { Button } from '@/shared/ui/Button.tsx';
+import { BrandMark } from '@/features/landing/components/BrandMark.tsx';
+import type { SiteLink } from '@/features/landing/model/navigation.ts';
 
-// QUÉ ES: encabezado del sitio público con la navegación principal. Esqueleto.
+// QUÉ ES: barra superior fija del sitio público: marca, navegación y botón.
 // NIVEL: componente presentacional — solo muestra lo que recibe por props,
 // no busca datos por su cuenta.
-// DÓNDE SE USA: en LandingPageContainer. El backoffice del personal tendrá su
-// propio header, por eso este vive en features/landing y no en shared/.
+// DÓNDE SE USA: en PublicLayout, así aparece en todas las páginas públicas.
+// El backoffice del personal tendrá su propio header, por eso este vive en
+// features/landing y no en shared/.
 
 type SiteHeaderProps = {
-  links: NavLink[];
+  links: SiteLink[];
+  cta: SiteLink;
 };
 
-export function SiteHeader({ links }: SiteHeaderProps) {
+export function SiteHeader({ links, cta }: SiteHeaderProps) {
   return (
-    <header>
+    <header className="topbar">
+      {/* La marca lleva al inicio desde cualquier página. */}
+      <Link className="brand-link" to="/" aria-label="SIGEDEM, ir al inicio">
+        <BrandMark />
+      </Link>
       {/* aria-label: le dice a los lectores de pantalla qué navegación es. */}
-      <nav aria-label="Navegación principal">
-        <ul>
-          {/* map() recorre el array y devuelve un <li> por cada link.
-              "key" debe ser único: React lo usa para saber qué elemento cambió. */}
-          {links.map((link) => (
-            <li key={link.href}>
-              {/* <a> provisorio: pasará a <Link> de React Router. */}
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
+      <nav className="topnav" aria-label="Principal">
+        {/* map() recorre el array y devuelve un <Link> por cada link.
+            "key" debe ser único: React lo usa para saber qué elemento cambió.
+            <Link> cambia de ruta sin recargar la página (un <a> la recargaría). */}
+        {links.map((link) => (
+          <Link key={link.to} to={link.to}>
+            {link.label}
+          </Link>
+        ))}
       </nav>
+      <Button to={cta.to}>{cta.label}</Button>
     </header>
   );
 }
