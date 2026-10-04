@@ -141,7 +141,17 @@ export function SiteFooter({ activities, contact }: SiteFooterProps) {
 
       <div className="mx-auto mt-14 flex max-w-page items-center justify-between gap-6 border-t border-white/12 pt-5">
         <p className="text-[11.5px] opacity-40">
-          Ícono de credencial diseñado por Magnific (Flaticon).
+          Ícono de credencial diseñado por Magnific (Flaticon). Ilustración de
+          la pileta de{' '}
+          <a
+            href="https://storyset.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="underline underline-offset-2 hover:opacity-100"
+          >
+            Storyset
+          </a>
+          .
         </p>
         {/* behavior "smooth": sube con animación en vez de saltar. */}
         <button
