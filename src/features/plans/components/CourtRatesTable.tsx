@@ -1,3 +1,4 @@
+import { BallIcon } from '@/features/plans/components/BallIcon.tsx';
 import type { CourtRate } from '@/features/plans/model/courts.ts';
 import { formatPrice } from '@/features/plans/model/plans.ts';
 
@@ -7,18 +8,29 @@ import { formatPrice } from '@/features/plans/model/plans.ts';
 // DÓNDE SE USA: en PlansPageContainer, una vez por deporte (fútbol y vóley).
 
 type CourtRatesTableProps = {
+  // Qué deporte es: elige la pelota que va al lado del título.
+  activity: CourtRate['activity'];
   title: string;
   rates: CourtRate[];
 };
 
-export function CourtRatesTable({ title, rates }: CourtRatesTableProps) {
+export function CourtRatesTable({
+  activity,
+  title,
+  rates,
+}: CourtRatesTableProps) {
   return (
     <div className="rounded-[22px] border border-white/14 bg-white/6 p-5 backdrop-blur-[6px] min-[768px]:p-6">
       {/* <table>: los precios son datos en filas y columnas, y así el lector
           de pantalla los lee junto con el encabezado de cada columna. */}
       <table className="w-full border-collapse text-left">
         <caption className="mb-4 text-left font-display text-[22px] leading-none">
-          {title}
+          {/* El flex va en un <span>: a un <caption> no conviene cambiarle el
+              display, porque deja de comportarse como título de la tabla. */}
+          <span className="flex items-center gap-2.5">
+            <BallIcon activity={activity} className="size-[26px] text-accent" />
+            {title}
+          </span>
         </caption>
         <thead>
           <tr className="text-[13px] tracking-[0.06em] uppercase opacity-60">

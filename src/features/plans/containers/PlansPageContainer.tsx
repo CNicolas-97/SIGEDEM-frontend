@@ -132,6 +132,7 @@ export function PlansPageContainer() {
             {courtGroups.map((group) => (
               <CourtRatesTable
                 key={group.activity}
+                activity={group.activity}
                 title={group.title}
                 rates={group.rates}
               />
