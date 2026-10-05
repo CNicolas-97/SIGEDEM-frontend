@@ -28,7 +28,7 @@ export function CourtRatesTable({
           {/* El flex va en un <span>: a un <caption> no conviene cambiarle el
               display, porque deja de comportarse como título de la tabla. */}
           <span className="flex items-center gap-2.5">
-            <BallIcon activity={activity} className="size-[26px] text-accent" />
+            <BallIcon activity={activity} className="size-8 text-accent" />
             {title}
           </span>
         </caption>
