@@ -21,15 +21,16 @@ La app queda disponible en http://localhost:5173
 
 ## Funcionalidades
 
-| Módulo               | Descripción                                                                                       | Estado        |
-| -------------------- | ------------------------------------------------------------------------------------------------- | ------------- |
-| Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                        | En desarrollo |
-| Detalle de actividad | Página por actividad con horario de hoy, datos destacados y alquiler de canchas (fútbol y vóley)  | Hecho         |
-| Planes y precios     | Planes del abono por cantidad de personas, con precio mensual y filtro por tipo                   | Hecho         |
-| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                                | Previsto      |
-| Inscripciones        | Formulario de inscripción al abono con validación; queda listo para guardarse en la base de datos | En desarrollo |
-| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección)   | Previsto      |
-| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404            | Hecho         |
+| Módulo               | Descripción                                                                                                                | Estado        |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                                                 | En desarrollo |
+| Detalle de actividad | Página por actividad con horario de hoy, datos destacados y alquiler de canchas (fútbol y vóley)                           | Hecho         |
+| Planes y precios     | Planes del abono por cantidad de personas, con precio mensual y filtro por tipo                                            | Hecho         |
+| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                                                         | Previsto      |
+| Inscripciones        | Formulario de inscripción al abono con validación; queda listo para guardarse en la base de datos                          | En desarrollo |
+| Alquiler de canchas  | Reserva de canchas de fútbol y vóley por día y horario; los turnos ocupados son de ejemplo hasta conectar la base de datos | En desarrollo |
+| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección)                            | Previsto      |
+| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404                                     | Hecho         |
 
 ## Tecnologías
 
@@ -70,7 +71,8 @@ SIGEDEM-frontend/
 ├── public/                      # Archivos estáticos (favicon, robots.txt, sitemap.xml)
 ├── src/
 │   ├── shared/
-│   │   └── ui/                  # Componentes genéricos (Button, Card, Seo)
+│   │   ├── lib/                 # Utilidades (cn, validaciones, fechas del input date)
+│   │   └── ui/                  # Componentes genéricos (Button, Card, Seo, FormFields)
 │   ├── features/
 │   │   ├── landing/             # Sitio público
 │   │   │   ├── components/      # Presentacionales (SiteHeader, ActivitySection, ...)
@@ -78,7 +80,8 @@ SIGEDEM-frontend/
 │   │   │   ├── hooks/           # Custom hooks (colores por sección, movimiento al scroll)
 │   │   │   └── model/           # Datos y tipos de la feature
 │   │   ├── plans/               # Planes y precios (PlansPageContainer, PlanCard, model/)
-│   │   └── enrollment/          # Inscripción (EnrollmentPageContainer, EnrollmentForm, model/)
+│   │   ├── enrollment/          # Hacerse socio (EnrollmentPageContainer, EnrollmentForm, model/)
+│   │   └── booking/             # Alquiler de canchas (BookingPageContainer, BookingForm, SlotPicker, model/)
 │   ├── App.tsx                  # Componente raíz y rutas
 │   └── main.tsx                 # Punto de entrada
 ├── index.html                   # HTML base con metadatos SEO
@@ -89,13 +92,14 @@ SIGEDEM-frontend/
 
 Definidas en `src/App.tsx`. Todas se dibujan dentro de `PublicLayout`, que pone el header y el footer una sola vez.
 
-| Ruta                 | Página                        | Qué muestra                                                                                      |
-| -------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
-| `/`                  | `LandingPageContainer`        | Home: hero, actividades y cómo asociarse                                                         |
-| `/actividades/:slug` | `ActivityDetailPageContainer` | Detalle de una actividad (`natacion`, `futbol`, `voley`); `#canchas` baja a la tabla de alquiler |
-| `/planes`            | `PlansPageContainer`          | Planes y precios, con filtro por tipo de plan                                                    |
-| `/inscripcion`       | `EnrollmentPageContainer`     | Formulario de inscripción (acepta `?plan=<id>`)                                                  |
-| `*`                  | `NotFoundPageContainer`       | Página 404 para cualquier otra dirección                                                         |
+| Ruta                 | Página                        | Qué muestra                                                                        |
+| -------------------- | ----------------------------- | ---------------------------------------------------------------------------------- |
+| `/`                  | `LandingPageContainer`        | Home: hero, actividades y cómo asociarse                                           |
+| `/actividades/:slug` | `ActivityDetailPageContainer` | Detalle de una actividad (`natacion`, `futbol`, `voley`)                           |
+| `/planes`            | `PlansPageContainer`          | Planes y precios, con filtro por tipo de plan                                      |
+| `/inscripcion`       | `EnrollmentPageContainer`     | Formulario de inscripción (acepta `?plan=<id>`)                                    |
+| `/alquilar-cancha`   | `BookingPageContainer`        | Reserva de una cancha de fútbol o vóley por hora (acepta `?deporte=` y `?cancha=`) |
+| `*`                  | `NotFoundPageContainer`       | Página 404 para cualquier otra dirección                                           |
 
 Los links a secciones de la home (por ejemplo `/#pasos`) funcionan desde cualquier página: la home busca el elemento con ese id al cargarse y baja hasta él.
 
@@ -112,7 +116,7 @@ Los imports usan el alias `@/` en lugar de rutas relativas: `@/shared/ui/Button.
 | Props        | Tipadas en cada componente (`type ...Props`). `shared/ui/Button.tsx`: `children` obligatoria, `variant` opcional con valor por defecto (`'primary'`) y `to` que decide si es link o botón. `shared/ui/Card.tsx`: `title` obligatoria y el resto opcional (`description`, `eyebrow`, `children`, `footer`). `ActivitySection.tsx`: el mismo componente muestra las tres actividades cambiando la prop `activity`                                                                                                  |
 | `map()`      | Listas renderizadas a partir de datos de `model/`: `PlansPageContainer.tsx` (botones del filtro y tarjetas de planes, después de `filter()`), `PlanCard.tsx` (los beneficios, iguales para todos los planes), `CourtRatesTable.tsx` (una fila por cancha, en la página de fútbol y de vóley), `LandingPageContainer.tsx` (una `ActivitySection` por actividad), `StatList.tsx`, `TodayBoard.tsx` y `SiteHeader.tsx`. Cada ítem lleva una `key` única y estable (un id o un texto que no se repite, no el índice) |
 | React Router | `App.tsx` (rutas anidadas y parámetro `:slug`), `PublicLayout.tsx` (`<Outlet />`), `ActivityDetailPageContainer.tsx` (`useParams`), `SiteHeader.tsx` (`<Link>`), `EnrollmentPageContainer.tsx` (`useSearchParams` para leer `?plan=`)                                                                                                                                                                                                                                                                            |
-| Formularios  | `features/enrollment/`: inputs controlados (el valor vive en el estado del container), `onSubmit` con `preventDefault`, validación en una función pura (`validateEnrollment`) y renderizado condicional del mensaje de éxito                                                                                                                                                                                                                                                                                     |
+| Formularios  | `features/enrollment/` y `features/booking/`: inputs controlados (el valor vive en el estado del container), `onSubmit` con `preventDefault`, validación en una función pura (`validateEnrollment`) y renderizado condicional del mensaje de éxito                                                                                                                                                                                                                                                               |
 
 ## Flujo de trabajo
 

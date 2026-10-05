@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useState } from 'react';
+import { useParams } from 'react-router';
 import { Seo } from '@/shared/ui/Seo.tsx';
 import { ActivityDetail } from '@/features/landing/components/ActivityDetail.tsx';
 import { NotFoundPageContainer } from '@/features/landing/containers/NotFoundPageContainer.tsx';
@@ -24,14 +24,6 @@ export function ActivityDetailPageContainer() {
   // Los hooks van antes de cualquier "return": React exige llamarlos siempre
   // en el mismo orden, en todos los renders.
   useSectionTheme(pageSections);
-
-  // Links como "/actividades/futbol#canchas" (botón "Alquilar cancha" del
-  // inicio): igual que en la home, bajamos hasta el elemento con ese id.
-  const location = useLocation();
-  useEffect(() => {
-    if (!location.hash) return;
-    document.getElementById(location.hash.slice(1))?.scrollIntoView();
-  }, [location]);
 
   // find() devuelve la primera actividad cuyo slug coincide, o undefined.
   const activity = activities.find((item) => item.slug === slug);

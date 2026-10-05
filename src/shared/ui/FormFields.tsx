@@ -71,7 +71,8 @@ type TextFieldProps = {
   // Teclado numérico en el celular (para el DNI).
   inputMode?: 'text' | 'numeric' | 'tel' | 'email';
   placeholder?: string;
-  // Fecha máxima permitida (solo para type="date").
+  // Fechas mínima y máxima permitidas (solo para type="date").
+  min?: string;
   max?: string;
   required?: boolean;
 };
@@ -87,6 +88,7 @@ export function TextField({
   autoComplete,
   inputMode,
   placeholder,
+  min,
   max,
   required = false,
 }: TextFieldProps) {
@@ -102,6 +104,7 @@ export function TextField({
         autoComplete={autoComplete}
         inputMode={inputMode}
         placeholder={placeholder}
+        min={min}
         max={max}
         required={required}
         aria-invalid={Boolean(error)}

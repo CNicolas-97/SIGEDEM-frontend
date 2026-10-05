@@ -67,10 +67,11 @@ export function ActivitySection({
             <Button to={`/actividades/${activity.slug}`}>
               {activity.ctaLabel}
             </Button>
-            {/* "#canchas": la página del deporte baja directo a la tabla. */}
+            {/* ?deporte=...: el formulario arranca con una cancha de este
+                deporte ya elegida. */}
             {hasCourts && (
               <Button
-                to={`/actividades/${activity.slug}#canchas`}
+                to={`/alquilar-cancha?deporte=${activity.slug}`}
                 variant="secondary"
               >
                 Alquilar cancha

@@ -95,9 +95,7 @@ export function ActivityDetail({
           ))}
         </ul>
         {courtRates.length > 0 && (
-          // id="canchas": el botón "Alquilar cancha" del inicio baja hasta acá.
-          // scroll-mt deja lugar para el header fijo al llegar.
-          <section id="canchas" className="mb-12 scroll-mt-[110px]">
+          <section id="canchas" className="mb-12">
             <h2 className="mb-3.5 text-[length:clamp(30px,4vw,46px)]">
               Alquiler de canchas
             </h2>
@@ -112,6 +110,12 @@ export function ActivityDetail({
                 rates={courtRates}
               />
             </div>
+            <Button
+              to={`/alquilar-cancha?deporte=${activity.slug}`}
+              className="mt-6"
+            >
+              Reservar una cancha
+            </Button>
           </section>
         )}
         {/* El mismo Button con distinta "variant": relleno o solo borde. */}
