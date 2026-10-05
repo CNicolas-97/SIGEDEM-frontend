@@ -1,13 +1,18 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/shared/lib/cn.ts';
-import type { SelectOption } from '@/features/enrollment/model/enrollment.ts';
 
 // QUÉ ES: los campos del formulario (texto y desplegable) con su etiqueta y
 // su mensaje de error.
-// NIVEL: componentes presentacionales. No guardan el valor: lo reciben por
-// props ("value") y avisan cada cambio con "onChange". Esto se llama
+// NIVEL: componentes genéricos de shared/ui. No guardan el valor: lo reciben
+// por props ("value") y avisan cada cambio con "onChange". Esto se llama
 // "input controlado": el estado vive en el container.
-// DÓNDE SE USA: en EnrollmentForm.
+// DÓNDE SE USA: en los formularios de hacerse socio y de alquilar cancha.
+
+// Una opción de un <select>: lo que se guarda (value) y lo que se ve (label).
+export type SelectOption = {
+  value: string;
+  label: string;
+};
 
 // Estilo común de <input> y <select>. Con error, el borde se pone rojo.
 const CONTROL_CLASSES =

@@ -1,3 +1,10 @@
+import type { SelectOption } from '@/shared/ui/FormFields.tsx';
+import { parseDateInput } from '@/shared/lib/dateInput.ts';
+import {
+  isValidDni,
+  isValidEmail,
+  isValidPhone,
+} from '@/shared/lib/validation.ts';
 import { formatPrice, plans } from '@/features/plans/model/plans.ts';
 
 // QUÉ ES: los datos del formulario de inscripción, sus opciones y la
@@ -28,12 +35,6 @@ export type EnrollmentField = keyof EnrollmentForm;
 // aparecen los que tienen error.
 export type EnrollmentErrors = Partial<Record<EnrollmentField, string>>;
 
-// Una opción de un <select>: lo que se guarda (value) y lo que se ve (label).
-export type SelectOption = {
-  value: string;
-  label: string;
-};
-
 // Formulario vacío. Recibe el plan por si se llega desde "Quiero este plan".
 export function createEmptyEnrollment(planId = ''): EnrollmentForm {
   return {
@@ -60,25 +61,9 @@ export const planOptions: SelectOption[] = plans.map((plan) => ({
   label: `${plan.name} · ${formatPrice(plan.monthlyPrice)} por mes`,
 }));
 
-// Convierte "AAAA-MM-DD" en una fecha. Se arma con los números (y no con
-// new Date("2004-03-15")) porque así el navegador la toma en hora argentina
-// y no en UTC, que la correría un día.
-function parseDate(value: string): Date {
-  const [year, month, day] = value.split('-').map(Number);
-  return new Date(year, month - 1, day);
-}
-
-// Lo contrario: una fecha en el formato "AAAA-MM-DD" del <input type="date">.
-// padStart completa con ceros: 3 → "03".
-export function toDateInputValue(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${date.getFullYear()}-${month}-${day}`;
-}
-
 // Edad en años cumplidos a la fecha "today".
 export function getAge(birthDate: string, today: Date): number {
-  const birth = parseDate(birthDate);
+  const birth = parseDateInput(birthDate);
   let age = today.getFullYear() - birth.getFullYear();
   const hasHadBirthday =
     today.getMonth() > birth.getMonth() ||
@@ -87,14 +72,6 @@ export function getAge(birthDate: string, today: Date): number {
   if (!hasHadBirthday) age -= 1;
   return age;
 }
-
-// Expresiones regulares: patrones para revisar el formato de un texto.
-// DNI: 7 u 8 números (los puntos y espacios se sacan antes de revisar).
-const DNI_PATTERN = /^\d{7,8}$/;
-// Email: algo@algo.algo, sin espacios.
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Teléfono: solo números, espacios, guiones, paréntesis y "+".
-const PHONE_PATTERN = /^[\d\s()+-]+$/;
 
 // Revisa el formulario y devuelve los errores encontrados. Si devuelve un
 // objeto vacío, está todo bien. Los errores se agregan en el mismo orden que
@@ -111,9 +88,8 @@ export function validateEnrollment(
   if (!form.firstName.trim()) errors.firstName = 'Escribí tu nombre.';
   if (!form.lastName.trim()) errors.lastName = 'Escribí tu apellido.';
 
-  const dni = form.dni.replace(/[.\s]/g, '');
-  if (!dni) errors.dni = 'Escribí tu DNI.';
-  else if (!DNI_PATTERN.test(dni))
+  if (!form.dni.trim()) errors.dni = 'Escribí tu DNI.';
+  else if (!isValidDni(form.dni))
     errors.dni = 'El DNI tiene 7 u 8 números, sin letras.';
 
   if (!form.birthDate) {
@@ -125,12 +101,11 @@ export function validateEnrollment(
   }
 
   if (!form.email.trim()) errors.email = 'Escribí tu email.';
-  else if (!EMAIL_PATTERN.test(form.email.trim()))
+  else if (!isValidEmail(form.email))
     errors.email = 'Revisá el email: falta la @ o el dominio.';
 
-  const phoneDigits = form.phone.replace(/\D/g, '');
   if (!form.phone.trim()) errors.phone = 'Escribí un teléfono de contacto.';
-  else if (!PHONE_PATTERN.test(form.phone) || phoneDigits.length < 8)
+  else if (!isValidPhone(form.phone))
     errors.phone =
       'Escribí el teléfono con la característica (ej.: 381 555-1234).';
 

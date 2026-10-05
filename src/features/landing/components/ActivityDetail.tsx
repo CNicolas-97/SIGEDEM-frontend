@@ -102,7 +102,7 @@ export function ActivityDetail({
               Alquiler de canchas
             </h2>
             <p className="mb-7 max-w-[56ch] text-[17px] opacity-85">
-              Se alquilan por hora, en la ventanilla o desde la app. Con el
+              Se alquilan por hora, en la ventanilla o desde la web. Con el
               abono pagás el precio de socio.
             </p>
             <div className="max-w-[640px]">

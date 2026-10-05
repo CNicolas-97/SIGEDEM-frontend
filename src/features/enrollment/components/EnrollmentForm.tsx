@@ -3,12 +3,12 @@ import { Button } from '@/shared/ui/Button.tsx';
 import {
   SelectField,
   TextField,
-} from '@/features/enrollment/components/FormFields.tsx';
+  type SelectOption,
+} from '@/shared/ui/FormFields.tsx';
 import type {
   EnrollmentErrors,
   EnrollmentField,
   EnrollmentForm as EnrollmentFormValues,
-  SelectOption,
 } from '@/features/enrollment/model/enrollment.ts';
 
 // QUÉ ES: el formulario para hacerse socio: datos personales, contacto y

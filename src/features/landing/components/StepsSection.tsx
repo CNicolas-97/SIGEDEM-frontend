@@ -30,7 +30,7 @@ export function StepsSection({ steps }: StepsSectionProps) {
             <p className="max-w-[52ch] text-[18px] opacity-75">
               Completás la inscripción acá y la terminás en la ventanilla del
               complejo, de lunes a sábado de 8 a 20. Si ya sos socio, renovás
-              desde la app sin venir.
+              desde la web sin venir.
             </p>
           </div>
           {/* alt vacío: es decorativa, el texto ya dice todo. */}
