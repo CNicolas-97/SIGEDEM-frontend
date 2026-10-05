@@ -4,7 +4,7 @@ import { Seo } from '@/shared/ui/Seo.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { footerContact } from '@/features/landing/model/navigation.ts';
 import { formatSchedule } from '@/features/landing/model/schedule.ts';
-import { defaultPageSections } from '@/features/landing/model/sectionTheme.ts';
+import { noGlowPageSections } from '@/features/landing/model/sectionTheme.ts';
 import { plans } from '@/features/plans/model/plans.ts';
 import { EnrollmentForm } from '@/features/enrollment/components/EnrollmentForm.tsx';
 import { EnrollmentSuccess } from '@/features/enrollment/components/EnrollmentSuccess.tsx';
@@ -41,7 +41,8 @@ export function EnrollmentPageContainer() {
   // Estado 3: si ya se envió bien (muestra el mensaje en vez del formulario).
   const [isSent, setIsSent] = useState(false);
 
-  useSectionTheme(defaultPageSections);
+  // Colores de las páginas simples, sin el brillo azul de la esquina.
+  useSectionTheme(noGlowPageSections);
 
   // Datos derivados: se recalculan en cada render a partir del estado, así
   // que no hace falta guardarlos aparte.
