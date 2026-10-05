@@ -27,7 +27,7 @@ export type Plan = {
 // escribe una sola vez: cada PlanCard recorre esta misma lista con map().
 export const planBenefits: string[] = [
   'Natatorio en turnos de nado libre',
-  'Reserva de canchas de fútbol y vóley',
+  'Canchas de fútbol y vóley a precio de socio',
   'Escuelas de natación, fútbol y vóley',
   'Vestuarios y duchas',
   'Un carnet con QR por persona',

@@ -3,7 +3,9 @@ import { cn } from '@/shared/lib/cn.ts';
 import { Seo } from '@/shared/ui/Seo.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { defaultPageSections } from '@/features/landing/model/sectionTheme.ts';
+import { CourtRatesTable } from '@/features/plans/components/CourtRatesTable.tsx';
 import { PlanCard } from '@/features/plans/components/PlanCard.tsx';
+import { courtGroups } from '@/features/plans/model/courts.ts';
 import {
   planFilters,
   plans,
@@ -114,9 +116,32 @@ export function PlansPageContainer() {
           </ul>
         )}
 
+        {/* Alquiler de canchas: una tabla por deporte, armada con map(). */}
+        <section className="mt-[90px]" aria-labelledby="canchas">
+          <h2
+            id="canchas"
+            className="mb-3.5 text-[length:clamp(30px,4.5vw,48px)]"
+          >
+            Canchas de fútbol y vóley
+          </h2>
+          <p className="mb-8 max-w-[56ch] text-[17px] opacity-80">
+            Se alquilan por hora, en la ventanilla o desde la app. Con el abono
+            pagás el precio de socio.
+          </p>
+          <div className="grid gap-5 laptop:grid-cols-[repeat(2,1fr)]">
+            {courtGroups.map((group) => (
+              <CourtRatesTable
+                key={group.activity}
+                title={group.title}
+                rates={group.rates}
+              />
+            ))}
+          </div>
+        </section>
+
         <p className="mt-10 text-[15px] opacity-70">
-          Precios mensuales de ejemplo. Para el natatorio se pide apto médico,
-          que se carga en la misma ventanilla.
+          Precios de ejemplo. Para el natatorio se pide apto médico, que se
+          carga en la misma ventanilla.
         </p>
       </main>
     </>
