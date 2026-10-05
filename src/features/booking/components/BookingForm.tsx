@@ -6,11 +6,12 @@ import {
   type SelectOption,
 } from '@/shared/ui/FormFields.tsx';
 import { SlotPicker } from '@/features/booking/components/SlotPicker.tsx';
-import type {
-  BookingErrors,
-  BookingForm as BookingFormValues,
-  BookingTextField,
-  Slot,
+import {
+  formatShortDate,
+  type BookingErrors,
+  type BookingForm as BookingFormValues,
+  type BookingTextField,
+  type Slot,
 } from '@/features/booking/model/booking.ts';
 
 // QUÉ ES: el formulario para alquilar una cancha: cancha, día, horario y
@@ -24,6 +25,8 @@ type BookingFormProps = {
   errors: BookingErrors;
   courtOptions: SelectOption[];
   slots: Slot[];
+  // true cuando hay cancha y un día válido: recién ahí se muestran los turnos.
+  isSlotPickerReady: boolean;
   // Primer y último día que se pueden elegir ("AAAA-MM-DD").
   minDate: string;
   maxDate: string;
@@ -57,6 +60,7 @@ export function BookingForm({
   errors,
   courtOptions,
   slots,
+  isSlotPickerReady,
   minDate,
   maxDate,
   onTextChange,
@@ -91,7 +95,7 @@ export function BookingForm({
             error={errors.date}
             min={minDate}
             max={maxDate}
-            hint="Hasta dos semanas adelante."
+            hint={`Desde hoy hasta el ${formatShortDate(maxDate)}.`}
             required
           />
         </div>
@@ -100,7 +104,7 @@ export function BookingForm({
           selectedHour={values.hour}
           onSelect={(hour) => onTextChange('hour', hour)}
           error={errors.hour}
-          isReady={Boolean(values.courtId && values.date)}
+          isReady={isSlotPickerReady}
         />
       </FieldGroup>
 

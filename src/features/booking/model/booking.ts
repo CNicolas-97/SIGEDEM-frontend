@@ -97,6 +97,26 @@ export function getBookingDateRange(now: Date): { min: string; max: string } {
   return { min: toDateInputValue(now), max: toDateInputValue(last) };
 }
 
+// "AAAA-MM-DD" → "18/10" (día/mes), para los mensajes.
+export function formatShortDate(date: string): string {
+  const [, month, day] = date.split('-').map(Number);
+  return `${day}/${month}`;
+}
+
+// Revisa solo el día. Devuelve el mensaje de error, o undefined si el día
+// se puede reservar. La usa validateBooking y también el container, para
+// avisar apenas se elige un día fuera de rango (sin esperar al envío).
+// Las fechas "AAAA-MM-DD" se pueden comparar como texto: el orden
+// alfabético coincide con el orden de los días.
+export function getDateError(date: string, now: Date): string | undefined {
+  const { min, max } = getBookingDateRange(now);
+  const range = `entre hoy (${formatShortDate(min)}) y el ${formatShortDate(max)}`;
+  if (!date) return 'Elegí el día.';
+  if (date < min) return `Ese día ya pasó. Elegí uno ${range}.`;
+  if (date > max) return `Todavía no se puede reservar. Elegí un día ${range}.`;
+  return undefined;
+}
+
 // TURNOS OCUPADOS DE EJEMPLO: todavía no hay base de datos, así que no hay
 // reservas reales. Para que la grilla se vea como funcionaría, esta función
 // marca como ocupados algunos turnos con una cuenta fija: siempre los mismos
@@ -143,20 +163,17 @@ export function getPrice(court: CourtRate, isMember: boolean): number {
 export function validateBooking(form: BookingForm, now: Date): BookingErrors {
   const errors: BookingErrors = {};
   const court = findCourt(form.courtId);
-  const { min, max } = getBookingDateRange(now);
 
   if (!court) errors.courtId = 'Elegí una cancha.';
 
-  // Las fechas "AAAA-MM-DD" se pueden comparar como texto: el orden
-  // alfabético coincide con el orden de los días.
-  if (!form.date) errors.date = 'Elegí el día.';
-  else if (form.date < min) errors.date = 'El día ya pasó.';
-  else if (form.date > max)
-    errors.date = `Se reserva con hasta ${BOOKING_DAYS_AHEAD} días de anticipación.`;
+  const dateError = getDateError(form.date, now);
+  if (dateError) errors.date = dateError;
 
-  if (!form.hour) {
+  // El horario solo se revisa si la cancha y el día están bien: si no, la
+  // grilla ni aparece y el error estaría de más.
+  if (court && !dateError && !form.hour) {
     errors.hour = 'Elegí un horario.';
-  } else if (court && form.date) {
+  } else if (court && !dateError) {
     // Se vuelve a revisar al enviar: el turno pudo haber pasado mientras la
     // persona completaba el resto.
     const slot = getSlots(court, form.date, now).find(

@@ -13,7 +13,7 @@ type SlotPickerProps = {
   selectedHour: string;
   onSelect: (hour: string) => void;
   error?: string;
-  // false = todavía falta elegir la cancha o el día.
+  // false = falta elegir la cancha o el día, o el día está fuera de rango.
   isReady: boolean;
 };
 
@@ -44,7 +44,7 @@ export function SlotPicker({
       {/* Renderizado condicional: tres casos según lo que haya elegido. */}
       {!isReady ? (
         <p className="text-[15px] opacity-60">
-          Elegí la cancha y el día para ver los horarios.
+          Elegí la cancha y un día válido para ver los horarios.
         </p>
       ) : !hasFreeSlots ? (
         <p className="text-[15px] opacity-80">

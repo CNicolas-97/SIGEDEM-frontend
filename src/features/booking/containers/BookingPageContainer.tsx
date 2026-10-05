@@ -16,6 +16,7 @@ import {
   findInitialCourtId,
   formatSlot,
   getBookingDateRange,
+  getDateError,
   getPrice,
   getSlots,
   validateBooking,
@@ -51,7 +52,12 @@ export function BookingPageContainer() {
 
   // Datos derivados del estado: se recalculan en cada render.
   const court = findCourt(form.courtId);
-  const slots = court ? getSlots(court, form.date, now) : [];
+  // Si el día está fuera de rango, se avisa apenas se elige, sin esperar al
+  // envío. Mientras tanto, la grilla de horarios no se muestra.
+  const dateError = form.date ? getDateError(form.date, now) : undefined;
+  const isSlotPickerReady = Boolean(court && form.date && !dateError);
+  const slots =
+    court && isSlotPickerReady ? getSlots(court, form.date, now) : [];
   const { min, max } = getBookingDateRange(now);
   const dateLabel = form.date ? formatToday(parseDateInput(form.date)) : '';
   const slotLabel = form.hour ? formatSlot(Number(form.hour)) : '';
@@ -138,9 +144,11 @@ export function BookingPageContainer() {
           <div className="grid items-start gap-10 laptop:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
             <BookingForm
               values={form}
-              errors={errors}
+              // El error del día se muestra al instante; los demás, al enviar.
+              errors={{ ...errors, date: errors.date ?? dateError }}
               courtOptions={courtOptions}
               slots={slots}
+              isSlotPickerReady={isSlotPickerReady}
               minDate={min}
               maxDate={max}
               onTextChange={handleTextChange}
