@@ -66,23 +66,55 @@ export function findCourt(courtId: string): CourtRate | undefined {
   return courtRates.find((rate) => rate.id === courtId);
 }
 
-// Cancha con la que arranca el formulario, según la URL:
-// ?cancha=futbol-5 elige esa cancha; ?deporte=voley elige la primera cancha
-// de vóley. Si no viene nada (o algo que no existe), arranca vacío.
-export function findInitialCourtId(
+// Los deportes que tienen canchas para alquilar.
+export type Sport = CourtRate['activity'];
+
+// Nombre del deporte para el título: "Alquilá una cancha de fútbol".
+// Record obliga a tener un nombre por cada deporte.
+export const sportNames: Record<Sport, string> = {
+  futbol: 'fútbol',
+  voley: 'vóley',
+};
+
+// Qué deporte se reserva, según la URL: ?deporte=futbol, o el deporte de la
+// cancha si viene ?cancha=voley-playa. undefined = se muestran todos.
+export function findSport(
   courtParam: string | null,
   sportParam: string | null
-): string {
-  if (courtParam && findCourt(courtParam)) return courtParam;
-  const firstOfSport = courtRates.find((rate) => rate.activity === sportParam);
-  return firstOfSport?.id ?? '';
+): Sport | undefined {
+  const fromSport = courtRates.find(
+    (rate) => rate.activity === sportParam
+  )?.activity;
+  return fromSport ?? findCourt(courtParam ?? '')?.activity;
 }
 
-// Opciones del desplegable, armadas con map() a partir de las canchas.
-export const courtOptions: SelectOption[] = courtRates.map((rate) => ({
-  value: rate.id,
-  label: rate.name,
-}));
+// Las canchas que se pueden elegir: solo las del deporte, o todas.
+export function getCourtsForSport(sport?: Sport): CourtRate[] {
+  return sport
+    ? courtRates.filter((rate) => rate.activity === sport)
+    : courtRates;
+}
+
+// Cancha con la que arranca el formulario: la de ?cancha= si es de ese
+// deporte; si no, la primera del deporte. Sin deporte, arranca vacío.
+export function findInitialCourtId(
+  courtParam: string | null,
+  sport?: Sport
+): string {
+  const courts = getCourtsForSport(sport);
+  const fromParam = courts.find((rate) => rate.id === courtParam);
+  if (fromParam) return fromParam.id;
+  return sport ? courts[0].id : '';
+}
+
+// Opciones del desplegable, armadas con map() a partir de las canchas del
+// deporte: desde fútbol solo aparecen Fútbol 5 y Fútbol 11.
+export function getCourtOptions(sport?: Sport): SelectOption[] {
+  return getCourtsForSport(sport).map((rate) => ({
+    value: rate.id,
+    label: rate.name,
+  }));
+}
 
 // El horario de una cancha es el de su deporte (activities.ts).
 function getCourtSchedule(court: CourtRate): Schedule | undefined {

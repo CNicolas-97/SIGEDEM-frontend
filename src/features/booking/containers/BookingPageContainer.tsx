@@ -10,15 +10,17 @@ import { BookingForm } from '@/features/booking/components/BookingForm.tsx';
 import { BookingSuccess } from '@/features/booking/components/BookingSuccess.tsx';
 import { BookingSummary } from '@/features/booking/components/BookingSummary.tsx';
 import {
-  courtOptions,
   createEmptyBooking,
   findCourt,
   findInitialCourtId,
+  findSport,
   formatSlot,
   getBookingDateRange,
+  getCourtOptions,
   getDateError,
   getPrice,
   getSlots,
+  sportNames,
   validateBooking,
   type BookingErrors,
   type BookingTextField,
@@ -34,16 +36,22 @@ import {
 export function BookingPageContainer() {
   const [searchParams] = useSearchParams();
 
+  // El deporte sale de la URL y no cambia mientras se está en la página:
+  // desde fútbol solo se ofrecen canchas de fútbol.
+  const sport = findSport(
+    searchParams.get('cancha'),
+    searchParams.get('deporte')
+  );
+  const courtOptions = getCourtOptions(sport);
+  const title = sport
+    ? `Alquilá una cancha de ${sportNames[sport]}`
+    : 'Alquilá una cancha';
+
   // La hora de referencia se toma una vez, al abrir la página: así la
   // grilla no cambia sola mientras la persona completa el formulario.
   const [now] = useState(() => new Date());
   const [form, setForm] = useState<BookingFormValues>(() =>
-    createEmptyBooking(
-      findInitialCourtId(
-        searchParams.get('cancha'),
-        searchParams.get('deporte')
-      )
-    )
+    createEmptyBooking(findInitialCourtId(searchParams.get('cancha'), sport))
   );
   const [errors, setErrors] = useState<BookingErrors>({});
   const [isSent, setIsSent] = useState(false);
@@ -105,7 +113,8 @@ export function BookingPageContainer() {
   }
 
   function handleReset() {
-    setForm(createEmptyBooking());
+    // Vuelve a arrancar con una cancha del mismo deporte.
+    setForm(createEmptyBooking(findInitialCourtId(null, sport)));
     setErrors({});
     setIsSent(false);
   }
@@ -113,7 +122,7 @@ export function BookingPageContainer() {
   return (
     <>
       <Seo
-        title="Alquilá una cancha"
+        title={title}
         path="/alquilar-cancha"
         description="Reservá una cancha de fútbol 5, fútbol 11 o vóley en el Complejo Teniente Ledesma: elegí el día y el horario, y pagás en la ventanilla al llegar."
       />
@@ -121,7 +130,7 @@ export function BookingPageContainer() {
       <main className="mx-auto max-w-page px-6.5 pt-[calc(130px+env(safe-area-inset-top,0px))] pb-[110px]">
         <section id="contenido" className="mb-10">
           <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
-            Alquilá una cancha
+            {title}
           </h1>
           <p className="max-w-[52ch] text-[18px] opacity-80">
             Elegí la cancha, el día y el horario. El turno queda a tu nombre y
