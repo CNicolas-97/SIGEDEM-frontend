@@ -11,7 +11,8 @@ import type {
   SelectOption,
 } from '@/features/enrollment/model/enrollment.ts';
 
-// QUÉ ES: el formulario de inscripción: datos personales, contacto y plan.
+// QUÉ ES: el formulario para hacerse socio: datos personales, contacto y
+// plan del abono.
 // NIVEL: componente presentacional — no guarda nada. Recibe los valores y
 // los errores por props, y avisa con onFieldChange y onSubmit. El container
 // decide qué hacer (validar, y más adelante mandarlo a la base de datos).
@@ -21,7 +22,6 @@ type EnrollmentFormProps = {
   values: EnrollmentFormValues;
   errors: EnrollmentErrors;
   planOptions: SelectOption[];
-  activityOptions: SelectOption[];
   // Fecha de hoy en "AAAA-MM-DD": tope del campo de nacimiento.
   maxBirthDate: string;
   onFieldChange: (field: EnrollmentField, value: string) => void;
@@ -54,7 +54,6 @@ export function EnrollmentForm({
   values,
   errors,
   planOptions,
-  activityOptions,
   maxBirthDate,
   onFieldChange,
   onSubmit,
@@ -148,20 +147,11 @@ export function EnrollmentForm({
           error={errors.planId}
           required
         />
-        <SelectField
-          id="activity"
-          label="Actividad que más vas a usar"
-          value={values.activity}
-          onChange={(value) => onFieldChange('activity', value)}
-          options={activityOptions}
-          placeholder="Todavía no sé"
-          hint="Opcional."
-        />
       </FieldGroup>
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
         {/* type="submit": al tocarlo, el <form> dispara onSubmit. */}
-        <Button type="submit">Enviar inscripción</Button>
+        <Button type="submit">Hacerme socio</Button>
         <p className="text-[14px] opacity-60">
           Después terminás el trámite en la ventanilla.
         </p>
