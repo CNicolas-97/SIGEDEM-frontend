@@ -35,8 +35,8 @@ export function EnrollmentSuccess({
         ¡Gracias, {firstName}!
       </h2>
       <p className="text-[17px] opacity-85">
-        Anotamos tu pedido del plan <strong>{planName}</strong>. Para terminar,
-        acercate a la ventanilla del complejo ({windowHours}) con:
+        Preinscripción realizada del plan <strong>{planName}</strong>. Para
+        terminar, acercate a la ventanilla del complejo ({windowHours}) con:
       </p>
       <ul className="grid gap-2 text-[16px]">
         {/* Cada texto es distinto, así que el propio texto sirve de key. */}
