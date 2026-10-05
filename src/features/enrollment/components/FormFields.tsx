@@ -13,6 +13,9 @@ import type { SelectOption } from '@/features/enrollment/model/enrollment.ts';
 const CONTROL_CLASSES =
   'w-full rounded-[12px] border border-white/18 bg-white/6 px-4 py-3 text-[16px] text-white transition-[border-color] duration-180 ease-[ease] placeholder:text-white/40 hover:border-white/35';
 
+// Opciones de la lista desplegable: fondo oscuro del sitio y texto blanco.
+const OPTION_CLASSES = 'bg-ink text-white';
+
 type FieldShellProps = {
   id: string;
   label: string;
@@ -144,9 +147,18 @@ export function SelectField({
           error && 'border-danger'
         )}
       >
-        <option value="">{placeholder}</option>
+        {/* La lista que se abre la dibuja el navegador: en Chrome y Edge toma
+            el fondo semitransparente del <select> y queda blanca, con el
+            texto blanco encima. Por eso cada opción lleva su fondo oscuro. */}
+        <option value="" className={OPTION_CLASSES}>
+          {placeholder}
+        </option>
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option
+            key={option.value}
+            value={option.value}
+            className={OPTION_CLASSES}
+          >
             {option.label}
           </option>
         ))}
