@@ -161,7 +161,7 @@ export function getWindowChecklist(
       'Un adulto responsable, con la libreta o la partida de nacimiento'
     );
   }
-  if (form.planId === 'solo-natatorio' || form.activity === 'natacion') {
+  if (form.activity === 'natacion') {
     checklist.push('El apto médico para el natatorio');
   }
   return checklist;

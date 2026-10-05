@@ -3,26 +3,37 @@
 // DÓNDE SE USA: PlansPageContainer los filtra y los recorre con map() para
 // armar una PlanCard por cada plan.
 
-// Unión de strings: un plan solo puede ser de uno de estos tres tipos.
-export type PlanType = 'individual' | 'familiar' | 'actividad';
+// Unión de strings: un plan solo puede ser de uno de estos dos tipos.
+export type PlanType = 'individual' | 'familiar';
 
 export type Plan = {
   // Identificador único y estable: se usa como "key" al recorrer la lista.
   id: string;
   name: string;
   type: PlanType;
+  // Cuántas personas cubre (ej.: "Hasta 4 personas"). Es lo único que
+  // cambia entre los planes, junto con el precio.
+  people: string;
   // Precio por mes en pesos, como número (el formato "$ 18.000" lo arma
   // formatPrice al mostrarlo).
   monthlyPrice: number;
   description: string;
-  // Qué incluye el plan: una línea por ítem.
-  includes: string[];
   // Opcionales ("?"): no todos los planes los tienen.
   badge?: string;
   discountNote?: string;
 };
 
-// Filtro de la página: los tres tipos de plan, o "todos".
+// Lo que incluye el abono. Es igual para todos los planes, así que se
+// escribe una sola vez: cada PlanCard recorre esta misma lista con map().
+export const planBenefits: string[] = [
+  'Natatorio en turnos de nado libre',
+  'Reserva de canchas de fútbol y vóley',
+  'Escuelas de natación, fútbol y vóley',
+  'Vestuarios y duchas',
+  'Un carnet con QR por persona',
+];
+
+// Filtro de la página: los dos tipos de plan, o "todos".
 export type PlanFilter = PlanType | 'todos';
 
 // Botones del filtro. También es un array de datos: la página lo recorre con
@@ -31,7 +42,6 @@ export const planFilters: { value: PlanFilter; label: string }[] = [
   { value: 'todos', label: 'Todos' },
   { value: 'individual', label: 'Individual' },
   { value: 'familiar', label: 'Familiar' },
-  { value: 'actividad', label: 'Por actividad' },
 ];
 
 export const plans: Plan[] = [
@@ -39,76 +49,29 @@ export const plans: Plan[] = [
     id: 'individual',
     name: 'Individual',
     type: 'individual',
+    people: '1 persona',
     monthlyPrice: 18000,
-    description: 'Acceso libre a todo el complejo para una persona.',
-    includes: [
-      'Natatorio en turnos de nado libre',
-      'Reserva de canchas de fútbol y vóley',
-      'Vestuarios y duchas',
-    ],
-  },
-  {
-    id: 'individual-jubilado',
-    name: 'Jubilado o pensionado',
-    type: 'individual',
-    monthlyPrice: 9000,
-    description: 'El plan individual completo, a mitad de precio.',
-    includes: [
-      'Natatorio en turnos de nado libre',
-      'Gimnasia acuática por la mañana',
-      'Vestuarios y duchas',
-    ],
-    discountNote: '50 % de descuento presentando el carnet de jubilado.',
+    description: 'Acceso completo al complejo para una persona.',
+    discountNote:
+      'Jubilados y pensionados: 50 % de descuento presentando el carnet.',
   },
   {
     id: 'familiar',
     name: 'Familiar',
     type: 'familiar',
+    people: 'Hasta 4 personas',
     monthlyPrice: 42000,
-    description: 'Hasta cuatro integrantes del mismo grupo familiar.',
-    includes: [
-      'Todo lo del plan individual para cada integrante',
-      'Escuela de natación para los menores',
-      'Un carnet con QR por persona',
-    ],
+    description: 'Para el grupo familiar que vive en la misma casa.',
     badge: 'Más elegido',
   },
   {
     id: 'familia-numerosa',
     name: 'Familia numerosa',
     type: 'familiar',
+    people: '5 personas o más',
     monthlyPrice: 50000,
-    description: 'Para grupos familiares de cinco integrantes o más.',
-    includes: [
-      'Todo lo del plan familiar',
-      'Sin costo extra desde el quinto integrante',
-      'Prioridad en la inscripción a las escuelas',
-    ],
+    description: 'Sin costo extra desde el quinto integrante.',
     discountNote: 'Se acredita con la libreta o las partidas de nacimiento.',
-  },
-  {
-    id: 'solo-natatorio',
-    name: 'Solo natatorio',
-    type: 'actividad',
-    monthlyPrice: 14000,
-    description: 'Para quien viene únicamente a nadar.',
-    includes: [
-      'Turnos de nado libre de 45 minutos',
-      'Reserva desde la app',
-      'Requiere apto médico',
-    ],
-  },
-  {
-    id: 'escuela-deportiva',
-    name: 'Escuela deportiva',
-    type: 'actividad',
-    monthlyPrice: 11000,
-    description: 'Una comisión de fútbol o vóley, dos veces por semana.',
-    includes: [
-      'Entrenadores del complejo',
-      'Categorías desde los 6 años',
-      'Torneos durante la temporada',
-    ],
   },
 ];
 
