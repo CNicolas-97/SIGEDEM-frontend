@@ -1,11 +1,11 @@
-import { BallIcon } from '@/features/plans/components/BallIcon.tsx';
-import type { CourtRate } from '@/features/plans/model/courts.ts';
+import { BallIcon } from '@/features/landing/components/BallIcon.tsx';
+import type { CourtRate } from '@/features/landing/model/courts.ts';
 import { formatPrice } from '@/features/plans/model/plans.ts';
 
 // QUÉ ES: la tabla de precios por hora de las canchas de UN deporte.
 // NIVEL: componente presentacional — recibe el título y las canchas por
 // props y las recorre con map(), una fila por cancha.
-// DÓNDE SE USA: en PlansPageContainer, una vez por deporte (fútbol y vóley).
+// DÓNDE SE USA: en ActivityDetail, en la página de fútbol y en la de vóley.
 
 type CourtRatesTableProps = {
   // Qué deporte es: elige la pelota que va al lado del título.

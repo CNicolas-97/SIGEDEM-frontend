@@ -2,8 +2,8 @@ import type { ActivitySlug } from '@/features/landing/model/activities.ts';
 
 // QUÉ ES: lo que cuesta alquilar una cancha de fútbol o de vóley por hora.
 // NIVEL: model — datos y tipos, sin JSX.
-// DÓNDE SE USA: PlansPageContainer arma una tabla por deporte, debajo de los
-// planes del abono.
+// DÓNDE SE USA: la sección de fútbol y de vóley del inicio muestra el precio
+// más bajo, y la página de cada deporte (/actividades/:slug) la tabla completa.
 
 export type CourtRate = {
   // Identificador único: se usa como "key" al recorrer la lista.
@@ -54,24 +54,15 @@ export const courtRates: CourtRate[] = [
   },
 ];
 
-// Un grupo por deporte: el título de la tabla y sus canchas.
-export type CourtGroup = {
-  activity: CourtRate['activity'];
-  title: string;
-  rates: CourtRate[];
-};
+// Las canchas de un deporte. filter() devuelve un array NUEVO solo con las
+// que cumplen la condición: para natación queda vacío, porque no tiene
+// canchas para alquilar.
+export function getCourtRates(slug: ActivitySlug): CourtRate[] {
+  return courtRates.filter((rate) => rate.activity === slug);
+}
 
-// filter() separa las canchas de cada deporte. Si se agrega una cancha a
-// courtRates, aparece sola en la tabla que le corresponde.
-export const courtGroups: CourtGroup[] = [
-  {
-    activity: 'futbol',
-    title: 'Fútbol',
-    rates: courtRates.filter((rate) => rate.activity === 'futbol'),
-  },
-  {
-    activity: 'voley',
-    title: 'Vóley',
-    rates: courtRates.filter((rate) => rate.activity === 'voley'),
-  },
-];
+// El precio de socio más barato, para el "desde $ ..." del inicio.
+// Math.min recibe los números sueltos: el "..." los saca del array.
+export function getLowestMemberPrice(rates: CourtRate[]): number {
+  return Math.min(...rates.map((rate) => rate.memberPrice));
+}

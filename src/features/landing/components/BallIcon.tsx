@@ -1,9 +1,9 @@
 import { useId } from 'react';
-import type { CourtRate } from '@/features/plans/model/courts.ts';
+import type { CourtRate } from '@/features/landing/model/courts.ts';
 
 // QUÉ ES: la pelota de cada deporte, dibujada como SVG (sin librerías).
 // NIVEL: componente presentacional mínimo.
-// DÓNDE SE USA: en CourtRatesTable, al lado del título de cada tabla.
+// DÓNDE SE USA: en CourtRatesTable, al lado del título de la tabla.
 // Como los íconos del footer, usa stroke="currentColor": toma el color del
 // texto que la rodea.
 
