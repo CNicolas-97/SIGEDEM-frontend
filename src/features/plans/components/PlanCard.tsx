@@ -5,19 +5,29 @@ import { formatPrice, type Plan } from '@/features/plans/model/plans.ts';
 // QUÉ ES: la tarjeta de UN plan: nombre, precio, qué incluye y un botón.
 // NIVEL: componente presentacional — arma la tarjeta con los componentes
 // genéricos Card y Button, pasándoles props.
-// DÓNDE SE USA: en PlansPageContainer, dentro de plans.map(...).
+// DÓNDE SE USA: en PlansPageContainer, dentro de plans.map(...), y en la
+// inscripción como resumen del plan elegido.
 
 type PlanCardProps = {
   plan: Plan;
+  // Opcional. false = sin el botón "Quiero este plan" (en la inscripción el
+  // plan ya está elegido).
+  showAction?: boolean;
 };
 
-export function PlanCard({ plan }: PlanCardProps) {
+export function PlanCard({ plan, showAction = true }: PlanCardProps) {
   return (
     <Card
       title={plan.name}
       description={plan.description}
       eyebrow={plan.badge}
-      footer={<Button to="/#pasos">Quiero este plan</Button>}
+      // ?plan=...: la inscripción lee este dato de la URL y deja el plan
+      // elegido en el formulario.
+      footer={
+        showAction && (
+          <Button to={`/inscripcion?plan=${plan.id}`}>Quiero este plan</Button>
+        )
+      }
     >
       {/* Todo lo que va entre <Card> y </Card> le llega como "children". */}
       <p className="mt-1 font-display text-[34px] leading-none text-accent tabular-nums">
