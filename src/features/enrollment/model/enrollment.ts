@@ -1,5 +1,3 @@
-import type { ActivitySlug } from '@/features/landing/model/activities.ts';
-import { activities } from '@/features/landing/model/activities.ts';
 import { formatPrice, plans } from '@/features/plans/model/plans.ts';
 
 // QUÉ ES: los datos del formulario de inscripción, sus opciones y la
@@ -21,8 +19,6 @@ export type EnrollmentForm = {
   phone: string;
   // El id de un plan de plans.ts, o '' si todavía no eligió.
   planId: string;
-  // Opcional: '' = "todavía no sé".
-  activity: ActivitySlug | '';
 };
 
 // keyof: la unión de los nombres de los campos ('firstName' | 'lastName' | ...).
@@ -48,7 +44,6 @@ export function createEmptyEnrollment(planId = ''): EnrollmentForm {
     email: '',
     phone: '',
     planId,
-    activity: '',
   };
 }
 
@@ -58,16 +53,11 @@ export function findPlanId(value: string | null): string {
   return plans.some((plan) => plan.id === value) ? (value ?? '') : '';
 }
 
-// Las opciones se arman con map() a partir de los datos que ya existen: si
-// se agrega un plan o una actividad, aparece solo en el formulario.
+// Las opciones del desplegable se arman con map() a partir de los planes: si
+// se agrega un plan, aparece solo en el formulario.
 export const planOptions: SelectOption[] = plans.map((plan) => ({
   value: plan.id,
   label: `${plan.name} · ${formatPrice(plan.monthlyPrice)} por mes`,
-}));
-
-export const activityOptions: SelectOption[] = activities.map((activity) => ({
-  value: activity.slug,
-  label: activity.name,
 }));
 
 // Convierte "AAAA-MM-DD" en una fecha. Se arma con los números (y no con
@@ -150,7 +140,7 @@ export function validateEnrollment(
 }
 
 // Lo que tiene que llevar a la ventanilla para terminar el trámite. Depende
-// de la edad y de la actividad, así que se calcula a partir del formulario.
+// de la edad, así que se calcula a partir del formulario.
 export function getWindowChecklist(
   form: EnrollmentForm,
   today: Date
@@ -161,8 +151,7 @@ export function getWindowChecklist(
       'Un adulto responsable, con la libreta o la partida de nacimiento'
     );
   }
-  if (form.activity === 'natacion') {
-    checklist.push('El apto médico para el natatorio');
-  }
+  // Todos los planes incluyen el natatorio, así que el apto médico va siempre.
+  checklist.push('El apto médico, si vas a usar el natatorio');
   return checklist;
 }

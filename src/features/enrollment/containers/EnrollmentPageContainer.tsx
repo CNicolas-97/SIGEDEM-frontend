@@ -10,7 +10,6 @@ import { EnrollmentForm } from '@/features/enrollment/components/EnrollmentForm.
 import { EnrollmentSuccess } from '@/features/enrollment/components/EnrollmentSuccess.tsx';
 import { PlanSummary } from '@/features/enrollment/components/PlanSummary.tsx';
 import {
-  activityOptions,
   createEmptyEnrollment,
   findPlanId,
   getWindowChecklist,
@@ -22,7 +21,7 @@ import {
   type EnrollmentForm as EnrollmentFormValues,
 } from '@/features/enrollment/model/enrollment.ts';
 
-// QUÉ ES: la página de inscripción (/inscripcion).
+// QUÉ ES: la página para hacerse socio del complejo (/inscripcion).
 // NIVEL: container (página) — guarda en el estado lo que se va escribiendo,
 // lo valida al enviar y elige qué mostrar: el formulario o el mensaje de
 // "listo". Los componentes de components/ solo dibujan.
@@ -90,7 +89,7 @@ export function EnrollmentPageContainer() {
   return (
     <>
       <Seo
-        title="Inscripción"
+        title="Hacete socio"
         path="/inscripcion"
         description="Inscribite al abono del Complejo Teniente Ledesma: completá tus datos, elegí el plan y terminá el trámite en la ventanilla con tu DNI."
       />
@@ -99,11 +98,11 @@ export function EnrollmentPageContainer() {
         {/* id="contenido": el bloque que toma los colores de la página. */}
         <section id="contenido" className="mb-10">
           <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
-            Inscripción
+            Hacete socio
           </h1>
           <p className="max-w-[52ch] text-[18px] opacity-80">
-            Completá tus datos y elegí el plan. Después pasás por la ventanilla
-            con tu DNI y te llevás el carnet.
+            Completá tus datos y elegí el plan del abono. Después pasás por la
+            ventanilla con tu DNI y te llevás el carnet de socio.
           </p>
         </section>
 
@@ -123,7 +122,6 @@ export function EnrollmentPageContainer() {
               values={form}
               errors={errors}
               planOptions={planOptions}
-              activityOptions={activityOptions}
               maxBirthDate={toDateInputValue(today)}
               onFieldChange={handleFieldChange}
               onSubmit={handleSubmit}
