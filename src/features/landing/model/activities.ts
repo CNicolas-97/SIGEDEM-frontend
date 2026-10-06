@@ -33,25 +33,22 @@ export type Schedule = {
   closesAt: number;
 };
 
-// Datos del frente del carnet. Son de EJEMPLO (no hay socios reales todavía):
-// el carnet los muestra con la aclaración "Datos de ejemplo".
-// Van sin prefijo ("04127", "03/2027"): las etiquetas las pone el carnet.
-// Colores del carnet: un degradé de dos tonos de la instalación (from → to)
-// para la franja de datos y un color "pop" para la etiqueta con el nombre.
-// El texto de la franja es tinta: los dos tonos son claros a propósito.
-export type MemberCardColors = {
+// Colores de la tarjeta: un degradé de dos tonos de la instalación
+// (from → to) para la franja de abajo y un color "pop" para la etiqueta con
+// el nombre. El texto de la franja es tinta: los dos tonos son claros a
+// propósito.
+export type CardColors = {
   from: string;
   to: string;
   pop: string;
   popText: string;
 };
 
-export type MemberCard = {
-  memberNumber: string;
-  category: string;
+// Datos de la tarjeta de la home (ver ActivityCard).
+export type ActivityCardInfo = {
+  // Instalación principal: "Pileta semiolímpica", "Cancha de once"...
   facility: string;
-  validUntil: string;
-  colors: MemberCardColors;
+  colors: CardColors;
 };
 
 export type Activity = {
@@ -68,8 +65,8 @@ export type Activity = {
   // Colores de la sección (ver sectionTheme.ts).
   theme: SectionTheme;
   image: ActivityImage;
-  // Carnet de ejemplo que se ve en la home (ver ActivityCard).
-  memberCard: MemberCard;
+  // Tarjeta que se ve en la home (ver ActivityCard).
+  card: ActivityCardInfo;
 };
 
 // Foto de la tarjeta. Cada foto está exportada en WebP y en dos anchos:
@@ -142,11 +139,8 @@ export const activities: Activity[] = [
       accent: '#2FA7B4',
       glowA: '#4FC3C9',
     },
-    memberCard: {
-      memberNumber: '04127',
-      category: 'Socio familiar',
+    card: {
       facility: 'Pileta semiolímpica',
-      validUntil: '03/2027',
       colors: {
         from: '#7FDCE3',
         to: '#3FB6F2',
@@ -210,11 +204,8 @@ export const activities: Activity[] = [
       accent: '#8DBA5A',
       glowA: '#5E8C3A',
     },
-    memberCard: {
-      memberNumber: '02318',
-      category: 'Socio adulto',
+    card: {
       facility: 'Cancha de once',
-      validUntil: '12/2026',
       colors: {
         from: '#C6E77A',
         to: '#7FC25A',
@@ -279,11 +270,8 @@ export const activities: Activity[] = [
       accent: '#D9B77A',
       glowA: '#A8703A',
     },
-    memberCard: {
-      memberNumber: '05764',
-      category: 'Socio juvenil',
+    card: {
       facility: 'Cancha cubierta',
-      validUntil: '06/2027',
       colors: {
         from: '#F7D58E',
         to: '#F2994A',

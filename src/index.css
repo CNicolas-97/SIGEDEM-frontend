@@ -43,8 +43,8 @@
   --breakpoint-laptop: 941px;
   --breakpoint-desktop: 1081px;
 
-  /* Curva única de movimiento (600ms): giro del carnet, cifras y líneas. */
-  --ease-carnet: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Curva única de movimiento (600ms): giro de las tarjetas, cifras y líneas. */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-pull: pull 2.4s ease-in-out infinite;
 

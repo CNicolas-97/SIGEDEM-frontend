@@ -13,7 +13,7 @@ type StatListProps = {
   stats: Stat[];
 };
 
-// Misma duración y curva que el resto del sitio (--ease-carnet en index.css).
+// Misma duración y curva que el resto del sitio (--ease-smooth en index.css).
 const COUNT_DURATION = 600;
 function easeOut(t: number) {
   // Aproximación de cubic-bezier(0.22, 1, 0.36, 1): arranca rápido y frena.
@@ -80,10 +80,10 @@ export function StatList({ stats }: StatListProps) {
     <ul ref={listRef} className="mb-[34px] grid">
       {stats.map((stat) => (
         // before: línea de acento que se dibuja sobre el borde al pasar el
-        // mouse por la fila (misma duración y curva que el carnet).
+        // mouse por la fila (misma duración y curva que la tarjeta).
         <li
           key={stat.label}
-          className="relative grid grid-cols-[auto_1fr] items-baseline gap-[18px] border-t border-white/18 py-[15px] before:absolute before:inset-x-0 before:-top-px before:h-0.5 before:origin-left before:scale-x-0 before:bg-accent before:transition-transform before:duration-600 before:ease-carnet last:border-b hover:before:scale-x-100"
+          className="relative grid grid-cols-[auto_1fr] items-baseline gap-[18px] border-t border-white/18 py-[15px] before:absolute before:inset-x-0 before:-top-px before:h-0.5 before:origin-left before:scale-x-0 before:bg-accent before:transition-transform before:duration-600 before:ease-smooth last:border-b hover:before:scale-x-100"
         >
           <span className="min-w-[2.6ch] font-display text-[27px] leading-[0.94] tracking-[-0.02em] text-accent tabular-nums">
             <CountUp value={stat.value} active={inView} />

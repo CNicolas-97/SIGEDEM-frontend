@@ -89,30 +89,30 @@
   }
 }
 
-/* ---------- carnet de cada actividad (ActivityCard) ---------- */
+/* ---------- tarjeta de cada actividad (ActivityCard) ---------- */
 /* Las dos caras están apiladas; el contenedor gira 180° para mostrar la de
    atrás. backface-visibility: hidden oculta la cara que queda de espaldas. */
-.carnet-inner {
+.flip-inner {
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 600ms var(--ease-carnet);
+  transition: transform 600ms var(--ease-smooth);
 }
-.carnet-inner[data-flipped='true'] {
+.flip-inner[data-flipped='true'] {
   transform: rotateY(180deg);
 }
-.carnet-face {
+.flip-face {
   position: absolute;
   inset: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-.carnet-back {
+.flip-back {
   transform: rotateY(180deg);
 }
 
 /* Menos movimiento: las caras cambian al instante, sin giro animado. */
 @media (prefers-reduced-motion: reduce) {
-  .carnet-inner {
+  .flip-inner {
     transition: none;
   }
 }
@@ -124,7 +124,7 @@
 .court-draw .court-line {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1200ms var(--ease-carnet);
+  transition: stroke-dashoffset 1200ms var(--ease-smooth);
 }
 .court-draw[data-in-view='true'] .court-line {
   stroke-dashoffset: 0;
@@ -135,8 +135,8 @@
   opacity: 0;
   transform: translateX(-60px);
   transition:
-    opacity 1200ms var(--ease-carnet),
-    transform 1200ms var(--ease-carnet);
+    opacity 1200ms var(--ease-smooth),
+    transform 1200ms var(--ease-smooth);
   transition-delay: calc(var(--lane, 0) * 90ms);
 }
 .court-draw[data-in-view='true'] .court-lane {

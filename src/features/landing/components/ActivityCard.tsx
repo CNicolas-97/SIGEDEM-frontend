@@ -9,15 +9,16 @@ import {
 } from '@/features/landing/model/schedule.ts';
 import { cn } from '@/shared/lib/cn.ts';
 
-// QUÉ ES: el carnet de socio de una actividad. El frente es la credencial
-// (foto + datos de ejemplo) y el dorso muestra el horario de hoy, si está
-// abierto y el link a la página de la actividad.
+// QUÉ ES: la tarjeta de una actividad en la home. El frente muestra la foto,
+// el nombre y la instalación con el horario de hoy; el dorso, el horario en
+// detalle, lo que hay que saber y el link a la página de la actividad.
+// (No es un carnet: el complejo tiene un solo carnet para todo.)
 // NIVEL: componente presentacional. El único estado que guarda es de la
-// interfaz: si el carnet está dado vuelta y la fecha al abrir la página.
+// interfaz: si la tarjeta está dada vuelta y la fecha al abrir la página.
 // DÓNDE SE USA: en ActivitySection (home). La página de detalle sigue usando
 // ActivityPhoto.
 // CÓMO FUNCIONA: las dos caras están apiladas; la de atrás arranca girada
-// 180°. Al dar vuelta, el contenedor (.carnet-inner, en landing.css) gira
+// 180°. Al dar vuelta, el contenedor (.flip-inner, en landing.css) gira
 // 180° y queda adelante la otra cara. La cara que no se ve lleva "inert":
 // no recibe foco ni clicks y los lectores de pantalla la ignoran.
 // Con el mouse se da vuelta al pasar por encima; con dedo o teclado, con el
@@ -27,19 +28,14 @@ type ActivityCardProps = {
   activity: Activity;
 };
 
-// Los tamaños usan "cqw" (1 % del ancho del carnet, ver @container abajo):
-// el texto crece con el carnet y no queda una tira vacía en pantallas anchas.
-// max(9px, ...) evita que en el celular quede ilegible.
-// Etiqueta chiquita en mayúsculas de cada dato del carnet.
-const FIELD_LABEL_CLASSES =
-  'block text-[length:max(11px,2.3cqw)] font-semibold opacity-70';
-const FIELD_VALUE_CLASSES =
-  'block font-display text-[length:max(15px,3.9cqw)] leading-tight text-balance';
+// Los tamaños usan "cqw" (1 % del ancho de la tarjeta, ver @container
+// abajo): el texto crece con la tarjeta y no queda una tira vacía en
+// pantallas anchas. max(9px, ...) evita que en el celular quede ilegible.
 const TINY_UPPER_CLASSES =
   'text-[length:max(9px,2cqw)] font-semibold tracking-[0.1em] uppercase';
 // Marcas de la regla del día en el dorso.
 const DAY_MARKS = [0, 6, 12, 18, 24];
-// Anillo de foco que sigue las esquinas redondeadas del carnet.
+// Anillo de foco que sigue las esquinas redondeadas de la tarjeta.
 const FOCUS_CLASSES =
   'focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent';
 
@@ -50,8 +46,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   // Hora con decimales (14:30 = 14.5) para ubicar la rayita de "ahora".
   const nowHour = now.getHours() + now.getMinutes() / 60;
   const status = getOpeningStatus(activity.schedule, now.getHours());
-  const { memberCard } = activity;
-  const { colors } = memberCard;
+  const { facility, colors } = activity.card;
   // Botones de cada cara: al dar vuelta con click o teclado, el foco pasa a
   // la otra cara (la que quedó oculta se vuelve inert y lo perdería).
   const frontButtonRef = useRef<HTMLButtonElement>(null);
@@ -68,7 +63,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
     frontButtonRef.current?.focus({ preventScroll: true });
   }
 
-  // Solo el mouse da vuelta el carnet al pasar: en el celular el "hover" se
+  // Solo el mouse da vuelta la tarjeta al pasar: en el celular el "hover" se
   // dispara al tocar y pelearía con el click del botón.
   function handlePointerEnter(event: PointerEvent) {
     if (event.pointerType === 'mouse') setFlipped(true);
@@ -77,7 +72,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
     if (event.pointerType === 'mouse') setFlipped(false);
   }
 
-  // El acento de ESTA actividad queda fijo en el carnet (franja, botón y
+  // El acento de ESTA actividad queda fijo en la tarjeta (franja, botón y
   // foco), aunque el resto de la página ya haya cambiado de sección.
   const cardStyle = { '--accent': activity.theme.accent } as CSSProperties;
 
@@ -95,10 +90,10 @@ export function ActivityCard({ activity }: ActivityCardProps) {
         className="shot-tilt relative aspect-[4/5] transform-3d will-change-transform"
         data-tilt
       >
-        <div className="carnet-inner size-full" data-flipped={flipped}>
+        <div className="flip-inner size-full" data-flipped={flipped}>
           {/* ---------- FRENTE ---------- */}
           <div
-            className="carnet-face flex flex-col overflow-hidden rounded-[26px] bg-cream text-ink shadow-[0_50px_100px] shadow-black/50"
+            className="flip-face flex flex-col overflow-hidden rounded-[26px] bg-cream text-ink shadow-[0_50px_100px] shadow-black/50"
             inert={flipped}
           >
             <div className="relative min-h-0 flex-1 bg-abyss">
@@ -131,46 +126,35 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               </span>
             </div>
 
-            {/* Franja con los datos de socio: degradé de los dos tonos de
-                la instalación (ver MemberCardColors). */}
+            {/* Franja de abajo: degradé de los dos tonos de la instalación
+                (ver CardColors), con la instalación y el horario de hoy. */}
             <div
-              className="flex flex-none flex-col gap-[max(10px,2.6cqw)] px-[max(16px,4.5cqw)] pt-[max(10px,3cqw)] pb-[max(10px,2.6cqw)]"
+              className="flex flex-none flex-col gap-[max(6px,1.6cqw)] px-[max(16px,4.5cqw)] pt-[max(12px,3cqw)] pb-[max(14px,3.4cqw)]"
               style={{
                 backgroundImage: `linear-gradient(120deg, ${colors.from}, ${colors.to})`,
               }}
             >
-              <p className="flex items-center justify-between gap-3 text-[length:max(11px,2.3cqw)] font-bold">
-                <span className="truncate">Complejo Municipal Teniente Ledesma</span>
-                <span className="flex-none rounded-full bg-ink/12 px-2 py-0.5 font-semibold">
-                  Ejemplo
+              <p className="font-display text-[length:max(18px,5cqw)] leading-tight text-balance">
+                {facility}
+              </p>
+              <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[length:max(14px,3cqw)] font-semibold">
+                <span className="tabular-nums">
+                  Hoy {formatSchedule(activity.schedule)}
+                </span>
+                <span
+                  className={cn(
+                    'inline-flex flex-none items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[length:max(12px,2.4cqw)] font-semibold text-white',
+                    status.isOpen ? 'bg-open' : 'bg-closed'
+                  )}
+                >
+                  <span className="size-1.5 rounded-full bg-white" />
+                  {status.label}
                 </span>
               </p>
-              <dl className="grid grid-cols-2 gap-x-4 gap-y-[max(6px,1.8cqw)]">
-                <div className="min-w-0">
-                  <dt className={FIELD_LABEL_CLASSES}>Socio N.º</dt>
-                  <dd className={cn(FIELD_VALUE_CLASSES, 'tabular-nums')}>
-                    {memberCard.memberNumber}
-                  </dd>
-                </div>
-                <div className="min-w-0">
-                  <dt className={FIELD_LABEL_CLASSES}>Categoría</dt>
-                  <dd className={FIELD_VALUE_CLASSES}>{memberCard.category}</dd>
-                </div>
-                <div className="min-w-0">
-                  <dt className={FIELD_LABEL_CLASSES}>Instalación</dt>
-                  <dd className={FIELD_VALUE_CLASSES}>{memberCard.facility}</dd>
-                </div>
-                <div className="min-w-0">
-                  <dt className={FIELD_LABEL_CLASSES}>Vence</dt>
-                  <dd className={cn(FIELD_VALUE_CLASSES, 'tabular-nums')}>
-                    {memberCard.validUntil}
-                  </dd>
-                </div>
-              </dl>
             </div>
 
             {/* El botón tapa todo el frente: un click/toque en cualquier
-                parte da vuelta el carnet. Va aparte del contenido para que
+                parte da vuelta la tarjeta. Va aparte del contenido para que
                 el lector de pantalla lea igual la foto y los datos. */}
             <button
               type="button"
@@ -187,12 +171,10 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 
           {/* ---------- DORSO ---------- */}
           <div
-            className="carnet-face carnet-back flex flex-col overflow-hidden rounded-[26px] bg-cream p-[max(20px,6cqw)] text-ink shadow-[0_50px_100px] shadow-black/50"
+            className="flip-face flip-back flex flex-col overflow-hidden rounded-[26px] bg-cream p-[max(20px,6cqw)] text-ink shadow-[0_50px_100px] shadow-black/50"
             inert={!flipped}
           >
-            <p className={TINY_UPPER_CLASSES}>
-              Complejo Municipal Teniente Ledesma
-            </p>
+            <p className={TINY_UPPER_CLASSES}>{facility}</p>
             <span
               className="mt-2 block h-1.5 rounded-full"
               style={{
@@ -249,14 +231,14 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             </div>
 
             {/* Lo que hay que saber de la actividad: en la home no aparece
-                en otro lado (las cifras ya están al costado del carnet). */}
+                en otro lado (las cifras ya están al costado de la tarjeta). */}
             <ul className="mt-[max(18px,6cqw)] grid grid-cols-2 gap-x-[max(14px,4cqw)] gap-y-[max(10px,3cqw)] border-t border-ink/15 pt-[max(12px,3cqw)]">
               {activity.highlights.slice(0, 4).map((highlight) => (
                 <li key={highlight.title} className="min-w-0">
                   <span className="block text-[length:max(14px,3cqw)] leading-tight font-bold">
                     {highlight.title}
                   </span>
-                  {/* La descripción solo entra cuando el carnet es ancho. */}
+                  {/* La descripción solo entra cuando la tarjeta es ancha. */}
                   <span className="mt-1 hidden text-[length:max(12px,2.4cqw)] leading-snug opacity-75 @md:block">
                     {highlight.description}
                   </span>
@@ -277,7 +259,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                   FOCUS_CLASSES
                 )}
               >
-                Volver al carnet
+                Volver a la foto
               </button>
             </div>
           </div>
