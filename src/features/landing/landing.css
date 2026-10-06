@@ -45,10 +45,10 @@
   z-index: 2;
   pointer-events: none;
   background: radial-gradient(
-    58% 38% at 50% 54%,
-    rgba(239, 234, 220, 0.93) 0%,
-    rgba(239, 234, 220, 0.6) 52%,
-    transparent 82%
+    46% 44% at 50% 54%,
+    rgba(239, 234, 220, 0.92) 0%,
+    rgba(239, 234, 220, 0.72) 55%,
+    transparent 100%
   );
 }
 
