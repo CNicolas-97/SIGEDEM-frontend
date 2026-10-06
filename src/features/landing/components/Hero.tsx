@@ -38,7 +38,7 @@ export function Hero({ activities, now }: HeroProps) {
     <section
       ref={sectionRef}
       data-inview={inView}
-      className="reveal-group hero-veil relative isolate flex min-h-svh flex-col justify-center overflow-hidden bg-sand px-6.5 pt-30 max-tablet:px-5.5 max-tablet:pt-26 max-tablet:pb-[110px]"
+      className="reveal-group hero-veil relative isolate touch-pan-y touch-pinch-zoom flex min-h-svh flex-col justify-center overflow-hidden bg-sand px-6.5 pt-30 max-tablet:px-5.5 max-tablet:pt-26 max-tablet:pb-[110px]"
       id="hero"
     >
       {/* La escena aparece primero, con un fundido desde el crema. Ocupa
