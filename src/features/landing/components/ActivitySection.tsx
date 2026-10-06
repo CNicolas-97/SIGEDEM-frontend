@@ -18,7 +18,14 @@ export function ActivitySection({ activity }: ActivitySectionProps) {
   // "--sec" es una variable CSS con el color de fondo de la sección (la usa
   // la utilidad bg-section, definida en index.css). TypeScript no conoce las variables CSS inventadas por
   // nosotros, por eso le aclaramos el tipo con "as CSSProperties".
-  const sectionStyle = { '--sec': activity.theme.bg } as CSSProperties;
+  const { bg, bgTo = bg } = activity.theme;
+  // Fondo en dos tonos: degradé diagonal de bg a bgTo, con la misma
+  // transparencia (88 %) que tenía el color liso para que se vea el brillo
+  // de atrás.
+  const sectionStyle = {
+    '--sec': bg,
+    backgroundImage: `linear-gradient(135deg, color-mix(in srgb, ${bg} 88%, transparent) 15%, color-mix(in srgb, ${bgTo} 88%, transparent) 85%)`,
+  } as CSSProperties;
 
   return (
     // El id es el slug: así funcionan los links "#natacion", "#futbol"...

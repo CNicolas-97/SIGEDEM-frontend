@@ -134,9 +134,11 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver el natatorio',
     schedule: { opensAt: 7, closesAt: 21 },
     theme: {
-      // Agua de la pileta: verde azulado profundo con el acento "pileta".
+      // Agua de la pileta: verde azulado profundo que va a azul noche, con el
+      // acento "pileta".
       // #0B3540 (y no más claro) para que el acento como texto pase 4,5:1.
       bg: '#0B3540',
+      bgTo: '#0A2F5C',
       accent: '#2FA7B4',
       glowA: '#4FC3C9',
     },
@@ -201,8 +203,10 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver las canchas',
     schedule: { opensAt: 9, closesAt: 23 },
     theme: {
-      // Pasto de la cancha: verde oscuro con un acento de pasto más claro.
+      // Pasto de la cancha: verde oscuro que va al azul de la noche (canchas
+      // iluminadas), con un acento de pasto más claro.
       bg: '#1E3518',
+      bgTo: '#14243A',
       accent: '#8DBA5A',
       glowA: '#5E8C3A',
     },
@@ -268,8 +272,10 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver las comisiones',
     schedule: { opensAt: 16, closesAt: 22 },
     theme: {
-      // Tierra y arena del vóley playa: marrón profundo con acento "arena".
+      // Tierra y arena del vóley playa: marrón profundo que va a bordó, con
+      // acento "arena".
       bg: '#4A2B16',
+      bgTo: '#5A1F2A',
       accent: '#D9B77A',
       glowA: '#A8703A',
     },
