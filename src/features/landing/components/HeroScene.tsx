@@ -210,11 +210,12 @@ export function HeroScene() {
   }, []);
 
   // aria-hidden: es decoración, no aporta información a un lector de pantalla.
-  // Hasta 860px de ancho el canvas termina donde empieza el tablero "Hoy".
+  // Ocupa todo su contenedor: en Hero, el hero entero en compu y un bloque
+  // debajo del texto en celular.
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 z-1 block size-full max-tablet:bottom-[238px] max-tablet:h-[calc(100%-238px)]"
+      className="absolute inset-0 z-1 block size-full"
       aria-hidden="true"
     />
   );

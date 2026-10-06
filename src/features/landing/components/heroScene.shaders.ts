@@ -37,15 +37,12 @@ float fbm(vec2 p){
   return v;
 }
 
-/* apaisado: recorte tipo cover. vertical: la escena entra entera, abajo */
+/* recorte tipo cover: la imagen siempre llena el canvas. apaisado: recorta
+   arriba y abajo; más angosto (celular): recorta los costados. */
 vec2 encuadre(vec2 uv, float esc){
   float ar = uRes.x/uRes.y;
-  if (ar >= ASPECT_IMG*0.92){
-    vec2 s = vec2(1.0, ASPECT_IMG/ar);
-    return (uv - 0.5)*s/esc + 0.5;
-  }
-  float h = (ar/ASPECT_IMG) * esc;
-  return vec2((uv.x - 0.5)/esc + 0.5, (uv.y - (1.0 - h))/h);
+  vec2 s = ar >= ASPECT_IMG ? vec2(1.0, ASPECT_IMG/ar) : vec2(ar/ASPECT_IMG, 1.0);
+  return (uv - 0.5)*s/esc + 0.5;
 }
 
 void main(){

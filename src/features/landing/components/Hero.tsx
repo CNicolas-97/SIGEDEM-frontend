@@ -38,12 +38,15 @@ export function Hero({ activities, now }: HeroProps) {
     <section
       ref={sectionRef}
       data-inview={inView}
-      className="reveal-group hero-veil relative isolate flex min-h-svh flex-col justify-center overflow-hidden bg-sand px-6.5 pt-30 max-tablet:px-5.5 max-tablet:pt-26 max-tablet:pb-[110px]"
+      className="reveal-group hero-veil relative isolate flex min-h-svh flex-col justify-center max-tablet:justify-start overflow-hidden bg-sand px-6.5 pt-30 max-tablet:px-5.5 max-tablet:pt-26 max-tablet:pb-[110px]"
       id="hero"
     >
-      {/* La escena aparece primero, con un fundido desde el crema. */}
+      {/* La escena aparece primero, con un fundido desde el crema.
+          Compu: ocupa todo el hero, detrás del texto. Celular (hasta 860px):
+          es un bloque debajo del texto, de borde a borde, que se funde con
+          el crema arriba; así el texto nunca queda encima del dibujo. */}
       <div
-        className="reveal reveal-fade absolute inset-0 z-1"
+        className="reveal reveal-fade absolute inset-0 z-1 max-tablet:relative max-tablet:inset-auto max-tablet:order-last max-tablet:-mx-5.5 max-tablet:mt-8 max-tablet:h-[42svh] max-tablet:mask-[linear-gradient(to_bottom,transparent,black_22%)]"
         style={revealOrder(0)}
       >
         <HeroScene />

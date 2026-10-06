@@ -52,6 +52,14 @@
   );
 }
 
+/* En celular el texto va sobre el crema y el dibujo debajo: el velo no hace
+   falta (y lavaría el dibujo). Mismo corte que max-tablet (860px). */
+@media (width < 861px) {
+  .hero-veil::after {
+    display: none;
+  }
+}
+
 /* Sube y se desvanece al bajar (--hero-progress va de 0 a 1). */
 .hero-content {
   transform: translateY(calc(var(--hero-progress, 0) * -50px));
@@ -110,6 +118,14 @@
   opacity: 1;
   translate: 0 0;
   scale: 1;
+}
+
+/* En celular la tarjeta ocupa todo el ancho: inclinada se corta contra el
+   borde de la pantalla, así que queda derecha. */
+@media (width < 861px) {
+  .shot-tilt {
+    transform: none;
+  }
 }
 
 /* Menos movimiento: sin efectos atados al scroll. */
