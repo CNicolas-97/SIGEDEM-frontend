@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router';
 import { Seo } from '@/shared/ui/Seo.tsx';
 import { ActivityDetail } from '@/features/landing/components/ActivityDetail.tsx';
 import { NotFoundPageContainer } from '@/features/landing/containers/NotFoundPageContainer.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { activities } from '@/features/landing/model/activities.ts';
+import { getCourtRates } from '@/features/landing/model/courts.ts';
 import { pageSections } from '@/features/landing/model/sectionTheme.ts';
 
 // QUÉ ES: la página de detalle de una actividad (/actividades/:slug).
@@ -24,6 +25,14 @@ export function ActivityDetailPageContainer() {
   // en el mismo orden, en todos los renders.
   useSectionTheme(pageSections);
 
+  // Links como "/actividades/futbol#canchas" (botón "Alquilar cancha" del
+  // inicio): igual que en la home, bajamos hasta el elemento con ese id.
+  const location = useLocation();
+  useEffect(() => {
+    if (!location.hash) return;
+    document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  }, [location]);
+
   // find() devuelve la primera actividad cuyo slug coincide, o undefined.
   const activity = activities.find((item) => item.slug === slug);
 
@@ -40,7 +49,11 @@ export function ActivityDetailPageContainer() {
         path={`/actividades/${activity.slug}`}
       />
       <main>
-        <ActivityDetail activity={activity} now={now} />
+        <ActivityDetail
+          activity={activity}
+          now={now}
+          courtRates={getCourtRates(activity.slug)}
+        />
       </main>
     </>
   );

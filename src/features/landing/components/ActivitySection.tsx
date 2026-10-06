@@ -4,6 +4,11 @@ import { CourtLines } from '@/features/landing/components/ActivityArt.tsx';
 import { ActivityPhoto } from '@/features/landing/components/ActivityPhoto.tsx';
 import { StatList } from '@/features/landing/components/StatList.tsx';
 import type { Activity } from '@/features/landing/model/activities.ts';
+import {
+  getLowestMemberPrice,
+  type CourtRate,
+} from '@/features/landing/model/courts.ts';
+import { formatPrice } from '@/features/plans/model/plans.ts';
 
 // QUÉ ES: la sección de UNA actividad (natación, fútbol o vóley).
 // NIVEL: componente presentacional reutilizable: es el mismo componente para
@@ -12,9 +17,16 @@ import type { Activity } from '@/features/landing/model/activities.ts';
 
 type ActivitySectionProps = {
   activity: Activity;
+  // Canchas para alquilar. Vacío en natación: ahí no se muestra el precio.
+  courtRates: CourtRate[];
 };
 
-export function ActivitySection({ activity }: ActivitySectionProps) {
+export function ActivitySection({
+  activity,
+  courtRates,
+}: ActivitySectionProps) {
+  const hasCourts = courtRates.length > 0;
+
   // "--sec" es una variable CSS con el color de fondo de la sección (la usa
   // la utilidad bg-section, definida en index.css). TypeScript no conoce las variables CSS inventadas por
   // nosotros, por eso le aclaramos el tipo con "as CSSProperties".
@@ -39,10 +51,32 @@ export function ActivitySection({ activity }: ActivitySectionProps) {
             {activity.description}
           </p>
           <StatList stats={activity.stats} />
-          {/* Lleva a la página de detalle: /actividades/natacion, etc. */}
-          <Button to={`/actividades/${activity.slug}`}>
-            {activity.ctaLabel}
-          </Button>
+          {/* Fútbol y vóley: el precio más bajo, como adelanto. La tabla
+              completa está en la página del deporte. */}
+          {hasCourts && (
+            <p className="mb-6 text-[17px]">
+              Alquiler de cancha desde{' '}
+              <strong className="font-display text-[20px] text-accent tabular-nums">
+                {formatPrice(getLowestMemberPrice(courtRates))}
+              </strong>{' '}
+              la hora para socios.
+            </p>
+          )}
+          <div className="flex flex-wrap gap-3">
+            {/* Lleva a la página de detalle: /actividades/natacion, etc. */}
+            <Button to={`/actividades/${activity.slug}`}>
+              {activity.ctaLabel}
+            </Button>
+            {/* "#canchas": la página del deporte baja directo a la tabla. */}
+            {hasCourts && (
+              <Button
+                to={`/actividades/${activity.slug}#canchas`}
+                variant="secondary"
+              >
+                Alquilar cancha
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </section>
