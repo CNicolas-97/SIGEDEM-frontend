@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useSearchParams } from 'react-router';
+import { toDateInputValue } from '@/shared/lib/dateInput.ts';
 import { Seo } from '@/shared/ui/Seo.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { footerContact } from '@/features/landing/model/navigation.ts';
@@ -14,7 +15,6 @@ import {
   findPlanId,
   getWindowChecklist,
   planOptions,
-  toDateInputValue,
   validateEnrollment,
   type EnrollmentErrors,
   type EnrollmentField,
