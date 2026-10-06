@@ -116,3 +116,41 @@
     transition: none;
   }
 }
+
+/* ---------- líneas de cancha que se dibujan (CourtLines) ---------- */
+/* data-in-view lo pone useInView cuando la sección aparece. Cada trazo
+   tiene pathLength="1": un guion de largo 1 desplazado 1 queda escondido;
+   al llevar el desplazamiento a 0, la línea se "dibuja". */
+.court-draw .court-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1200ms var(--ease-carnet);
+}
+.court-draw[data-in-view='true'] .court-line {
+  stroke-dashoffset: 0;
+}
+/* Sogas de la pileta: ya son punteadas, así que entran deslizándose, una
+   detrás de otra (--lane es el número de soga). */
+.court-draw .court-lane {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition:
+    opacity 1200ms var(--ease-carnet),
+    transform 1200ms var(--ease-carnet);
+  transition-delay: calc(var(--lane, 0) * 90ms);
+}
+.court-draw[data-in-view='true'] .court-lane {
+  opacity: 1;
+  transform: none;
+}
+
+/* Menos movimiento: las líneas aparecen ya dibujadas. */
+@media (prefers-reduced-motion: reduce) {
+  .court-draw .court-line,
+  .court-draw .court-lane {
+    transition: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: none;
+  }
+}
