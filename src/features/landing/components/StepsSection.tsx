@@ -28,8 +28,9 @@ export function StepsSection({ steps }: StepsSectionProps) {
               Asociarse lleva cinco minutos
             </h2>
             <p className="max-w-[52ch] text-[18px] opacity-75">
-              Se hace en la ventanilla del complejo, de lunes a sábado de 8 a
-              20. Si ya sos socio, renovás desde la app sin venir.
+              Completás la inscripción acá y la terminás en la ventanilla del
+              complejo, de lunes a sábado de 8 a 20. Si ya sos socio, renovás
+              desde la app sin venir.
             </p>
           </div>
           {/* alt vacío: es decorativa, el texto ya dice todo. */}
@@ -59,9 +60,12 @@ export function StepsSection({ steps }: StepsSectionProps) {
           ))}
         </div>
         {/* Sin colores propios: usa el acento cian, igual que el botón del header. */}
-        <Button to="/planes" className="mt-[52px]">
-          Ver planes y precios
-        </Button>
+        <div className="mt-[52px] flex flex-wrap gap-3">
+          <Button to="/inscripcion">Inscribirme</Button>
+          <Button to="/planes" variant="secondary">
+            Ver planes y precios
+          </Button>
+        </div>
       </div>
     </section>
   );
