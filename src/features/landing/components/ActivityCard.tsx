@@ -74,12 +74,17 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 
   // El acento de ESTA actividad queda fijo en la tarjeta (franja, botón y
   // foco), aunque el resto de la página ya haya cambiado de sección.
-  const cardStyle = { '--accent': activity.theme.accent } as CSSProperties;
+  // --i: 0 = la tarjeta es la primera pieza en aparecer cuando la sección
+  // se arma (ver .reveal en landing.css).
+  const cardStyle = {
+    '--accent': activity.theme.accent,
+    '--i': 0,
+  } as CSSProperties;
 
   return (
     // @container: los hijos miden su texto en "cqw" respecto de este ancho.
     <div
-      className="@container perspective-[1250px]"
+      className="reveal reveal-big @container perspective-[1250px]"
       style={cardStyle}
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
@@ -110,11 +115,14 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               />
               {/* Etiqueta tipo sticker con el nombre, en el color "pop". */}
               <p
-                className="absolute bottom-[max(14px,4cqw)] left-[max(14px,4cqw)] -rotate-2 rounded-xl px-[max(12px,3cqw)] py-[max(6px,1.6cqw)] font-display text-[length:max(28px,8.5cqw)] leading-none shadow-[0_10px_24px] shadow-black/30"
-                style={{
-                  backgroundColor: colors.pop,
-                  color: colors.popText,
-                }}
+                className="reveal reveal-pop absolute bottom-[max(14px,4cqw)] left-[max(14px,4cqw)] -rotate-2 rounded-xl px-[max(12px,3cqw)] py-[max(6px,1.6cqw)] font-display text-[length:max(28px,8.5cqw)] leading-none shadow-[0_10px_24px] shadow-black/30"
+                style={
+                  {
+                    backgroundColor: colors.pop,
+                    color: colors.popText,
+                    '--i': 1,
+                  } as CSSProperties
+                }
               >
                 {activity.name}
               </p>

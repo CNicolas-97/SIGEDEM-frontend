@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
 import type { Stat } from '@/features/landing/model/activities.ts';
 import { useInView } from '@/features/landing/hooks/useInView.ts';
 
@@ -11,6 +12,10 @@ import { useInView } from '@/features/landing/hooks/useInView.ts';
 
 type StatListProps = {
   stats: Stat[];
+  // Orden de aparición de la primera fila cuando la lista está dentro de
+  // una sección que se arma pieza por pieza (.reveal-group). Fuera de esa
+  // sección (página de detalle) no tiene efecto.
+  revealFrom?: number;
 };
 
 // Misma duración y curva que el resto del sitio (--ease-smooth en index.css).
@@ -73,17 +78,18 @@ function CountUp({ value, active }: CountUpProps) {
   );
 }
 
-export function StatList({ stats }: StatListProps) {
+export function StatList({ stats, revealFrom = 0 }: StatListProps) {
   const [listRef, inView] = useInView<HTMLUListElement>();
 
   return (
     <ul ref={listRef} className="mb-[34px] grid">
-      {stats.map((stat) => (
+      {stats.map((stat, index) => (
         // before: línea de acento que se dibuja sobre el borde al pasar el
         // mouse por la fila (misma duración y curva que la tarjeta).
         <li
           key={stat.label}
-          className="relative grid grid-cols-[auto_1fr] items-baseline gap-[18px] border-t border-white/18 py-[15px] before:absolute before:inset-x-0 before:-top-px before:h-0.5 before:origin-left before:scale-x-0 before:bg-accent before:transition-transform before:duration-600 before:ease-smooth last:border-b hover:before:scale-x-100"
+          style={{ '--i': revealFrom + index } as CSSProperties}
+          className="reveal relative grid grid-cols-[auto_1fr] items-baseline gap-[18px] border-t border-white/18 py-[15px] before:absolute before:inset-x-0 before:-top-px before:h-0.5 before:origin-left before:scale-x-0 before:bg-accent before:transition-transform before:duration-600 before:ease-smooth last:border-b hover:before:scale-x-100"
         >
           <span className="min-w-[2.6ch] font-display text-[27px] leading-[0.94] tracking-[-0.02em] text-accent tabular-nums">
             <CountUp value={stat.value} active={inView} />
