@@ -95,6 +95,11 @@
   translate: 0 60px;
   scale: 0.92;
 }
+/* Variante "fundido": no se mueve, solo aparece (la escena del hero). */
+.reveal-group .reveal-fade {
+  translate: 0 0;
+  transition-duration: 1200ms;
+}
 /* Variante "sticker": aparece de golpe, como si la pegaran. */
 .reveal-group .reveal-pop {
   translate: 0 0;
