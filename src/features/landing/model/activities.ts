@@ -35,6 +35,7 @@ export type Schedule = {
 
 // Datos del frente del carnet. Son de EJEMPLO (no hay socios reales todavía):
 // el carnet los muestra con la aclaración "Datos de ejemplo".
+// Van sin prefijo ("04127", "03/2027"): las etiquetas las pone el carnet.
 export type MemberCard = {
   memberNumber: string;
   category: string;
@@ -129,10 +130,10 @@ export const activities: Activity[] = [
       glowA: '#4FC3C9',
     },
     memberCard: {
-      memberNumber: 'N.º 04127',
+      memberNumber: '04127',
       category: 'Socio familiar',
       facility: 'Pileta semiolímpica',
-      validUntil: 'Vence 03/2027',
+      validUntil: '03/2027',
     },
     image: {
       src: natacionLarge,
@@ -189,10 +190,10 @@ export const activities: Activity[] = [
       glowA: '#5E8C3A',
     },
     memberCard: {
-      memberNumber: 'N.º 02318',
+      memberNumber: '02318',
       category: 'Socio adulto',
       facility: 'Cancha de once',
-      validUntil: 'Vence 12/2026',
+      validUntil: '12/2026',
     },
     image: {
       src: futbolLarge,
@@ -250,10 +251,10 @@ export const activities: Activity[] = [
       glowA: '#A8703A',
     },
     memberCard: {
-      memberNumber: 'N.º 05764',
+      memberNumber: '05764',
       category: 'Socio juvenil',
       facility: 'Cancha cubierta',
-      validUntil: 'Vence 06/2027',
+      validUntil: '06/2027',
     },
     image: {
       src: voleyLarge,

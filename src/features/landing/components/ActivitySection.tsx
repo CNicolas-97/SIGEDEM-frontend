@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Button } from '@/shared/ui/Button.tsx';
 import { CourtLines } from '@/features/landing/components/ActivityArt.tsx';
-import { ActivityPhoto } from '@/features/landing/components/ActivityPhoto.tsx';
+import { ActivityCard } from '@/features/landing/components/ActivityCard.tsx';
 import { StatList } from '@/features/landing/components/StatList.tsx';
 import type { Activity } from '@/features/landing/model/activities.ts';
 
@@ -30,7 +30,7 @@ export function ActivitySection({ activity }: ActivitySectionProps) {
       <CourtLines slug={activity.slug} />
       {/* Foto y texto lado a lado; hasta 940px de ancho, uno debajo del otro. */}
       <div className="relative z-1 mx-auto grid max-w-page grid-cols-[1fr] items-center gap-[clamp(34px,5.5vw,76px)] laptop:grid-cols-[1.05fr_0.95fr]">
-        <ActivityPhoto activity={activity} loading="lazy" />
+        <ActivityCard activity={activity} />
         <div>
           <h2 className="mb-5 text-[length:clamp(38px,5.6vw,66px)]">
             {activity.title}

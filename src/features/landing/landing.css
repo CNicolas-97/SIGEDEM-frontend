@@ -88,3 +88,31 @@
     transform: none;
   }
 }
+
+/* ---------- carnet de cada actividad (ActivityCard) ---------- */
+/* Las dos caras están apiladas; el contenedor gira 180° para mostrar la de
+   atrás. backface-visibility: hidden oculta la cara que queda de espaldas. */
+.carnet-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 600ms var(--ease-carnet);
+}
+.carnet-inner[data-flipped='true'] {
+  transform: rotateY(180deg);
+}
+.carnet-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.carnet-back {
+  transform: rotateY(180deg);
+}
+
+/* Menos movimiento: las caras cambian al instante, sin giro animado. */
+@media (prefers-reduced-motion: reduce) {
+  .carnet-inner {
+    transition: none;
+  }
+}
