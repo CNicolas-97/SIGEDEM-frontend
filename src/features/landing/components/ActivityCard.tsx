@@ -234,18 +234,17 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               </div>
             </div>
 
-            <ul className="mt-[max(18px,6cqw)] grid grid-cols-3 gap-[max(12px,3cqw)] border-t border-ink/15 pt-[max(12px,3cqw)]">
-              {activity.stats.map((stat) => (
-                <li key={stat.label} className="min-w-0">
-                  <span className="block font-display text-[length:max(22px,6cqw)] leading-none tabular-nums">
-                    {stat.value}
+            {/* Lo que hay que saber de la actividad: en la home no aparece
+                en otro lado (las cifras ya están al costado del carnet). */}
+            <ul className="mt-[max(18px,6cqw)] grid grid-cols-2 gap-x-[max(14px,4cqw)] gap-y-[max(10px,3cqw)] border-t border-ink/15 pt-[max(12px,3cqw)]">
+              {activity.highlights.slice(0, 4).map((highlight) => (
+                <li key={highlight.title} className="min-w-0">
+                  <span className="block text-[length:max(14px,3cqw)] leading-tight font-bold">
+                    {highlight.title}
                   </span>
-                  <span className="mt-1 block text-[length:max(12px,2.5cqw)] leading-tight font-semibold">
-                    {stat.label}
-                  </span>
-                  {/* El detalle solo entra cuando el carnet es ancho. */}
-                  <span className="mt-1 hidden text-[length:2.2cqw] leading-snug opacity-70 @md:block">
-                    {stat.detail}
+                  {/* La descripción solo entra cuando el carnet es ancho. */}
+                  <span className="mt-1 hidden text-[length:max(12px,2.4cqw)] leading-snug opacity-75 @md:block">
+                    {highlight.description}
                   </span>
                 </li>
               ))}

@@ -49,14 +49,8 @@ export function SiteFooter({ activities, contact }: SiteFooterProps) {
   return (
     // <footer>: etiqueta semántica para el cierre de la página.
     <footer className="relative z-1">
-      {/* Franja crema. Arriba, una tira con los tres colores de las
-          instalaciones (pileta, pasto y arena): es decorativa. */}
+      {/* Franja crema con el llamado a sacar el carnet. */}
       <div className="bg-cream text-ink">
-        <div className="flex h-1.5" aria-hidden="true">
-          <span className="flex-1 bg-pileta" />
-          <span className="flex-1 bg-pasto" />
-          <span className="flex-1 bg-arena" />
-        </div>
         <div className="mx-auto flex max-w-page flex-col items-start gap-6 px-6.5 py-10 tablet:flex-row tablet:items-center tablet:justify-between">
           <div>
             <p className="font-display text-[length:clamp(28px,3.6vw,42px)] leading-[0.95] tracking-[-0.02em]">
