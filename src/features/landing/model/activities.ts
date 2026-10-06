@@ -36,11 +36,22 @@ export type Schedule = {
 // Datos del frente del carnet. Son de EJEMPLO (no hay socios reales todavía):
 // el carnet los muestra con la aclaración "Datos de ejemplo".
 // Van sin prefijo ("04127", "03/2027"): las etiquetas las pone el carnet.
+// Colores del carnet: un degradé de dos tonos de la instalación (from → to)
+// para la franja de datos y un color "pop" para la etiqueta con el nombre.
+// El texto de la franja es tinta: los dos tonos son claros a propósito.
+export type MemberCardColors = {
+  from: string;
+  to: string;
+  pop: string;
+  popText: string;
+};
+
 export type MemberCard = {
   memberNumber: string;
   category: string;
   facility: string;
   validUntil: string;
+  colors: MemberCardColors;
 };
 
 export type Activity = {
@@ -134,6 +145,12 @@ export const activities: Activity[] = [
       category: 'Socio familiar',
       facility: 'Pileta semiolímpica',
       validUntil: '03/2027',
+      colors: {
+        from: '#7FDCE3',
+        to: '#3FB6F2',
+        pop: '#FFD30B',
+        popText: '#071A26',
+      },
     },
     image: {
       src: natacionLarge,
@@ -194,6 +211,12 @@ export const activities: Activity[] = [
       category: 'Socio adulto',
       facility: 'Cancha de once',
       validUntil: '12/2026',
+      colors: {
+        from: '#C6E77A',
+        to: '#7FC25A',
+        pop: '#FF8A3D',
+        popText: '#071A26',
+      },
     },
     image: {
       src: futbolLarge,
@@ -255,6 +278,12 @@ export const activities: Activity[] = [
       category: 'Socio juvenil',
       facility: 'Cancha cubierta',
       validUntil: '06/2027',
+      colors: {
+        from: '#F7D58E',
+        to: '#F2994A',
+        pop: '#0A63F4',
+        popText: '#FFFFFF',
+      },
     },
     image: {
       src: voleyLarge,

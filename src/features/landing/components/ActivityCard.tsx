@@ -32,9 +32,9 @@ type ActivityCardProps = {
 // max(9px, ...) evita que en el celular quede ilegible.
 // Etiqueta chiquita en mayúsculas de cada dato del carnet.
 const FIELD_LABEL_CLASSES =
-  'block text-[length:max(9px,2cqw)] font-semibold tracking-[0.12em] uppercase opacity-65';
+  'block text-[length:max(11px,2.3cqw)] font-semibold opacity-70';
 const FIELD_VALUE_CLASSES =
-  'block truncate text-[length:max(13px,3.3cqw)] leading-tight font-semibold';
+  'block font-display text-[length:max(15px,3.9cqw)] leading-tight text-balance';
 const TINY_UPPER_CLASSES =
   'text-[length:max(9px,2cqw)] font-semibold tracking-[0.1em] uppercase';
 // Marcas de la regla del día en el dorso.
@@ -51,6 +51,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   const nowHour = now.getHours() + now.getMinutes() / 60;
   const status = getOpeningStatus(activity.schedule, now.getHours());
   const { memberCard } = activity;
+  const { colors } = memberCard;
   // Botones de cada cara: al dar vuelta con click o teclado, el foco pasa a
   // la otra cara (la que quedó oculta se vuelve inert y lo perdería).
   const frontButtonRef = useRef<HTMLButtonElement>(null);
@@ -97,12 +98,12 @@ export function ActivityCard({ activity }: ActivityCardProps) {
         <div className="carnet-inner size-full" data-flipped={flipped}>
           {/* ---------- FRENTE ---------- */}
           <div
-            className="carnet-face overflow-hidden rounded-[26px] bg-cream text-ink shadow-[0_50px_100px] shadow-black/50"
+            className="carnet-face flex flex-col overflow-hidden rounded-[26px] bg-cream text-ink shadow-[0_50px_100px] shadow-black/50"
             inert={flipped}
           >
-            <div className="relative h-[70%] bg-abyss">
+            <div className="relative min-h-0 flex-1 bg-abyss">
               <img
-                className="absolute inset-0 size-full object-cover"
+                className="absolute inset-0 size-full object-cover brightness-[1.06] saturate-[1.2]"
                 src={activity.image.src}
                 srcSet={activity.image.srcSet}
                 sizes="(max-width: 940px) 100vw, 580px"
@@ -112,9 +113,14 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                 loading="lazy"
                 decoding="async"
               />
-              {/* Sombra abajo para que el nombre se lea sobre cualquier foto. */}
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
-              <p className="absolute bottom-4 left-5 font-display text-[length:clamp(30px,4.6vw,52px)] leading-[0.9] text-white text-shadow-[0_12px_30px] text-shadow-black/45">
+              {/* Etiqueta tipo sticker con el nombre, en el color "pop". */}
+              <p
+                className="absolute bottom-[max(14px,4cqw)] left-[max(14px,4cqw)] -rotate-2 rounded-xl px-[max(12px,3cqw)] py-[max(6px,1.6cqw)] font-display text-[length:max(28px,8.5cqw)] leading-none shadow-[0_10px_24px] shadow-black/30"
+                style={{
+                  backgroundColor: colors.pop,
+                  color: colors.popText,
+                }}
+              >
                 {activity.name}
               </p>
               <span
@@ -125,12 +131,21 @@ export function ActivityCard({ activity }: ActivityCardProps) {
               </span>
             </div>
 
-            {/* Tira de papel con los datos de socio. */}
-            <div className="flex h-[30%] flex-col justify-between border-t-4 border-accent px-[max(16px,4.5cqw)] pt-[max(8px,2.6cqw)] pb-[max(10px,3cqw)]">
-              <p className={TINY_UPPER_CLASSES}>
-                Complejo Municipal Teniente Ledesma
+            {/* Franja con los datos de socio: degradé de los dos tonos de
+                la instalación (ver MemberCardColors). */}
+            <div
+              className="flex flex-none flex-col gap-[max(10px,2.6cqw)] px-[max(16px,4.5cqw)] pt-[max(10px,3cqw)] pb-[max(10px,2.6cqw)]"
+              style={{
+                backgroundImage: `linear-gradient(120deg, ${colors.from}, ${colors.to})`,
+              }}
+            >
+              <p className="flex items-center justify-between gap-3 text-[length:max(11px,2.3cqw)] font-bold">
+                <span className="truncate">Complejo Municipal Teniente Ledesma</span>
+                <span className="flex-none rounded-full bg-ink/12 px-2 py-0.5 font-semibold">
+                  Ejemplo
+                </span>
               </p>
-              <dl className="grid grid-cols-2 gap-x-4 gap-y-[max(4px,1.6cqw)]">
+              <dl className="grid grid-cols-2 gap-x-4 gap-y-[max(6px,1.8cqw)]">
                 <div className="min-w-0">
                   <dt className={FIELD_LABEL_CLASSES}>Socio N.º</dt>
                   <dd className={cn(FIELD_VALUE_CLASSES, 'tabular-nums')}>
@@ -152,9 +167,6 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                   </dd>
                 </div>
               </dl>
-              <p className="text-[length:max(9px,1.9cqw)] leading-none opacity-65">
-                Datos de ejemplo
-              </p>
             </div>
 
             {/* El botón tapa todo el frente: un click/toque en cualquier
@@ -178,14 +190,16 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             className="carnet-face carnet-back flex flex-col overflow-hidden rounded-[26px] bg-cream p-[max(20px,6cqw)] text-ink shadow-[0_50px_100px] shadow-black/50"
             inert={!flipped}
           >
-            <p
-              className={cn(
-                TINY_UPPER_CLASSES,
-                'border-b-4 border-accent pb-2'
-              )}
-            >
+            <p className={TINY_UPPER_CLASSES}>
               Complejo Municipal Teniente Ledesma
             </p>
+            <span
+              className="mt-2 block h-1.5 rounded-full"
+              style={{
+                backgroundImage: `linear-gradient(90deg, ${colors.from}, ${colors.to}, ${colors.pop})`,
+              }}
+              aria-hidden="true"
+            />
             <h3 className="mt-[max(14px,4cqw)] text-[length:max(30px,10cqw)]">
               {activity.name}
             </h3>
