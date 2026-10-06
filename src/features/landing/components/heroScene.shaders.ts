@@ -38,11 +38,21 @@ float fbm(vec2 p){
 }
 
 /* recorte tipo cover: la imagen siempre llena el canvas. apaisado: recorta
-   arriba y abajo; más angosto (celular): recorta los costados. */
+   arriba y abajo; más angosto: recorta los costados. En celular además
+   corre el centro hacia la izquierda, donde está la pileta (FOCO_X), sin
+   pasarse del borde de la imagen. */
+const float FOCO_X = 0.36;
 vec2 encuadre(vec2 uv, float esc){
   float ar = uRes.x/uRes.y;
-  vec2 s = ar >= ASPECT_IMG ? vec2(1.0, ASPECT_IMG/ar) : vec2(ar/ASPECT_IMG, 1.0);
-  return (uv - 0.5)*s/esc + 0.5;
+  if (ar >= ASPECT_IMG){
+    vec2 s = vec2(1.0, ASPECT_IMG/ar);
+    return (uv - 0.5)*s/esc + 0.5;
+  }
+  float w = ar/ASPECT_IMG;
+  /* compu (w cerca de 1): centrado. celular (w chico): corrido al foco. */
+  float foco = mix(FOCO_X, 0.5, smoothstep(0.55, 0.85, w));
+  float cx = clamp(foco, w*0.5, 1.0 - w*0.5);
+  return vec2((uv.x - 0.5)*w/esc + cx, (uv.y - 0.5)/esc + 0.5);
 }
 
 void main(){

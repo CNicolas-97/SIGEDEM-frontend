@@ -210,8 +210,7 @@ export function HeroScene() {
   }, []);
 
   // aria-hidden: es decoración, no aporta información a un lector de pantalla.
-  // Ocupa todo su contenedor: en Hero, el hero entero en compu y un bloque
-  // debajo del texto en celular.
+  // Ocupa todo su contenedor: en Hero, el hero entero.
   return (
     <canvas
       ref={canvasRef}

@@ -52,14 +52,6 @@
   );
 }
 
-/* En celular el texto va sobre el crema y el dibujo debajo: el velo no hace
-   falta (y lavaría el dibujo). Mismo corte que max-tablet (860px). */
-@media (width < 861px) {
-  .hero-veil::after {
-    display: none;
-  }
-}
-
 /* Sube y se desvanece al bajar (--hero-progress va de 0 a 1). */
 .hero-content {
   transform: translateY(calc(var(--hero-progress, 0) * -50px));
