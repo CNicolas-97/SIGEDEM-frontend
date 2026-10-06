@@ -33,6 +33,15 @@ export type Schedule = {
   closesAt: number;
 };
 
+// Datos del frente del carnet. Son de EJEMPLO (no hay socios reales todavía):
+// el carnet los muestra con la aclaración "Datos de ejemplo".
+export type MemberCard = {
+  memberNumber: string;
+  category: string;
+  facility: string;
+  validUntil: string;
+};
+
 export type Activity = {
   slug: ActivitySlug;
   // Nombre corto: se ve sobre la imagen y en el tablero de horarios.
@@ -47,6 +56,8 @@ export type Activity = {
   // Colores de la sección (ver sectionTheme.ts).
   theme: SectionTheme;
   image: ActivityImage;
+  // Carnet de ejemplo que se ve en la home (ver ActivityCard).
+  memberCard: MemberCard;
 };
 
 // Foto de la tarjeta. Cada foto está exportada en WebP y en dos anchos:
@@ -117,6 +128,12 @@ export const activities: Activity[] = [
       accent: '#2FA7B4',
       glowA: '#4FC3C9',
     },
+    memberCard: {
+      memberNumber: 'N.º 04127',
+      category: 'Socio familiar',
+      facility: 'Pileta semiolímpica',
+      validUntil: 'Vence 03/2027',
+    },
     image: {
       src: natacionLarge,
       srcSet: `${natacionSmall} 400w, ${natacionLarge} 589w`,
@@ -170,6 +187,12 @@ export const activities: Activity[] = [
       bg: '#1E3518',
       accent: '#8DBA5A',
       glowA: '#5E8C3A',
+    },
+    memberCard: {
+      memberNumber: 'N.º 02318',
+      category: 'Socio adulto',
+      facility: 'Cancha de once',
+      validUntil: 'Vence 12/2026',
     },
     image: {
       src: futbolLarge,
@@ -225,6 +248,12 @@ export const activities: Activity[] = [
       bg: '#4A2B16',
       accent: '#D9B77A',
       glowA: '#A8703A',
+    },
+    memberCard: {
+      memberNumber: 'N.º 05764',
+      category: 'Socio juvenil',
+      facility: 'Cancha cubierta',
+      validUntil: 'Vence 06/2027',
     },
     image: {
       src: voleyLarge,
