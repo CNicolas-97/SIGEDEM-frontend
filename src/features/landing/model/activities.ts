@@ -111,9 +111,11 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver el natatorio',
     schedule: { opensAt: 7, closesAt: 21 },
     theme: {
-      bg: '#06263F',
-      accent: '#1EA7EF',
-      glowA: '#1C7FD6',
+      // Agua de la pileta: verde azulado profundo con el acento "pileta".
+      // #0B3540 (y no más claro) para que el acento como texto pase 4,5:1.
+      bg: '#0B3540',
+      accent: '#2FA7B4',
+      glowA: '#4FC3C9',
     },
     image: {
       src: natacionLarge,
@@ -164,9 +166,10 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver las canchas',
     schedule: { opensAt: 9, closesAt: 23 },
     theme: {
-      bg: '#08281A',
-      accent: '#8CE05B',
-      glowA: '#189B4A',
+      // Pasto de la cancha: verde oscuro con un acento de pasto más claro.
+      bg: '#1E3518',
+      accent: '#8DBA5A',
+      glowA: '#5E8C3A',
     },
     image: {
       src: futbolLarge,
@@ -218,9 +221,10 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver las comisiones',
     schedule: { opensAt: 16, closesAt: 22 },
     theme: {
-      bg: '#2B1406',
-      accent: '#FFB23F',
-      glowA: '#E4572E',
+      // Tierra y arena del vóley playa: marrón profundo con acento "arena".
+      bg: '#4A2B16',
+      accent: '#D9B77A',
+      glowA: '#A8703A',
     },
     image: {
       src: voleyLarge,
