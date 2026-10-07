@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import backgroundImage from '@/assets/landing/hero-background.webp';
-import waterImage from '@/assets/landing/hero-water.webp';
+import maskImage from '@/assets/landing/hero-mask.png';
 import {
   FRAGMENT_SHADER,
   VERTEX_SHADER,
@@ -121,10 +121,10 @@ export function HeroScene() {
       scroll: gl.getUniformLocation(program, 'uScroll'),
     };
     gl.uniform1i(gl.getUniformLocation(program, 'tFondo'), 0);
-    gl.uniform1i(gl.getUniformLocation(program, 'tAgua'), 1);
+    gl.uniform1i(gl.getUniformLocation(program, 'tMask'), 1);
 
     const background = loadTexture(gl, backgroundImage, 0);
-    const water = loadTexture(gl, waterImage, 1);
+    const mask = loadTexture(gl, maskImage, 1);
 
     // --- Estado de la animación ---
     const mouse = { x: 0, y: 0 };
@@ -196,9 +196,9 @@ export function HeroScene() {
       window.removeEventListener('scroll', handleScroll);
       // Si una imagen termina de cargar después de limpiar, que no haga nada.
       background.image.onload = null;
-      water.image.onload = null;
+      mask.image.onload = null;
       gl.deleteTexture(background.texture);
-      gl.deleteTexture(water.texture);
+      gl.deleteTexture(mask.texture);
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vertexArray);
       gl.deleteProgram(program);
