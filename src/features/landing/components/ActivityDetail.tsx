@@ -4,16 +4,19 @@ import { cn } from '@/shared/lib/cn.ts';
 import { Button } from '@/shared/ui/Button.tsx';
 import { Card } from '@/shared/ui/Card.tsx';
 import { CourtLines } from '@/features/landing/components/ActivityArt.tsx';
+import { CourtRatesTable } from '@/features/landing/components/CourtRatesTable.tsx';
 import { ActivityPhoto } from '@/features/landing/components/ActivityPhoto.tsx';
 import { StatList } from '@/features/landing/components/StatList.tsx';
 import type { Activity } from '@/features/landing/model/activities.ts';
+import type { CourtRate } from '@/features/landing/model/courts.ts';
 import {
   formatSchedule,
   getOpeningStatus,
 } from '@/features/landing/model/schedule.ts';
 
 // QUÉ ES: el contenido de la página de UNA actividad: foto, descripción,
-// horario de hoy, datos destacados e información extra.
+// horario de hoy, datos destacados, información extra y, en fútbol y vóley,
+// el alquiler de canchas.
 // NIVEL: componente presentacional — recibe la actividad ya encontrada y la
 // fecha por props; no lee la URL ni el reloj por su cuenta.
 // DÓNDE SE USA: en ActivityDetailPageContainer.
@@ -21,9 +24,15 @@ import {
 type ActivityDetailProps = {
   activity: Activity;
   now: Date;
+  // Canchas para alquilar. Vacío en natación: no se muestra la tabla.
+  courtRates: CourtRate[];
 };
 
-export function ActivityDetail({ activity, now }: ActivityDetailProps) {
+export function ActivityDetail({
+  activity,
+  now,
+  courtRates,
+}: ActivityDetailProps) {
   // Mismo truco que ActivitySection: el color de fondo va en la variable --sec.
   const sectionStyle = { '--sec': activity.theme.bg } as CSSProperties;
   const status = getOpeningStatus(activity.schedule, now.getHours());
@@ -85,6 +94,30 @@ export function ActivityDetail({ activity, now }: ActivityDetailProps) {
             </li>
           ))}
         </ul>
+        {courtRates.length > 0 && (
+          <section id="canchas" className="mb-12">
+            <h2 className="mb-3.5 text-[length:clamp(30px,4vw,46px)]">
+              Alquiler de canchas
+            </h2>
+            <p className="mb-7 max-w-[56ch] text-[17px] opacity-85">
+              Se alquilan por hora, en la ventanilla o desde la web. Con el
+              abono pagás el precio de socio.
+            </p>
+            <div className="max-w-[640px]">
+              <CourtRatesTable
+                activity={courtRates[0].activity}
+                title="Precio por hora"
+                rates={courtRates}
+              />
+            </div>
+            <Button
+              to={`/alquilar-cancha?deporte=${activity.slug}`}
+              className="mt-6"
+            >
+              Reservar una cancha
+            </Button>
+          </section>
+        )}
         {/* El mismo Button con distinta "variant": relleno o solo borde. */}
         <div className="flex flex-wrap gap-3.5">
           <Button to="/#pasos">Cómo asociarse</Button>

@@ -45,10 +45,10 @@
   z-index: 2;
   pointer-events: none;
   background: radial-gradient(
-    58% 38% at 50% 54%,
-    rgba(239, 234, 220, 0.93) 0%,
-    rgba(239, 234, 220, 0.6) 52%,
-    transparent 82%
+    46% 44% at 50% 54%,
+    rgba(239, 234, 220, 0.92) 0%,
+    rgba(239, 234, 220, 0.72) 55%,
+    transparent 100%
   );
 }
 
@@ -75,6 +75,51 @@
     scale(calc(1 - var(--tilt-abs, 0) * 0.045));
 }
 
+/* ---------- secciones que se arman pieza por pieza ---------- */
+/* La sección lleva .reveal-group y data-inview (lo pone useInView al entrar
+   en pantalla). Cada pieza lleva .reveal y --i, su orden de aparición: entra
+   desde abajo, 110 ms después de la anterior. Misma duración y curva que el
+   resto del movimiento del sitio. */
+.reveal-group .reveal {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 600ms var(--ease-smooth),
+    translate 600ms var(--ease-smooth),
+    scale 600ms var(--ease-smooth);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+/* Variante para piezas grandes (la tarjeta, la credencial): sube desde más
+   abajo y crece un poco. */
+.reveal-group .reveal-big {
+  translate: 0 60px;
+  scale: 0.92;
+}
+/* Variante "fundido": no se mueve, solo aparece (la escena del hero). */
+.reveal-group .reveal-fade {
+  translate: 0 0;
+  transition-duration: 1200ms;
+}
+/* Variante "sticker": aparece de golpe, como si la pegaran. */
+.reveal-group .reveal-pop {
+  translate: 0 0;
+  scale: 0.6;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal-group[data-inview='true'] .reveal {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+/* En celular la tarjeta ocupa todo el ancho: inclinada se corta contra el
+   borde de la pantalla, así que queda derecha. */
+@media (width < 861px) {
+  .shot-tilt {
+    transform: none;
+  }
+}
+
 /* Menos movimiento: sin efectos atados al scroll. */
 @media (prefers-reduced-motion: reduce) {
   .hero-content,
@@ -86,5 +131,81 @@
   .hero-board,
   .shot-tilt {
     transform: none;
+  }
+}
+
+/* ---------- tarjeta de cada actividad (ActivityCard) ---------- */
+/* Las dos caras están apiladas; el contenedor gira 180° para mostrar la de
+   atrás. backface-visibility: hidden oculta la cara que queda de espaldas. */
+.flip-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 600ms var(--ease-smooth);
+}
+.flip-inner[data-flipped='true'] {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+/* Menos movimiento: las caras cambian al instante, sin giro animado. */
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner {
+    transition: none;
+  }
+}
+
+/* ---------- líneas de cancha que se dibujan (CourtLines) ---------- */
+/* data-in-view lo pone useInView cuando la sección aparece. Cada trazo
+   tiene pathLength="1": un guion de largo 1 desplazado 1 queda escondido;
+   al llevar el desplazamiento a 0, la línea se "dibuja". */
+.court-draw .court-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1200ms var(--ease-smooth);
+}
+.court-draw[data-in-view='true'] .court-line {
+  stroke-dashoffset: 0;
+}
+/* Sogas de la pileta: ya son punteadas, así que entran deslizándose, una
+   detrás de otra (--lane es el número de soga). */
+.court-draw .court-lane {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition:
+    opacity 1200ms var(--ease-smooth),
+    transform 1200ms var(--ease-smooth);
+  transition-delay: calc(var(--lane, 0) * 90ms);
+}
+.court-draw[data-in-view='true'] .court-lane {
+  opacity: 1;
+  transform: none;
+}
+
+/* Menos movimiento: las líneas aparecen ya dibujadas. */
+@media (prefers-reduced-motion: reduce) {
+  .court-draw .court-line,
+  .court-draw .court-lane {
+    transition: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Menos movimiento: las piezas se ven desde el principio, sin armarse. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-group .reveal {
+    opacity: 1;
+    translate: none;
+    scale: none;
+    transition: none;
   }
 }

@@ -7,6 +7,8 @@ import { activities } from '@/features/landing/model/activities.ts';
 
 export type SectionTheme = {
   bg: string;
+  // Segundo color del fondo: la sección mezcla bg y bgTo en diagonal.
+  bgTo?: string;
   accent: string;
   glowA: string;
   // "?" = opcional. true si la sección es clara (el header usa texto oscuro).
@@ -51,4 +53,11 @@ export const pageSections: ThemedSection[] = [
 // oscuro pensado para el hero claro de la home.
 export const defaultPageSections: ThemedSection[] = [
   { id: 'contenido', theme: stepsTheme },
+];
+
+// Igual que defaultPageSections, pero sin el brillo azul de arriba a la
+// izquierda: el brillo toma el mismo color que el fondo, así no se nota.
+// Lo usa la página para hacerse socio, donde el formulario va solo.
+export const noGlowPageSections: ThemedSection[] = [
+  { id: 'contenido', theme: { ...stepsTheme, glowA: stepsTheme.bg } },
 ];

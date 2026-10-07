@@ -33,6 +33,24 @@ export type Schedule = {
   closesAt: number;
 };
 
+// Colores de la tarjeta: un degradé de dos tonos de la instalación
+// (from → to) para la franja de abajo y un color "pop" para la etiqueta con
+// el nombre. El texto de la franja es tinta: los dos tonos son claros a
+// propósito.
+export type CardColors = {
+  from: string;
+  to: string;
+  pop: string;
+  popText: string;
+};
+
+// Datos de la tarjeta de la home (ver ActivityCard).
+export type ActivityCardInfo = {
+  // Instalación principal: "Pileta semiolímpica", "Cancha de once"...
+  facility: string;
+  colors: CardColors;
+};
+
 export type Activity = {
   slug: ActivitySlug;
   // Nombre corto: se ve sobre la imagen y en el tablero de horarios.
@@ -47,6 +65,8 @@ export type Activity = {
   // Colores de la sección (ver sectionTheme.ts).
   theme: SectionTheme;
   image: ActivityImage;
+  // Tarjeta que se ve en la home (ver ActivityCard).
+  card: ActivityCardInfo;
 };
 
 // Foto de la tarjeta. Cada foto está exportada en WebP y en dos anchos:
@@ -83,7 +103,7 @@ export const activities: Activity[] = [
       {
         value: '45′',
         label: 'Turnos',
-        detail: 'Reservás desde la app y el molinete te deja pasar con el QR.',
+        detail: 'Reservás desde la web y el molinete te deja pasar con el QR.',
       },
     ],
     highlights: [
@@ -95,7 +115,7 @@ export const activities: Activity[] = [
       {
         title: 'Nado libre',
         description:
-          'Turnos de 45 minutos que reservás desde la app, con cupo por andarivel.',
+          'Turnos de 45 minutos que reservás desde la web, con cupo por andarivel.',
       },
       {
         title: 'Apto médico',
@@ -111,9 +131,22 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver el natatorio',
     schedule: { opensAt: 7, closesAt: 21 },
     theme: {
-      bg: '#06263F',
-      accent: '#1EA7EF',
-      glowA: '#1C7FD6',
+      // Agua de la pileta: verde azulado profundo que va a azul noche, con el
+      // acento "pileta".
+      // #0B3540 (y no más claro) para que el acento como texto pase 4,5:1.
+      bg: '#0B3540',
+      bgTo: '#0A2F5C',
+      accent: '#2FA7B4',
+      glowA: '#4FC3C9',
+    },
+    card: {
+      facility: 'Pileta semiolímpica',
+      colors: {
+        from: '#7FDCE3',
+        to: '#3FB6F2',
+        pop: '#FFD30B',
+        popText: '#071A26',
+      },
     },
     image: {
       src: natacionLarge,
@@ -149,7 +182,7 @@ export const activities: Activity[] = [
       {
         title: 'Reserva por hora',
         description:
-          'Elegís cancha y horario desde la app; el turno queda a tu nombre.',
+          'Elegís cancha y horario desde la web; el turno queda a tu nombre.',
       },
       {
         title: 'Liga interna',
@@ -164,9 +197,21 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver las canchas',
     schedule: { opensAt: 9, closesAt: 23 },
     theme: {
-      bg: '#08281A',
-      accent: '#8CE05B',
-      glowA: '#189B4A',
+      // Pasto de la cancha: verde oscuro que va al azul de la noche (canchas
+      // iluminadas), con un acento de pasto más claro.
+      bg: '#1E3518',
+      bgTo: '#14243A',
+      accent: '#8DBA5A',
+      glowA: '#5E8C3A',
+    },
+    card: {
+      facility: 'Cancha de once',
+      colors: {
+        from: '#C6E77A',
+        to: '#7FC25A',
+        pop: '#FF8A3D',
+        popText: '#071A26',
+      },
     },
     image: {
       src: futbolLarge,
@@ -218,9 +263,21 @@ export const activities: Activity[] = [
     ctaLabel: 'Ver las comisiones',
     schedule: { opensAt: 16, closesAt: 22 },
     theme: {
-      bg: '#2B1406',
-      accent: '#FFB23F',
-      glowA: '#E4572E',
+      // Tierra y arena del vóley playa: marrón profundo que va a bordó, con
+      // acento "arena".
+      bg: '#4A2B16',
+      bgTo: '#5A1F2A',
+      accent: '#D9B77A',
+      glowA: '#A8703A',
+    },
+    card: {
+      facility: 'Cancha cubierta',
+      colors: {
+        from: '#F7D58E',
+        to: '#F2994A',
+        pop: '#0A63F4',
+        popText: '#FFFFFF',
+      },
     },
     image: {
       src: voleyLarge,
