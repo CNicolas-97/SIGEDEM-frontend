@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import backgroundImage from '@/assets/landing/hero-background.webp';
-import waterImage from '@/assets/landing/hero-water.webp';
+import maskImage from '@/assets/landing/hero-mask.png';
 import {
   FRAGMENT_SHADER,
   VERTEX_SHADER,
+  getFraming,
 } from '@/features/landing/components/heroScene.shaders.ts';
+import { cn } from '@/shared/lib/cn.ts';
 
 // QUÉ ES: la escena animada de fondo del hero, dibujada con WebGL2.
 // NIVEL: pieza EXTRA de aprendizaje (WebGL2/GLSL), independiente de los
@@ -66,8 +68,13 @@ function loadTexture(gl: WebGL2RenderingContext, url: string, unit: number) {
   return { texture, image };
 }
 
+// Grados de inclinación del celular para recorrer la imagen de punta a punta.
+const TILT_RANGE_DEG = 30;
+
 export function HeroScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Si la persona ya deslizó o giró el celular, el aviso "deslizá" se va.
+  const [hasPanned, setHasPanned] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -119,12 +126,13 @@ export function HeroScene() {
       mouse: gl.getUniformLocation(program, 'uMouse'),
       time: gl.getUniformLocation(program, 'uTime'),
       scroll: gl.getUniformLocation(program, 'uScroll'),
+      pan: gl.getUniformLocation(program, 'uPan'),
     };
     gl.uniform1i(gl.getUniformLocation(program, 'tFondo'), 0);
-    gl.uniform1i(gl.getUniformLocation(program, 'tAgua'), 1);
+    gl.uniform1i(gl.getUniformLocation(program, 'tMask'), 1);
 
     const background = loadTexture(gl, backgroundImage, 0);
-    const water = loadTexture(gl, waterImage, 1);
+    const mask = loadTexture(gl, maskImage, 1);
 
     // --- Estado de la animación ---
     const mouse = { x: 0, y: 0 };
@@ -140,6 +148,78 @@ export function HeroScene() {
     // el programa nuevo nunca recibiría uRes y se vería negro.
     let lastWidth = 0;
     let lastHeight = 0;
+
+    // --- Recorrer la imagen en celular ---
+    // Cuando la pantalla es más angosta que la ilustración, se ve solo una
+    // parte. La persona puede deslizar con el dedo o girar el celular para
+    // ver el resto. pan es cuánto se corre el centro (en fracción del ancho
+    // de la imagen); dragPan lo pone el dedo y tiltPan, el giroscopio.
+    let pan = 0;
+    let dragPan = 0;
+    let tiltPan = 0;
+    let dragStartX: number | null = null;
+    let dragStartPan = 0;
+    let tiltBase: number | null = null;
+    const section = canvas.closest('section');
+
+    // Límites del corrimiento para la proporción actual del canvas.
+    function panLimits() {
+      const framing = getFraming(
+        (canvas?.clientWidth ?? 1) / (canvas?.clientHeight ?? 1)
+      );
+      return {
+        ...framing,
+        low: framing.min - framing.focus,
+        high: framing.max - framing.focus,
+      };
+    }
+    function clampPan(value: number) {
+      const { low, high } = panLimits();
+      return Math.min(high, Math.max(low, value));
+    }
+
+    // Solo el dedo (o lápiz): el mouse ya mueve la escena con el parallax.
+    function handlePointerDown(event: PointerEvent) {
+      if (event.pointerType === 'mouse') return;
+      dragStartX = event.clientX;
+      dragStartPan = dragPan;
+    }
+    function handlePointerMove(event: PointerEvent) {
+      if (dragStartX === null || !canvas) return;
+      // Deslizar a la derecha trae lo que está a la izquierda, como al
+      // arrastrar una foto: la imagen sigue al dedo.
+      const { w } = panLimits();
+      const dx = (event.clientX - dragStartX) / canvas.clientWidth;
+      // Se limita el total (dedo + giro) y el dedo se queda con su parte.
+      dragPan = clampPan(dragStartPan + tiltPan - dx * w) - tiltPan;
+      if (Math.abs(dx) > 0.02) setHasPanned(true);
+    }
+    function handlePointerEnd() {
+      dragStartX = null;
+    }
+
+    // Giroscopio: gamma es la inclinación a izquierda/derecha, en grados.
+    // La primera lectura es "derecho"; desde ahí, ±TILT_RANGE_DEG recorre
+    // la imagen de punta a punta.
+    function handleOrientation(event: DeviceOrientationEvent) {
+      if (event.gamma === null) return;
+      tiltBase ??= event.gamma;
+      const { low, high } = panLimits();
+      const ratio = Math.min(
+        1,
+        Math.max(-1, (event.gamma - tiltBase) / TILT_RANGE_DEG)
+      );
+      tiltPan = ratio * ((high - low) / 2);
+      if (Math.abs(ratio) > 0.15) setHasPanned(true);
+    }
+    // En iPhone el giroscopio pide permiso con un cartel del sistema
+    // (requestPermission); ahí no lo usamos y queda solo el dedo. Con
+    // "reducir movimiento" tampoco: mover el celular no tiene que mover la
+    // pantalla.
+    const canUseTilt =
+      'DeviceOrientationEvent' in window &&
+      !('requestPermission' in DeviceOrientationEvent) &&
+      !reduceMotion;
 
     // Ajusta el tamaño interno del canvas al tamaño en pantalla.
     function resize() {
@@ -179,11 +259,23 @@ export function HeroScene() {
       gl.uniform2f(uniforms.mouse, mouse.x, mouse.y);
       gl.uniform1f(uniforms.time, reduceMotion ? 0 : (now - startTime) / 1000);
       gl.uniform1f(uniforms.scroll, scroll);
+      // El corrimiento también llega con inercia.
+      pan += (clampPan(dragPan + tiltPan) - pan) * 0.12;
+      gl.uniform1f(uniforms.pan, pan);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
+    section?.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointermove', handlePointerMove, {
+      passive: true,
+    });
+    window.addEventListener('pointerup', handlePointerEnd);
+    window.addEventListener('pointercancel', handlePointerEnd);
+    if (canUseTilt) {
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
     resize();
     frameId = requestAnimationFrame(drawFrame);
 
@@ -194,11 +286,16 @@ export function HeroScene() {
       cancelAnimationFrame(frameId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      section?.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerEnd);
+      window.removeEventListener('pointercancel', handlePointerEnd);
+      window.removeEventListener('deviceorientation', handleOrientation);
       // Si una imagen termina de cargar después de limpiar, que no haga nada.
       background.image.onload = null;
-      water.image.onload = null;
+      mask.image.onload = null;
       gl.deleteTexture(background.texture);
-      gl.deleteTexture(water.texture);
+      gl.deleteTexture(mask.texture);
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vertexArray);
       gl.deleteProgram(program);
@@ -210,12 +307,24 @@ export function HeroScene() {
   }, []);
 
   // aria-hidden: es decoración, no aporta información a un lector de pantalla.
-  // Hasta 860px de ancho el canvas termina donde empieza el tablero "Hoy".
+  // Ocupa todo su contenedor: en Hero, el hero entero.
+  // El aviso solo se ve en celular (hasta 860px) y se va al primer uso.
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 z-1 block size-full max-tablet:bottom-[238px] max-tablet:h-[calc(100%-238px)]"
-      aria-hidden="true"
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 z-1 block size-full"
+        aria-hidden="true"
+      />
+      <p
+        className={cn(
+          'pointer-events-none absolute inset-x-0 bottom-[118px] z-1 mx-auto w-fit rounded-full bg-ink/70 px-3.5 py-1.5 text-[13px] font-semibold text-cream backdrop-blur-[4px] transition-opacity duration-600 tablet:hidden',
+          hasPanned && 'opacity-0'
+        )}
+        aria-hidden="true"
+      >
+        ↔ Deslizá para ver todo el complejo
+      </p>
+    </>
   );
 }
