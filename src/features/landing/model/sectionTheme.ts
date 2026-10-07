@@ -54,3 +54,10 @@ export const pageSections: ThemedSection[] = [
 export const defaultPageSections: ThemedSection[] = [
   { id: 'contenido', theme: stepsTheme },
 ];
+
+// Igual que defaultPageSections, pero sin el brillo azul de arriba a la
+// izquierda: el brillo toma el mismo color que el fondo, así no se nota.
+// Lo usa la página para hacerse socio, donde el formulario va solo.
+export const noGlowPageSections: ThemedSection[] = [
+  { id: 'contenido', theme: { ...stepsTheme, glowA: stepsTheme.bg } },
+];

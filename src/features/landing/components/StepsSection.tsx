@@ -47,8 +47,9 @@ export function StepsSection({ steps }: StepsSectionProps) {
               className="reveal max-w-[52ch] text-[18px] opacity-75"
               style={revealOrder(1)}
             >
-              Se hace en la ventanilla del complejo, de lunes a sábado de 8 a
-              20. Si ya sos socio, renovás desde la app sin venir.
+              Completás la inscripción acá y la terminás en la ventanilla del
+              complejo, de lunes a sábado de 8 a 20. Si ya sos socio, renovás
+              desde la web sin venir.
             </p>
           </div>
           {/* alt vacío: es decorativa, el texto ya dice todo. */}
@@ -83,8 +84,14 @@ export function StepsSection({ steps }: StepsSectionProps) {
           ))}
         </div>
         {/* Sin colores propios: usa el acento cian, igual que el botón del header. */}
-        <div className="reveal mt-[52px]" style={revealOrder(3 + steps.length)}>
-          <Button to="/planes">Ver planes y precios</Button>
+        <div
+          className="reveal mt-[52px] flex flex-wrap gap-3"
+          style={revealOrder(3 + steps.length)}
+        >
+          <Button to="/inscripcion">Inscribirme</Button>
+          <Button to="/planes" variant="secondary">
+            Ver planes y precios
+          </Button>
         </div>
       </div>
     </section>

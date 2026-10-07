@@ -36,7 +36,7 @@ export function PlansPageContainer() {
       <Seo
         title="Planes y precios"
         path="/planes"
-        description="Planes del abono del Complejo Teniente Ledesma: individual, familiar o por actividad, con descuento para jubilados y familias numerosas."
+        description="Planes del abono del Complejo Teniente Ledesma: individual, familiar o familia numerosa. Todos incluyen lo mismo; cambia la cantidad de personas."
       />
       {/* El padding de arriba deja espacio para el header fijo. */}
       <main className="mx-auto max-w-page px-6.5 pt-[calc(130px+env(safe-area-inset-top,0px))] pb-[110px]">
@@ -50,9 +50,9 @@ export function PlansPageContainer() {
                 Planes y precios
               </h1>
               <p className="max-w-[52ch] text-[18px] opacity-80">
-                Individual, familiar o por actividad. Si te corresponde
-                descuento de jubilado o familia numerosa, se aplica en la
-                ventanilla.
+                Todos los planes incluyen lo mismo: natatorio, canchas y
+                escuelas. Solo cambia para cuántas personas es. Jubilados y
+                pensionados tienen 50 % de descuento.
               </p>
             </div>
             {/* alt vacío: es decorativa, el texto ya dice todo. */}
@@ -115,8 +115,8 @@ export function PlansPageContainer() {
         )}
 
         <p className="mt-10 text-[15px] opacity-70">
-          Precios mensuales de ejemplo. Para el natatorio se pide apto médico,
-          que se carga en la misma ventanilla.
+          Precios de ejemplo. Para el natatorio se pide apto médico, que se
+          carga en la misma ventanilla.
         </p>
       </main>
     </>

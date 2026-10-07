@@ -103,7 +103,7 @@ export const activities: Activity[] = [
       {
         value: '45′',
         label: 'Turnos',
-        detail: 'Reservás desde la app y el molinete te deja pasar con el QR.',
+        detail: 'Reservás desde la web y el molinete te deja pasar con el QR.',
       },
     ],
     highlights: [
@@ -115,7 +115,7 @@ export const activities: Activity[] = [
       {
         title: 'Nado libre',
         description:
-          'Turnos de 45 minutos que reservás desde la app, con cupo por andarivel.',
+          'Turnos de 45 minutos que reservás desde la web, con cupo por andarivel.',
       },
       {
         title: 'Apto médico',
@@ -182,7 +182,7 @@ export const activities: Activity[] = [
       {
         title: 'Reserva por hora',
         description:
-          'Elegís cancha y horario desde la app; el turno queda a tu nombre.',
+          'Elegís cancha y horario desde la web; el turno queda a tu nombre.',
       },
       {
         title: 'Liga interna',
