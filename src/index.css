@@ -26,6 +26,10 @@
   /* Verde más claro para el punto de "abierto" sobre fondo azul. */
   --color-open-bright: #4cc38a;
   --color-closed: #9c5a1c;
+  /* Un acento por instalación, sacados de la ilustración del complejo. */
+  --color-pileta: #2fa7b4;
+  --color-arena: #d9b77a;
+  --color-pasto: #5e8c3a;
   /* Errores de los formularios: rojo claro que se lee sobre fondo oscuro. */
   --color-danger: #ff9b8f;
 
@@ -40,6 +44,9 @@
   --breakpoint-tablet: 861px;
   --breakpoint-laptop: 941px;
   --breakpoint-desktop: 1081px;
+
+  /* Curva única de movimiento (600ms): giro de las tarjetas, cifras y líneas. */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-pull: pull 2.4s ease-in-out infinite;
 

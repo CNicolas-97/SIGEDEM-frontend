@@ -7,6 +7,8 @@ import { activities } from '@/features/landing/model/activities.ts';
 
 export type SectionTheme = {
   bg: string;
+  // Segundo color del fondo: la sección mezcla bg y bgTo en diagonal.
+  bgTo?: string;
   accent: string;
   glowA: string;
   // "?" = opcional. true si la sección es clara (el header usa texto oscuro).

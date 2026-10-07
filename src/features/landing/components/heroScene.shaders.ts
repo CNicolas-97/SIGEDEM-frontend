@@ -14,15 +14,32 @@ void main(){ uv = p*0.5+0.5; gl_Position = vec4(p,0.,1.); }`;
 // Fragment shader: calcula el color de cada píxel. Parte de una sola
 // ilustración y la anima con una máscara pintada (R = árboles, G = pasto):
 // viento en la vegetación, agua en la pileta, niebla, luz y grano.
+// Proporción de la ilustración (2000 × 1116) y punto donde se centra el
+// recorte en celular (la pileta). HeroScene.tsx los usa también para saber
+// cuánto se puede deslizar la vista.
+export const IMAGE_ASPECT = 1.792;
+export const FOCUS_X = 0.36;
+
+// Centro del recorte en pantallas más angostas que la imagen. Devuelve el
+// ancho visible (w, de 0 a 1), el centro por defecto (focus) y los límites
+// para no pasarse del borde (min, max). Misma cuenta que encuadre() en GLSL.
+export function getFraming(aspect: number) {
+  const w = Math.min(1, aspect / IMAGE_ASPECT);
+  const t = Math.min(1, Math.max(0, (w - 0.55) / 0.3));
+  const smooth = t * t * (3 - 2 * t);
+  const focus = FOCUS_X + (0.5 - FOCUS_X) * smooth;
+  return { w, focus, min: w / 2, max: 1 - w / 2 };
+}
+
 export const FRAGMENT_SHADER = `#version 300 es
 precision highp float;
 in vec2 uv; out vec4 color;
 uniform sampler2D tFondo, tMask;
 uniform vec2 uRes, uMouse;
-uniform float uTime, uScroll;
+uniform float uTime, uScroll, uPan;
 
 const vec3 CREMA = vec3(0.937,0.918,0.863);
-const float ASPECT_IMG = 1.792;
+const float ASPECT_IMG = ${IMAGE_ASPECT};
 
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
 float noise(vec2 p){
@@ -37,15 +54,23 @@ float fbm(vec2 p){
   return v;
 }
 
-/* apaisado: recorte tipo cover. vertical: la escena entra entera, abajo */
+/* recorte tipo cover: la imagen siempre llena el canvas. apaisado: recorta
+   arriba y abajo; más angosto: recorta los costados. En celular además
+   corre el centro hacia la izquierda, donde está la pileta (FOCO_X), sin
+   pasarse del borde de la imagen. uPan: lo que el usuario deslizó o giró
+   el celular (lo limita HeroScene.tsx). */
+const float FOCO_X = ${FOCUS_X};
 vec2 encuadre(vec2 uv, float esc){
   float ar = uRes.x/uRes.y;
-  if (ar >= ASPECT_IMG*0.92){
+  if (ar >= ASPECT_IMG){
     vec2 s = vec2(1.0, ASPECT_IMG/ar);
     return (uv - 0.5)*s/esc + 0.5;
   }
-  float h = (ar/ASPECT_IMG) * esc;
-  return vec2((uv.x - 0.5)/esc + 0.5, (uv.y - (1.0 - h))/h);
+  float w = ar/ASPECT_IMG;
+  /* compu (w cerca de 1): centrado. celular (w chico): corrido al foco. */
+  float foco = mix(FOCO_X, 0.5, smoothstep(0.55, 0.85, w));
+  float cx = clamp(foco + uPan, w*0.5, 1.0 - w*0.5);
+  return vec2((uv.x - 0.5)*w/esc + cx, (uv.y - 0.5)/esc + 0.5);
 }
 
 void main(){
