@@ -14,6 +14,7 @@ import {
   findPlanId,
   getWindowChecklist,
   planOptions,
+  sanitizeField,
   toDateInputValue,
   validateEnrollment,
   type EnrollmentErrors,
@@ -52,7 +53,10 @@ export function EnrollmentPageContainer() {
   function handleFieldChange(field: EnrollmentField, value: string) {
     // "...prev" copia el objeto anterior y [field] pisa solo el campo que
     // cambió. Nunca se modifica el estado directamente: se crea uno nuevo.
-    setForm((prev) => ({ ...prev, [field]: value }));
+    // sanitizeField saca lo que el campo no acepta (ej.: números en el
+    // nombre) antes de guardarlo.
+    const clean = sanitizeField(field, value);
+    setForm((prev) => ({ ...prev, [field]: clean }));
     // Si ese campo tenía un error, se borra apenas la persona lo corrige.
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));

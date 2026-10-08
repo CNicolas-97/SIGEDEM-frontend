@@ -100,6 +100,26 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Teléfono: solo números, espacios, guiones, paréntesis y "+".
 const PHONE_PATTERN = /^[\d\s()+-]+$/;
 
+// Filtro mientras se escribe: saca los caracteres que ese campo no acepta,
+// así ni siquiera aparecen en pantalla. Igual se valida todo al enviar.
+// [^...] = "cualquier cosa que NO sea esto".
+export function sanitizeField(field: EnrollmentField, value: string): string {
+  switch (field) {
+    case 'firstName':
+    case 'lastName':
+      // Solo letras, espacios, guiones y apóstrofos; hasta 40.
+      return value.replace(/[^\p{L}\s'’-]/gu, '').slice(0, 40);
+    case 'dni':
+      // Solo números y puntos (40.123.456 tiene 10 caracteres).
+      return value.replace(/[^\d.]/g, '').slice(0, 10);
+    case 'phone':
+      // Lo mismo que acepta PHONE_PATTERN.
+      return value.replace(/[^\d\s()+-]/g, '').slice(0, 20);
+    default:
+      return value;
+  }
+}
+
 // Revisa un nombre o un apellido. Devuelve el mensaje de error, o undefined
 // si está bien. "what" es "nombre" o "apellido", para armar el mensaje.
 function validateName(value: string, what: string): string | undefined {
