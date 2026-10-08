@@ -89,12 +89,29 @@ export function getAge(birthDate: string, today: Date): number {
 }
 
 // Expresiones regulares: patrones para revisar el formato de un texto.
+// Nombre y apellido: solo letras (con tildes, ñ y ü), y pueden llevar un
+// espacio, un guion o un apóstrofo entre palabras: "María José",
+// "Pérez-Gil", "D'Angelo". \p{L} es "cualquier letra" (necesita la "u").
+const NAME_PATTERN = /^\p{L}+(?:[\s'’-]\p{L}+)*$/u;
 // DNI: 7 u 8 números (los puntos y espacios se sacan antes de revisar).
 const DNI_PATTERN = /^\d{7,8}$/;
 // Email: algo@algo.algo, sin espacios.
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Teléfono: solo números, espacios, guiones, paréntesis y "+".
 const PHONE_PATTERN = /^[\d\s()+-]+$/;
+
+// Revisa un nombre o un apellido. Devuelve el mensaje de error, o undefined
+// si está bien. "what" es "nombre" o "apellido", para armar el mensaje.
+function validateName(value: string, what: string): string | undefined {
+  // Varios espacios seguidos cuentan como uno: "Juan  Pablo" = "Juan Pablo".
+  const name = value.trim().replace(/\s+/g, ' ');
+  if (!name) return `Escribí tu ${what}.`;
+  if (!NAME_PATTERN.test(name))
+    return `El ${what} solo puede tener letras, sin números ni símbolos.`;
+  if (name.length < 2) return `El ${what} tiene que tener al menos 2 letras.`;
+  if (name.length > 40) return `El ${what} puede tener hasta 40 letras.`;
+  return undefined;
+}
 
 // Revisa el formulario y devuelve los errores encontrados. Si devuelve un
 // objeto vacío, está todo bien. Los errores se agregan en el mismo orden que
@@ -108,8 +125,10 @@ export function validateEnrollment(
   const errors: EnrollmentErrors = {};
 
   // trim() saca los espacios de las puntas: "  " no cuenta como nombre.
-  if (!form.firstName.trim()) errors.firstName = 'Escribí tu nombre.';
-  if (!form.lastName.trim()) errors.lastName = 'Escribí tu apellido.';
+  const firstNameError = validateName(form.firstName, 'nombre');
+  if (firstNameError) errors.firstName = firstNameError;
+  const lastNameError = validateName(form.lastName, 'apellido');
+  if (lastNameError) errors.lastName = lastNameError;
 
   const dni = form.dni.replace(/[.\s]/g, '');
   if (!dni) errors.dni = 'Escribí tu DNI.';
