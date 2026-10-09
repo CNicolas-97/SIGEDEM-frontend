@@ -31,9 +31,10 @@ export function EnrollmentSuccess({
       <span className="self-start justify-self-start rounded-full bg-accent px-[11px] py-[3px] text-[12.5px] font-bold text-btn-fg">
         Preinscripción lista
       </span>
-      <h2 className="text-[length:clamp(28px,4vw,40px)]">
+      {/* Es el único título de la pantalla al enviar, por eso es <h1>. */}
+      <h1 className="text-[length:clamp(28px,4vw,40px)]">
         ¡Gracias, {firstName}!
-      </h2>
+      </h1>
       <p className="text-[17px] opacity-85">
         Preinscripción realizada del plan <strong>{planName}</strong>. Para
         terminar, acercate a la ventanilla del complejo ({windowHours}) con:

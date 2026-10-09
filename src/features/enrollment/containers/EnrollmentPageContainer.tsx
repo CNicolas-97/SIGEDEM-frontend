@@ -100,16 +100,20 @@ export function EnrollmentPageContainer() {
       />
       {/* El padding de arriba deja espacio para el header fijo. */}
       <main className="mx-auto max-w-page px-6.5 pt-[calc(130px+env(safe-area-inset-top,0px))] pb-[110px]">
-        {/* id="contenido": el bloque que toma los colores de la página. */}
-        <section id="contenido" className="mb-10">
-          <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
-            Hacete socio
-          </h1>
-          <p className="max-w-[52ch] text-[18px] opacity-80">
-            Completá tus datos y elegí el plan del abono. Después pasás por la
-            ventanilla con tu DNI y te llevás el carnet de socio.
-          </p>
-        </section>
+        {/* id="contenido": el bloque que toma los colores de la página.
+            Después de enviar se oculta: el mensaje de gracias ya dice qué
+            sigue. Los colores quedan aplicados igual. */}
+        {!isSent && (
+          <section id="contenido" className="mb-10">
+            <h1 className="mb-[18px] text-[length:clamp(40px,6vw,72px)]">
+              Hacete socio
+            </h1>
+            <p className="max-w-[52ch] text-[18px] opacity-80">
+              Completá tus datos y elegí el plan del abono. Después pasás por
+              la ventanilla con tu DNI y te llevás el carnet de socio.
+            </p>
+          </section>
+        )}
 
         {/* Renderizado condicional: según isSent se ve una cosa u otra. */}
         {isSent ? (
