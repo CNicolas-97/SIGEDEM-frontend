@@ -16,7 +16,7 @@ type HeroProps = {
 };
 
 // Título dividido en palabras: cada una aparece por separado.
-const TITLE_WORDS = 'El complejo municipal, con un solo carnet.'.split(' ');
+const TITLE_WORDS = 'Complejo Municipal Ledesma'.split(' ');
 
 // Orden de aparición de cada pieza (ver .reveal en landing.css).
 function revealOrder(index: number) {
@@ -69,12 +69,10 @@ export function Hero({ activities, now }: HeroProps) {
           ))}
         </h1>
         <p
-          className="reveal mx-auto mb-8 max-w-[46ch] text-[length:clamp(16.5px,1.4vw,19px)] leading-[1.55] text-pool-muted"
+          className="reveal mx-auto mb-8 max-w-[46ch] text-[length:clamp(33px,2.8vw,38px)] leading-[1.2] text-pool-muted"
           style={revealOrder(afterTitle)}
         >
-          Natatorio climatizado, seis canchas y escuelas deportivas en el
-          Teniente Ledesma. Sacás el abono en la ventanilla y entrás mostrando
-          el QR.
+          Para la juventud Tucumana
         </p>
         <div className="flex flex-wrap items-center justify-center gap-[clamp(18px,3vw,30px)]">
           {/* Cada botón va en un span que aparece: el link queda libre
@@ -89,7 +87,7 @@ export function Hero({ activities, now }: HeroProps) {
           </span>
           <span className="reveal" style={revealOrder(afterTitle + 2)}>
             <a
-              className="border-b-2 border-pool/45 pb-[3px] text-[16.5px] font-semibold text-pool hover:border-pool"
+              className="rounded-full border-2 border-pool px-8 py-[13px] text-[16.5px] font-bold text-pool transition-[translate,background-color,color] duration-500 ease-[ease] hover:-translate-y-0.5 hover:bg-pool hover:text-cream focus-visible:-translate-y-0.5 focus-visible:bg-pool focus-visible:text-cream"
               href="#natacion"
             >
               Ver qué hay en el complejo

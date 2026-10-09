@@ -27,9 +27,6 @@ export const navLinks: SiteLink[] = [
   { to: '/#pasos', label: 'Cómo asociarse' },
 ];
 
-// Botón destacado a la derecha del header.
-export const headerCta: SiteLink = { to: '/planes', label: 'Sacar el abono' };
-
 // Datos de contacto del footer. La ventanilla atiende de lunes a sábado; el
 // horario usa el mismo tipo Schedule que las actividades, así el footer
 // calcula si está abierta con la misma función (getOpeningStatus).

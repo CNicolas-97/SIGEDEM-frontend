@@ -28,7 +28,7 @@ function applyTheme(theme: SectionTheme) {
   root.setProperty('--bg', theme.bg);
   root.setProperty('--accent', theme.accent);
   root.setProperty('--glow-a', theme.glowA);
-  root.setProperty('--ui-fg', theme.isLight ? '#08313D' : '#ffffff');
+  root.setProperty('--ui-fg', theme.isLight ? '#06263F' : '#ffffff');
   root.setProperty(
     '--btn-fg',
     theme.buttonFg ?? (theme.isLight ? '#08313D' : '#04121B')
