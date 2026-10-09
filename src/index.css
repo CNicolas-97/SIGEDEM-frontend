@@ -75,7 +75,7 @@
 @layer base {
   :root {
     /* Valores iniciales; useSectionTheme los cambia según la sección visible. */
-    --ui-fg: #08313d;
+    --ui-fg: #06263f;
     --btn-fg: #08313d;
     --bg: #071a26;
     --accent: #1ea7ef;

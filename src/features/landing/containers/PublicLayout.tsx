@@ -5,7 +5,6 @@ import { SiteHeader } from '@/features/landing/components/SiteHeader.tsx';
 import { activities } from '@/features/landing/model/activities.ts';
 import {
   footerContact,
-  headerCta,
   navLinks,
 } from '@/features/landing/model/navigation.ts';
 import '@/features/landing/landing.css';
@@ -40,7 +39,7 @@ export function PublicLayout() {
         aria-hidden="true"
       />
 
-      <SiteHeader links={navLinks} cta={headerCta} />
+      <SiteHeader links={navLinks} />
       {/* key={pathname}: si cambia la dirección, React monta la página de
           cero aunque sea el mismo componente (de /actividades/natacion a
           /actividades/futbol). Así cada página arranca con sus efectos y su
