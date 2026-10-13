@@ -4,23 +4,24 @@ import { Seo } from '@/shared/ui/Seo.tsx';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
 import { defaultPageSections } from '@/features/landing/model/sectionTheme.ts';
 import { PlanCard } from '@/features/plans/components/PlanCard.tsx';
-import {
-  planFilters,
-  plans,
-  type PlanFilter,
-} from '@/features/plans/model/plans.ts';
+import { usePlans } from '@/features/plans/hooks/usePlans.ts';
+import { planFilters, type PlanFilter } from '@/features/plans/model/plans.ts';
 // Ilustración gratuita de Storyset: la licencia pide citar la fuente, el
 // crédito está en SiteFooter.
 import poolImage from '@/assets/landing/pileta-planes.webp';
 
 // QUÉ ES: la página de planes y precios (/planes).
-// NIVEL: container (página) — guarda el filtro elegido, filtra los planes de
-// model/ y se los pasa a PlanCard por props.
+// NIVEL: container (página) — trae los planes de la API con usePlans, guarda
+// el filtro elegido, los filtra y se los pasa a PlanCard por props.
 // map() EN ESTA PÁGINA: los botones del filtro, las tarjetas de los planes y,
 // dentro de cada PlanCard, la lista de lo que incluye.
 export function PlansPageContainer() {
   // Estado: qué filtro está elegido. Arranca en "todos".
   const [filter, setFilter] = useState<PlanFilter>('todos');
+
+  // Los planes vienen de la API (db.json), junto con si todavía están
+  // cargando o si hubo un error.
+  const { plans, isLoading, error } = usePlans();
 
   // Mismo header y colores que las otras páginas simples (ver sectionTheme.ts).
   useSectionTheme(defaultPageSections);
@@ -96,7 +97,20 @@ export function PlansPageContainer() {
           </div>
         </section>
 
-        {visiblePlans.length === 0 ? (
+        {/* Tres casos antes de mostrar las tarjetas: cargando, error o sin
+            planes del tipo elegido. */}
+        {isLoading ? (
+          <p
+            className="my-[1em] animate-pulse text-[15px] opacity-70"
+            role="status"
+          >
+            Cargando planes…
+          </p>
+        ) : error ? (
+          <p className="my-[1em] text-[15px] opacity-70" role="alert">
+            {error}
+          </p>
+        ) : visiblePlans.length === 0 ? (
           <p className="my-[1em] text-[15px] opacity-70">
             No hay planes de este tipo por ahora.
           </p>
