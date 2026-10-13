@@ -1,3 +1,5 @@
+import { env } from '@/shared/lib/env.ts';
+
 // QUÉ ES: define el título, la descripción y la URL canónica de cada página
 // para los buscadores.
 // NIVEL: componente genérico de shared/ui. No muestra nada en pantalla.
@@ -5,8 +7,9 @@
 // CÓMO FUNCIONA: React 19 detecta <title>, <meta> y <link> y los mueve solo al
 // <head> del documento, sin librerías extra.
 
-// Dirección pública del sitio. Se usa para armar las URLs absolutas.
-const SITE_URL = 'https://sigedem-frontend.vercel.app';
+// Dirección pública del sitio, para armar las URLs absolutas. Sale de la
+// variable de entorno VITE_SITE_URL (ver .env.example).
+const SITE_URL = env.siteUrl;
 
 type SeoProps = {
   // Nombre de la página. Se le agrega " | SIGEDEM" al final.

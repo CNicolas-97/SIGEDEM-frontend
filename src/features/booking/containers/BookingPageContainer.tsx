@@ -105,9 +105,10 @@ export function BookingPageContainer() {
     }
 
     // ACÁ VA LA BASE DE DATOS: cuando esté la API, en este punto se manda
-    // "form" con fetch (método POST). La API tiene que revisar que el turno
-    // siga libre, porque otra persona pudo reservarlo recién. Por ahora solo
-    // se muestra que salió bien.
+    // "form" con fetch (método POST) a `${env.apiUrl}/...` (la dirección del
+    // backend sale del .env, ver shared/lib/env.ts). La API tiene que revisar
+    // que el turno siga libre, porque otra persona pudo reservarlo recién.
+    // Por ahora solo se muestra que salió bien.
     setIsSent(true);
     window.scrollTo(0, 0);
   }
