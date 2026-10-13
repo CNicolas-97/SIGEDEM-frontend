@@ -25,7 +25,23 @@ La app queda disponible en http://localhost:5173 y la API en http://localhost:30
 
 Mientras el backend no está listo, los datos salen de `db.json`, servido con [json-server](https://github.com/typicode/json-server). Cada clave de primer nivel es una ruta: `"plans"` → `GET http://localhost:3000/plans`.
 
-La URL de la API va en la variable de entorno `VITE_API_URL` del archivo `.env`. Ese archivo **no se sube** a GitHub (está en `.gitignore`); `.env.example` muestra qué poner.
+La URL de la API sale de `VITE_API_URL` (ver [Variables de entorno](#variables-de-entorno)).
+
+## Variables de entorno
+
+La configuración que cambia según dónde corre la app (en tu compu, en Vercel) va en un archivo `.env`, no escrita en el código.
+
+- `.env.example` **sí** se sube a git: lista las variables con valores de ejemplo.
+- `.env` **no** se sube (está en `.gitignore`): cada uno crea el suyo copiando el de ejemplo.
+- Vite solo deja llegar al navegador las variables que empiezan con `VITE_`, y se leen con `import.meta.env`. En el proyecto se leen una sola vez en `src/shared/lib/env.ts`, y sus tipos están en `src/vite-env.d.ts`.
+- Si falta el `.env`, la app usa los valores por defecto de `env.ts` y funciona igual.
+- Si cambiás el `.env`, reiniciá `npm run dev`.
+- Lo que lee el front queda a la vista de cualquiera: **nunca** poner contraseñas ni claves secretas.
+
+| Variable        | Para qué sirve                                        | Dónde se usa                                                                                  |
+| --------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `VITE_SITE_URL` | Dirección pública del sitio (URLs canónicas para SEO) | `shared/ui/Seo.tsx`                                                                           |
+| `VITE_API_URL`  | Dirección de la API (hoy json-server con `db.json`)   | Planes (`plans/api/plansApi.ts`); formularios de inscripción y alquiler (donde va el `fetch`) |
 
 ## Funcionalidades
 

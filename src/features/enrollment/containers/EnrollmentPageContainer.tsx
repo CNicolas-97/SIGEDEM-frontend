@@ -75,8 +75,9 @@ export function EnrollmentPageContainer() {
     }
 
     // ACÁ VA LA BASE DE DATOS: cuando esté la API, en este punto se manda
-    // "form" con fetch (método POST) y se espera la respuesta antes de
-    // mostrar el mensaje. Por ahora solo se muestra que salió bien.
+    // "form" con fetch (método POST) a `${env.apiUrl}/...` (la dirección del
+    // backend sale del .env, ver shared/lib/env.ts) y se espera la respuesta
+    // antes de mostrar el mensaje. Por ahora solo se muestra que salió bien.
     setIsSent(true);
     window.scrollTo(0, 0);
   }
