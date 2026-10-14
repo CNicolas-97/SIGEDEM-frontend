@@ -30,6 +30,8 @@
   --color-pileta: #2fa7b4;
   --color-arena: #d9b77a;
   --color-pasto: #5e8c3a;
+  /* Errores de los formularios: rojo claro que se lee sobre fondo oscuro. */
+  --color-danger: #ff9b8f;
 
   --font-display: 'Archivo Black', 'Arial Black', Impact, sans-serif;
   --font-body: 'Public Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -73,7 +75,7 @@
 @layer base {
   :root {
     /* Valores iniciales; useSectionTheme los cambia según la sección visible. */
-    --ui-fg: #08313d;
+    --ui-fg: #06263f;
     --btn-fg: #08313d;
     --bg: #071a26;
     --accent: #1ea7ef;

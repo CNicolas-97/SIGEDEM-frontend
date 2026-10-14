@@ -16,7 +16,7 @@ export const membershipSteps: MembershipStep[] = [
   {
     title: 'Elegí el plan',
     description:
-      'Individual, familiar o por actividad. Si te corresponde descuento de jubilado o familia numerosa, se aplica ahí mismo.',
+      'Individual, familiar o familia numerosa: todos incluyen lo mismo. Si te corresponde descuento de jubilado, se aplica ahí mismo.',
   },
   {
     title: 'Llevate el carnet',

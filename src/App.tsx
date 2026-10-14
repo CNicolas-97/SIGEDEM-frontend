@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
+import { BookingPageContainer } from '@/features/booking/containers/BookingPageContainer.tsx';
+import { EnrollmentPageContainer } from '@/features/enrollment/containers/EnrollmentPageContainer.tsx';
 import { ActivityDetailPageContainer } from '@/features/landing/containers/ActivityDetailPageContainer.tsx';
 import { LandingPageContainer } from '@/features/landing/containers/LandingPageContainer.tsx';
 import { NotFoundPageContainer } from '@/features/landing/containers/NotFoundPageContainer.tsx';
@@ -24,6 +26,8 @@ export function App() {
             element={<ActivityDetailPageContainer />}
           />
           <Route path="/planes" element={<PlansPageContainer />} />
+          <Route path="/inscripcion" element={<EnrollmentPageContainer />} />
+          <Route path="/alquilar-cancha" element={<BookingPageContainer />} />
           {/* "*" atrapa cualquier otra dirección: página 404. */}
           <Route path="*" element={<NotFoundPageContainer />} />
         </Route>

@@ -1,0 +1,31 @@
+{
+  "plans": [
+    {
+      "id": "individual",
+      "name": "Individual",
+      "type": "individual",
+      "people": "1 persona",
+      "monthlyPrice": 18000,
+      "description": "Acceso completo al complejo para una persona.",
+      "discountNote": "Jubilados y pensionados: 50 % de descuento presentando el carnet."
+    },
+    {
+      "id": "familiar",
+      "name": "Familiar",
+      "type": "familiar",
+      "people": "Hasta 4 personas",
+      "monthlyPrice": 42000,
+      "description": "Para el grupo familiar que vive en la misma casa.",
+      "badge": "Más elegido"
+    },
+    {
+      "id": "familia-numerosa",
+      "name": "Familia numerosa",
+      "type": "familiar",
+      "people": "5 personas o más",
+      "monthlyPrice": 50000,
+      "description": "Sin costo extra desde el quinto integrante.",
+      "discountNote": "Se acredita con la libreta o las partidas de nacimiento."
+    }
+  ]
+}

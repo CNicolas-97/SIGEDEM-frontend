@@ -27,8 +27,13 @@ export const navLinks: SiteLink[] = [
   { to: '/#pasos', label: 'Cómo asociarse' },
 ];
 
-// Botón destacado a la derecha del header.
-export const headerCta: SiteLink = { to: '/planes', label: 'Sacar el abono' };
+// Botón del header que lleva al formulario de inscripción. Se ve solo en
+// celular: ahí la navegación se oculta y sin él el header quedaría con la
+// marca sola. En compu no hace falta, porque repetiría el botón del hero.
+export const headerCta: SiteLink = {
+  to: '/inscripcion',
+  label: 'Sacar el abono',
+};
 
 // Datos de contacto del footer. La ventanilla atiende de lunes a sábado; el
 // horario usa el mismo tipo Schedule que las actividades, así el footer

@@ -6,6 +6,7 @@ import { Hero } from '@/features/landing/components/Hero.tsx';
 import { StepsSection } from '@/features/landing/components/StepsSection.tsx';
 import { useScrollMotion } from '@/features/landing/hooks/useScrollMotion.ts';
 import { useSectionTheme } from '@/features/landing/hooks/useSectionTheme.ts';
+import { getCourtRates } from '@/features/landing/model/courts.ts';
 import { activities } from '@/features/landing/model/activities.ts';
 import { membershipSteps } from '@/features/landing/model/membership.ts';
 import { pageSections } from '@/features/landing/model/sectionTheme.ts';
@@ -48,7 +49,11 @@ export function LandingPageContainer() {
         <Hero activities={activities} now={now} />
         {/* Un mismo componente para las tres actividades: cambian las props. */}
         {activities.map((activity) => (
-          <ActivitySection key={activity.slug} activity={activity} />
+          <ActivitySection
+            key={activity.slug}
+            activity={activity}
+            courtRates={getCourtRates(activity.slug)}
+          />
         ))}
         <StepsSection steps={membershipSteps} />
       </main>
