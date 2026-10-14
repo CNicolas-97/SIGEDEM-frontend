@@ -8,7 +8,7 @@ import { env } from '@/shared/lib/env.ts';
 // <head> del documento, sin librerías extra.
 
 // Dirección pública del sitio, para armar las URLs absolutas. Sale de la
-// variable de entorno VITE_SITE_URL (ver .env.example).
+// variable de entorno VITE_SITE_URL (ver shared/lib/env.ts).
 const SITE_URL = env.siteUrl;
 
 type SeoProps = {

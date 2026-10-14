@@ -14,7 +14,6 @@ Requisitos: **Node.js 20.19+** (o 22.12+) y **npm**.
 git clone https://github.com/CNicolas-97/SIGEDEM-frontend.git
 cd SIGEDEM-frontend
 npm install
-cp .env.example .env
 npm run api   # en una terminal: la API con los datos de db.json
 npm run dev   # en otra terminal: la app
 ```
@@ -33,8 +32,8 @@ En Vercel json-server no corre: la función `api/plans.ts` responde `GET /api/pl
 
 La configuración que cambia según dónde corre la app (en tu compu, en Vercel) va en un archivo `.env`, no escrita en el código.
 
-- `.env.example` **sí** se sube a git: lista las variables con valores de ejemplo.
-- `.env` **no** se sube (está en `.gitignore`): cada uno crea el suyo copiando el de ejemplo.
+- El `.env` **no** se sube a git: está en `.gitignore` (también cualquier `.env.*`). Cada uno lo crea en su compu, en la raíz del proyecto, solo si quiere cambiar algún valor.
+- Para arrancar no hace falta: sin `.env`, en desarrollo la API es `http://localhost:3000` (json-server) y en Vercel es `/api`.
 - Vite solo deja llegar al navegador las variables que empiezan con `VITE_`, y se leen con `import.meta.env`. En el proyecto se leen una sola vez en `src/shared/lib/env.ts`, y sus tipos están en `src/vite-env.d.ts`.
 - Si falta el `.env`, la app usa los valores por defecto de `env.ts` y funciona igual.
 - Si cambiás el `.env`, reiniciá `npm run dev`.
