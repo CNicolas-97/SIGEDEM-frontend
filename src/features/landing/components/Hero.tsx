@@ -72,7 +72,7 @@ export function Hero({ activities, now }: HeroProps) {
           className="reveal mx-auto mb-8 max-w-[46ch] text-[length:clamp(33px,2.8vw,38px)] leading-[1.2] text-pool-muted"
           style={revealOrder(afterTitle)}
         >
-          Para la juventud Tucumana
+          Para la juventud tucumana
         </p>
         <div className="flex flex-wrap items-center justify-center gap-[clamp(18px,3vw,30px)]">
           {/* Cada botón va en un span que aparece: el link queda libre
