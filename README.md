@@ -27,6 +27,8 @@ Mientras el backend no está listo, los datos salen de `db.json`, servido con [j
 
 La URL de la API sale de `VITE_API_URL` (ver [Variables de entorno](#variables-de-entorno)).
 
+En Vercel json-server no corre: la función `api/plans.ts` responde `GET /api/plans` con el mismo `db.json`. Sin `VITE_API_URL`, la versión publicada usa `/api` (ver `src/shared/lib/env.ts`).
+
 ## Variables de entorno
 
 La configuración que cambia según dónde corre la app (en tu compu, en Vercel) va en un archivo `.env`, no escrita en el código.

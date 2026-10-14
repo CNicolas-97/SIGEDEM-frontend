@@ -13,6 +13,11 @@ export const env = {
   // Dirección pública del sitio (para las URLs canónicas del SEO).
   siteUrl:
     import.meta.env.VITE_SITE_URL ?? 'https://sigedem-frontend.vercel.app',
-  // Dirección del backend. Ej.: fetch(`${env.apiUrl}/inscripciones`).
-  apiUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:3000',
+  // Dirección de la API. Ej.: axios.get(`${env.apiUrl}/plans`).
+  // Sin .env: en desarrollo, json-server en el puerto 3000; en la versión
+  // publicada (import.meta.env.PROD), "/api", donde Vercel corre las
+  // funciones de la carpeta api/ con los mismos datos de db.json.
+  apiUrl:
+    import.meta.env.VITE_API_URL ??
+    (import.meta.env.PROD ? '/api' : 'http://localhost:3000'),
 };
