@@ -27,7 +27,9 @@ export const navLinks: SiteLink[] = [
   { to: '/#pasos', label: 'Cómo asociarse' },
 ];
 
-// Botón destacado a la derecha del header: lleva al formulario de inscripción.
+// Botón del header que lleva al formulario de inscripción. Se ve solo en
+// celular: ahí la navegación se oculta y sin él el header quedaría con la
+// marca sola. En compu no hace falta, porque repetiría el botón del hero.
 export const headerCta: SiteLink = {
   to: '/inscripcion',
   label: 'Sacar el abono',
