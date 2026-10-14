@@ -1,7 +1,8 @@
 // QUÉ ES: los planes del abono del complejo, con sus precios.
 // NIVEL: model — datos, tipos y funciones puras; sin JSX.
-// DÓNDE SE USA: PlansPageContainer los filtra y los recorre con map() para
-// armar una PlanCard por cada plan.
+// DÓNDE SE USA: el tipo Plan, los filtros, los beneficios y formatPrice, en
+// toda la app. La página /planes ya NO usa la lista "plans" de acá: la trae
+// de la API (db.json, ver usePlans).
 
 // Unión de strings: un plan solo puede ser de uno de estos dos tipos.
 export type PlanType = 'individual' | 'familiar';
@@ -44,6 +45,8 @@ export const planFilters: { value: PlanFilter; label: string }[] = [
   { value: 'familiar', label: 'Familiar' },
 ];
 
+// Copia local de los planes de db.json. La usa todavía la inscripción; cuando
+// también los pida a la API, esta lista se borra.
 export const plans: Plan[] = [
   {
     id: 'individual',

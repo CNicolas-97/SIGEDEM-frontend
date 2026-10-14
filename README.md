@@ -15,10 +15,17 @@ git clone https://github.com/CNicolas-97/SIGEDEM-frontend.git
 cd SIGEDEM-frontend
 npm install
 cp .env.example .env
-npm run dev
+npm run api   # en una terminal: la API con los datos de db.json
+npm run dev   # en otra terminal: la app
 ```
 
-La app queda disponible en http://localhost:5173
+La app queda disponible en http://localhost:5173 y la API en http://localhost:3000
+
+### API de prueba (db.json)
+
+Mientras el backend no está listo, los datos salen de `db.json`, servido con [json-server](https://github.com/typicode/json-server). Cada clave de primer nivel es una ruta: `"plans"` → `GET http://localhost:3000/plans`.
+
+La URL de la API sale de `VITE_API_URL` (ver [Variables de entorno](#variables-de-entorno)).
 
 ## Variables de entorno
 
@@ -31,10 +38,10 @@ La configuración que cambia según dónde corre la app (en tu compu, en Vercel)
 - Si cambiás el `.env`, reiniciá `npm run dev`.
 - Lo que lee el front queda a la vista de cualquiera: **nunca** poner contraseñas ni claves secretas.
 
-| Variable        | Para qué sirve                                        | Dónde se usa                                                |
-| --------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
-| `VITE_SITE_URL` | Dirección pública del sitio (URLs canónicas para SEO) | `shared/ui/Seo.tsx`                                         |
-| `VITE_API_URL`  | Dirección del backend NestJS, cuando esté disponible  | Formularios de inscripción y alquiler (donde va el `fetch`) |
+| Variable        | Para qué sirve                                        | Dónde se usa                                                                                  |
+| --------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `VITE_SITE_URL` | Dirección pública del sitio (URLs canónicas para SEO) | `shared/ui/Seo.tsx`                                                                           |
+| `VITE_API_URL`  | Dirección de la API (hoy json-server con `db.json`)   | Planes (`plans/api/plansApi.ts`); formularios de inscripción y alquiler (donde va el `fetch`) |
 
 ## Funcionalidades
 
@@ -42,7 +49,7 @@ La configuración que cambia según dónde corre la app (en tu compu, en Vercel)
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                                                 | En desarrollo |
 | Detalle de actividad | Página por actividad con horario de hoy, datos destacados y alquiler de canchas (fútbol y vóley)                           | Hecho         |
-| Planes y precios     | Planes del abono por cantidad de personas, con precio mensual y filtro por tipo                                            | Hecho         |
+| Planes y precios     | Planes del abono por cantidad de personas, con precio mensual y filtro por tipo; los trae de la API                        | Hecho         |
 | Disciplinas          | Listado de disciplinas con edades, sede y horarios                                                                         | Previsto      |
 | Inscripciones        | Formulario de inscripción al abono con validación; queda listo para guardarse en la base de datos                          | En desarrollo |
 | Alquiler de canchas  | Reserva de canchas de fútbol y vóley por día y horario; los turnos ocupados son de ejemplo hasta conectar la base de datos | En desarrollo |
@@ -51,14 +58,17 @@ La configuración que cambia según dónde corre la app (en tu compu, en Vercel)
 
 ## Tecnologías
 
-| Tecnología                                    | Uso                                                     |
-| --------------------------------------------- | ------------------------------------------------------- |
-| [React 19](https://react.dev/)                | Librería de interfaz basada en componentes              |
-| [TypeScript](https://www.typescriptlang.org/) | JavaScript con tipos: detecta errores antes de ejecutar |
-| [Vite](https://vite.dev/)                     | Servidor de desarrollo y build                          |
-| [React Router](https://reactrouter.com/)      | Navegación entre páginas (modo declarativo)             |
-| ESLint + typescript-eslint                    | Análisis estático del código                            |
-| Prettier                                      | Formato de código consistente                           |
+| Tecnología                                             | Uso                                                     |
+| ------------------------------------------------------ | ------------------------------------------------------- |
+| [React 19](https://react.dev/)                         | Librería de interfaz basada en componentes              |
+| [TypeScript](https://www.typescriptlang.org/)          | JavaScript con tipos: detecta errores antes de ejecutar |
+| [Vite](https://vite.dev/)                              | Servidor de desarrollo y build                          |
+| [React Router](https://reactrouter.com/)               | Navegación entre páginas (modo declarativo)             |
+| [Axios](https://axios-http.com/)                       | Pedidos HTTP a la API                                   |
+| [SweetAlert2](https://sweetalert2.github.io/)          | Avisos al usuario (por ejemplo, si falla la API)        |
+| [json-server](https://github.com/typicode/json-server) | API de prueba a partir de `db.json`                     |
+| ESLint + typescript-eslint                             | Análisis estático del código                            |
+| Prettier                                               | Formato de código consistente                           |
 
 El backend se desarrolla en un repositorio separado con **NestJS + TypeScript**, así que todo el sistema usa el mismo lenguaje.
 
@@ -67,6 +77,7 @@ El backend se desarrolla en un repositorio separado con **NestJS + TypeScript**,
 | Comando             | Qué hace                                                      |
 | ------------------- | ------------------------------------------------------------- |
 | `npm run dev`       | Levanta el servidor de desarrollo                             |
+| `npm run api`       | Levanta la API de prueba con `db.json` en el puerto 3000      |
 | `npm run build`     | Revisa los tipos y genera la versión de producción en `dist/` |
 | `npm run typecheck` | Revisa los tipos con TypeScript, sin generar archivos         |
 | `npm run preview`   | Sirve localmente el build de producción                       |
