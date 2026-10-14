@@ -148,6 +148,53 @@ Los imports usan el alias `@/` en lugar de rutas relativas: `@/shared/ui/Button.
 | React Router | `App.tsx` (rutas anidadas y parámetro `:slug`), `PublicLayout.tsx` (`<Outlet />`), `ActivityDetailPageContainer.tsx` (`useParams`), `SiteHeader.tsx` (`<Link>`), `EnrollmentPageContainer.tsx` (`useSearchParams` para leer `?plan=`)                                                                                                                                                                                                                                                                            |
 | Formularios  | `features/enrollment/` y `features/booking/`: inputs controlados (el valor vive en el estado del container), `onSubmit` con `preventDefault`, validación en una función pura (`validateEnrollment`) y renderizado condicional del mensaje de éxito                                                                                                                                                                                                                                                               |
 
+## SEO
+
+El sitio es una SPA (React arma la página en el navegador), así que el SEO se resuelve en tres capas: metadatos por defecto en el HTML, metadatos propios de cada página y archivos para los buscadores.
+
+### 1. Metadatos por defecto (`index.html`)
+
+Es lo primero que lee un buscador o una red social, antes de que corra React:
+
+| Qué                            | Para qué sirve                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------ |
+| `<html lang="es-AR">`          | Indica el idioma y la región del contenido                                           |
+| `<title>` y `meta description` | Título y resumen que aparecen en los resultados de búsqueda                          |
+| Open Graph (`og:*`)            | Título, descripción, tipo e idioma de la vista previa al compartir en WhatsApp, etc. |
+| Twitter / X (`twitter:*`)      | Lo mismo para X                                                                      |
+| Datos estructurados (JSON-LD)  | Le dicen a Google que el sitio es un organismo público (`GovernmentOrganization`)    |
+| `theme-color` y favicon        | Color de la barra del navegador en celular e ícono de la pestaña                     |
+
+### 2. Metadatos de cada página (`<Seo>`)
+
+`src/shared/ui/Seo.tsx` recibe por props el título, la descripción y la ruta de la página. React 19 lleva esos `<title>`, `<meta>` y `<link>` al `<head>` solo, sin librerías extra.
+
+```tsx
+<Seo
+  title="Planes y precios"
+  path="/planes"
+  description="Planes del abono del Complejo Teniente Ledesma..."
+/>
+```
+
+Genera:
+
+- `<title>Planes y precios | SIGEDEM</title>`: cada página tiene un título distinto.
+- `<meta name="description">`: el resumen propio de esa página.
+- `<link rel="canonical">` y `og:url`: la dirección oficial de la página, armada con `VITE_SITE_URL` (ver [Variables de entorno](#variables-de-entorno)). Evita que Google cuente como páginas distintas la misma página con parámetros (`/inscripcion?plan=familiar`).
+- `noIndex`: agrega `<meta name="robots" content="noindex">`. Se usa en la página 404 para que no aparezca en Google.
+
+Lo usan todas las páginas: home, detalle de actividad, planes, inscripción, alquiler de canchas y 404.
+
+### 3. Archivos para los buscadores (`public/`)
+
+- **`robots.txt`**: permite indexar todo el sitio y avisa dónde está el sitemap.
+- **`sitemap.xml`**: la lista de páginas públicas (`/`, las tres actividades, `/planes`, `/inscripcion` y `/alquilar-cancha`) para que el buscador las encuentre sin tener que seguir los links.
+
+### HTML semántico
+
+También ayuda al SEO y a la accesibilidad: un solo `<h1>` por página, `<header>`, `<main>`, `<section>` y `<footer>` en lugar de `<div>` sueltos, `alt` en las imágenes (vacío en las decorativas) y links reales (`<Link>`) para navegar entre páginas.
+
 ## Flujo de trabajo
 
 | Rama                        | Uso                                                  |
