@@ -39,23 +39,25 @@ La configuración que cambia según dónde corre la app (en tu compu, en Vercel)
 - Si cambiás el `.env`, reiniciá `npm run dev`.
 - Lo que lee el front queda a la vista de cualquiera: **nunca** poner contraseñas ni claves secretas.
 
-| Variable        | Para qué sirve                                        | Dónde se usa                                                                                  |
-| --------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `VITE_SITE_URL` | Dirección pública del sitio (URLs canónicas para SEO) | `shared/ui/Seo.tsx`                                                                           |
-| `VITE_API_URL`  | Dirección de la API (hoy json-server con `db.json`)   | Planes (`plans/api/plansApi.ts`); formularios de inscripción y alquiler (donde va el `fetch`) |
+| Variable        | Para qué sirve                                               | Dónde se usa                                                                                  |
+| --------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `VITE_SITE_URL` | Dirección pública del sitio (URLs canónicas para SEO)        | `shared/ui/Seo.tsx`                                                                           |
+| `VITE_API_URL`  | Dirección de la API (hoy json-server con `db.json`)          | Planes (`plans/api/plansApi.ts`); formularios de inscripción y alquiler (donde va el `fetch`) |
+| `VITE_AUTH_URL` | Dirección del login (sin `.env`: `/api`, el login de prueba) | Login (`auth/api/authApi.ts`)                                                                 |
 
 ## Funcionalidades
 
-| Módulo               | Descripción                                                                                                                | Estado        |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                                                 | En desarrollo |
-| Detalle de actividad | Página por actividad con horario de hoy, datos destacados y alquiler de canchas (fútbol y vóley)                           | Hecho         |
-| Planes y precios     | Planes del abono por cantidad de personas, con precio mensual y filtro por tipo; los trae de la API                        | Hecho         |
-| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                                                         | Previsto      |
-| Inscripciones        | Formulario de inscripción al abono con validación; queda listo para guardarse en la base de datos                          | En desarrollo |
-| Alquiler de canchas  | Reserva de canchas de fútbol y vóley por día y horario; los turnos ocupados son de ejemplo hasta conectar la base de datos | En desarrollo |
-| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección)                            | Previsto      |
-| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404                                     | Hecho         |
+| Módulo               | Descripción                                                                                                                                                      | Estado        |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| Landing pública      | Presentación de la Dirección de Deportes y sus disciplinas                                                                                                       | En desarrollo |
+| Detalle de actividad | Página por actividad con horario de hoy, datos destacados y alquiler de canchas (fútbol y vóley)                                                                 | Hecho         |
+| Planes y precios     | Planes del abono por cantidad de personas, con precio mensual y filtro por tipo; los trae de la API                                                              | Hecho         |
+| Disciplinas          | Listado de disciplinas con edades, sede y horarios                                                                                                               | Previsto      |
+| Inscripciones        | Formulario de inscripción al abono con validación; queda listo para guardarse en la base de datos                                                                | En desarrollo |
+| Alquiler de canchas  | Reserva de canchas de fútbol y vóley por día y horario; los turnos ocupados son de ejemplo hasta conectar la base de datos                                       | En desarrollo |
+| Login de socios      | Ingreso con email y contraseña (`/login`), sesión guardada y página privada `/mi-cuenta`; usuario de prueba `socio@sigedem.com` / `socio1234` hasta tener NestJS | En desarrollo |
+| Acceso del personal  | Ingreso con pantalla inicial según el rol (ventanilla, caja, portería, coordinación, dirección)                                                                  | Previsto      |
+| Navegación           | Rutas entre páginas con React Router, layout compartido (header y footer) y página 404                                                                           | Hecho         |
 
 ## Tecnologías
 
