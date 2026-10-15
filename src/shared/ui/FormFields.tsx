@@ -65,7 +65,7 @@ type TextFieldProps = {
   error?: string;
   hint?: string;
   // Tipo del <input>: cambia el teclado en el celular y el control (fecha).
-  type?: 'text' | 'email' | 'tel' | 'date';
+  type?: 'text' | 'email' | 'tel' | 'date' | 'password';
   // Le dice al navegador qué dato es, para que lo autocomplete.
   autoComplete?: string;
   // Teclado numérico en el celular (para el DNI).
