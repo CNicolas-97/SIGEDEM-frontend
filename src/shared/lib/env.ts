@@ -20,4 +20,9 @@ export const env = {
   apiUrl:
     import.meta.env.VITE_API_URL ??
     (import.meta.env.PROD ? '/api' : 'http://localhost:3000'),
+  // Dirección del login. Va aparte de apiUrl porque json-server no sabe
+  // loguear: sin .env vale "/api" también en desarrollo, donde Vite sirve el
+  // login de prueba (ver vite.config.ts). Cuando esté NestJS, VITE_API_URL y
+  // VITE_AUTH_URL apuntan al mismo backend.
+  authUrl: import.meta.env.VITE_AUTH_URL ?? '/api',
 };

@@ -24,6 +24,8 @@ type ButtonProps = {
   // Opcional. Función que se ejecuta al hacer click.
   // "() => void" = no recibe nada y no devuelve nada.
   onClick?: () => void;
+  // Opcional. Apaga el botón (ej.: mientras se envía un formulario).
+  disabled?: boolean;
   // Opcional. Clases extra para ajustar el botón según dónde se usa (ej.: más
   // chico en el header). Si choca con una clase base, gana esta (ver cn()).
   className?: string;
@@ -53,6 +55,7 @@ export function Button({
   to,
   type = 'button',
   onClick,
+  disabled = false,
   className,
 }: ButtonProps) {
   // Las clases dependen de la prop "variant"; al final van las que llegan
@@ -68,7 +71,15 @@ export function Button({
   }
 
   return (
-    <button className={classes} type={type} onClick={onClick}>
+    <button
+      className={cn(
+        classes,
+        'disabled:cursor-wait disabled:opacity-60 disabled:hover:translate-y-0'
+      )}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

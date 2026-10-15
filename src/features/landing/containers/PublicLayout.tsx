@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import { useAuth } from '@/features/auth/hooks/useAuth.ts';
 import { SiteFooter } from '@/features/landing/components/SiteFooter.tsx';
 import { SiteHeader } from '@/features/landing/components/SiteHeader.tsx';
 import { activities } from '@/features/landing/model/activities.ts';
@@ -19,6 +20,8 @@ import '@/features/landing/landing.css';
 // el footer se escriben una sola vez y no se repiten en cada página.
 export function PublicLayout() {
   const location = useLocation();
+  // Quién está logueado: el header muestra "Ingresar" o "Mi cuenta".
+  const { user } = useAuth();
 
   // Al cambiar de página, el navegador conserva el scroll de la anterior.
   // Por eso volvemos arriba en cada navegación... salvo que la URL traiga un
@@ -40,7 +43,7 @@ export function PublicLayout() {
         aria-hidden="true"
       />
 
-      <SiteHeader links={navLinks} cta={headerCta} />
+      <SiteHeader links={navLinks} cta={headerCta} isLoggedIn={Boolean(user)} />
       {/* key={pathname}: si cambia la dirección, React monta la página de
           cero aunque sea el mismo componente (de /actividades/natacion a
           /actividades/futbol). Así cada página arranca con sus efectos y su
